@@ -10,7 +10,7 @@ import ProductApplication from './components/ProductApplication.vue'
 const About = () => import('./components/About.vue')
 const Product = () => import('./components/Product.vue')
 const Contact = () => import('./components/Contact.vue')
-
+const FAQ = () => import('./components/FAQ.vue')
 const routes = [
   {
     path: '/',
@@ -32,6 +32,11 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact
+  },
+  {
+    path: '/faq',
+    name: 'FAQ',
+    component: FAQ
   },
   {
     path: '/mobile',

@@ -2,14 +2,15 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *'); // Cho phép CORS
 
-// Kết nối với MySQL
-$host = 'localhost';
-$user = 'root';
-$password = ''; // Thay bằng mật khẩu MySQL của bạn nếu có
-$database = 'samsung_products';
+// // Kết nối với MySQL
+// $host = 'localhost';
+// $user = 'root';
+// $password = ''; // Thay bằng mật khẩu MySQL của bạn nếu có
+// $database = 'samsung_products';
 
-$conn = new mysqli($host, $user, $password, $database);
+// $conn = new mysqli($host, $user, $password, $database);
 
+require_once __DIR__ . '/database.php';
 // Kiểm tra kết nối
 if ($conn->connect_error) {
     die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));

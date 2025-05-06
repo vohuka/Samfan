@@ -18,3 +18,14 @@ export const fetchProducts = async () => {
     throw error;
   }
 };
+
+// Function to fetch FAQs
+export const fetchFAQs = async () => {
+  try {
+    const response = await apiClient.get('/get_FAQs.php');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching FAQs:', error);
+    throw error;
+  }
+};
