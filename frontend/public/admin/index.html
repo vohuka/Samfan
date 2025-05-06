@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/compiled/css/app.css">
+    <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
+    <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+</head>
+
+<body>
+<script src="assets/static/js/initTheme.js"></script>
+<div id="app">
+    <div id="sidebar">
+        <div class="sidebar-wrapper active">
+            <div class="sidebar-header position-relative">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="logo">
+                        <a href="index.html"><img src="./assets/logo.png" style="height: 60px; width: auto;" alt="Logo"></a>
+                    </div>
+                    <div class="sidebar-toggler x">
+                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul class="menu">
+                    <li class="sidebar-title">Admin Menu</li>
+                    <li class="sidebar-item active">
+                        <a href="index.html" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Main</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="manage-intro-page.html" class='sidebar-link'>
+                            <i class="bi bi-file-text-fill"></i>
+                            <span>Manage Pages</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="faq.html" class='sidebar-link'>
+                            <i class="bi bi-question-circle-fill"></i>
+                            <span>FAQ</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+
+        <div class="page-heading">
+            <h3>Welcome to the Management Page for Admin!</h3>
+        </div>
+        <div class="page-content">
+            <section class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">This is the administration site for SAMFAN</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-light-primary">
+                                        <i class="bi bi-star-fill"></i> 
+                                        Welcome to the administration interface of SAMFAN. Here you can manage:
+                                    </div>
+                                    <div class="mt-4">
+                                        <ul class="list-unstyled">
+                                            <li class="d-flex align-items-center mb-3">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>Products and inventory</span>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-3">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>Customer orders and transactions</span>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-3">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>User accounts and permissions</span>
+                                            </li>
+                                            <li class="d-flex align-items-center mb-3">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>Website content and FAQ management</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- <section class="row">
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="stats-icon purple">
+                                        <i class="iconly-boldUser"></i>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="text-muted font-semibold">Active Users</h6>
+                                    <h6 class="font-extrabold mb-0">1,200</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="stats-icon blue">
+                                        <i class="iconly-boldFolder"></i>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="text-muted font-semibold">Projects</h6>
+                                    <h6 class="font-extrabold mb-0">305</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="stats-icon green">
+                                        <i class="iconly-boldChart"></i>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="text-muted font-semibold">Revenue</h6>
+                                    <h6 class="font-extrabold mb-0">$48K</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 col-md-6">
+                    <div class="card">
+                        <div class="card-body px-3 py-4-5">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="stats-icon red">
+                                        <i class="iconly-boldDocument"></i>
+                                    </div>
+                                </div>
+                                <div class="col-9">
+                                    <h6 class="text-muted font-semibold">Reports</h6>
+                                    <h6 class="font-extrabold mb-0">89</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+        </div>
+        <footer>
+            <div class="footer clearfix mb-0 text-muted">
+                <div class="float-start">
+                    <p>2025 &copy; SAMFAN</p>
+                </div>
+                <!-- <div class="float-end">
+                    <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span> by You</p>
+                </div> -->
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="assets/static/js/components/dark.js"></script>
+<script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="assets/compiled/js/app.js"></script>
+</body>
+
+</html>

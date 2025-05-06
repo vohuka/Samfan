@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2025 at 10:16 AM
+-- Generation Time: May 06, 2025 at 07:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -99,10 +99,31 @@ INSERT INTO `products` (`id`, `name`, `rating`, `price`, `color`, `memory`, `ram
 --
 
 CREATE TABLE `user` (
-  `ID` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `full_name`, `email`, `phone`, `address`) VALUES
+(1, 'john_doe', '123456', 'John Doe', 'john@example.com', '0901234567', '123 Main St'),
+(2, 'jane_smith', 'password', 'Jane Smith', 'jane@example.com', '0902345678', '456 Oak St'),
+(3, 'bob_nguyen', 'abc123', 'Nguyen Van Bob', 'bob@example.com', '0903456789', '789 Pine St'),
+(4, 'alice_lee', 'alicelee', 'Alice Lee', 'alice@example.com', '0904567890', '321 Elm St'),
+(5, 'charlie_k', 'charlie1', 'Charlie Kim', 'charlie@example.com', '0905678901', '654 Maple St'),
+(6, 'david_tran', 'davidtran', 'Tran Minh David', 'david@example.com', '0906789012', '987 Cedar St'),
+(7, 'emma_wat', 'emma123', 'Emma Watson', 'emma@example.com', '0907890123', '159 Birch St'),
+(8, 'lucas_ho', 'lucasho', 'Ho Quang Lucas', 'lucas@example.com', '0908901234', '753 Spruce St'),
+(9, 'sophie_phan', 'sophiep', 'Phan Thi Sophie', 'sophie@example.com', '0909012345', '357 Ash St'),
+(10, 'michael_t', 'michael1', 'Michael Truong', 'michael@example.com', '0910123456', '951 Walnut St'),
+(11, 'Hehe123', '$2y$10$QFpkR5kTX6V5UfogrGZovuBq.kZtgbl.By6sXtg5gXdLZgqhSeERC', 'Debug Account', 'debug@account.com', '0123456789', 'Debug debug');
 
 --
 -- Indexes for dumped tables
@@ -124,8 +145,9 @@ ALTER TABLE `products`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -147,7 +169,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
