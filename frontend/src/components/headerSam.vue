@@ -1,4 +1,5 @@
 <!-- src/components/Header.vue -->
+ 
 <template>
   <header class="samfan-header">
     <div class="header-container">
@@ -173,12 +174,45 @@
           </div>
 
           <div class="form-group">
+            <label for="signup-fullname">Full Name</label>
+            <input 
+              type="text"
+              id="signup-fullname"
+              v-model="signupForm.fullName"
+              placeholder="Enter your full name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
             <label for="signup-email">Email</label>
             <input 
               type="email"
               id="signup-email"
               v-model="signupForm.email"
               placeholder="Enter email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="signup-phone">Phone</label>
+            <input 
+              type="text"
+              id="signup-phone"
+              v-model="signupForm.phone"
+              placeholder="Enter phone number"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="signup-address">Address</label>
+            <input 
+              type="text"
+              id="signup-address"
+              v-model="signupForm.address"
+              placeholder="Enter address"
               required
             >
           </div>
@@ -216,14 +250,31 @@
         </form>
       </div>
     </div>
+
+    <!-- Profile Dropdown -->
+    <div v-if="isProfileOpen" class="profile-dropdown" @click.stop>
+      <div class="profile-info" v-if="user">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
+        <p><strong>Address:</strong> {{ user.address }}</p>
+        <div class="login-buttons">
+          <button class="btn-filled-dark" @click="handleLogout">Logout</button>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 import galaxyA56 from '../assets/galaxy-a56.webp'
 import galaxyA36 from '../assets/galaxy-a36.avif'
 import galaxyA06 from '../assets/galaxy-a06.avif'
 import galaxyA16 from '../assets/galaxy-a16.avif'
+import { signup, login, logout, checkSession } from '../api/api';
 
 export default {
   name: 'SamfanHeader',
@@ -231,7 +282,6 @@ export default {
     return {
       isSearchOpen: false,
       isMenuOpen: false,
-      isMobile: false,
       isLoginOpen: false,
       windowWidth: window.innerWidth,
       searchQuery: '',
@@ -243,7 +293,10 @@ export default {
       isLoginForm: true, // true for login, false for signup
       signupForm: {
         username: '',
+        fullName: '',
         email: '',
+        phone: '',
+        address: '',
         password: '',
         confirmPassword: ''
       },
@@ -272,7 +325,9 @@ export default {
           price: '5.889.600 VND',
           image: galaxyA16
         }
-      ]
+      ],
+      user: null, // Thêm biến user
+      isProfileOpen: false, // Thêm biến trạng thái overlay profile
     }
   },
   methods: {
@@ -284,12 +339,18 @@ export default {
       }
     },
     toggleLogin() {
-      this.isLoginOpen = !this.isLoginOpen;
-      if (!this.isLoginOpen) {
-        this.clearLoginForm();
-      }
-      if (this.isSearchOpen) {
-        this.isSearchOpen = false;
+      if (this.user) {
+        // Nếu đã login, mở overlay profile
+        this.isProfileOpen = !this.isProfileOpen;
+      } else {
+        // Nếu chưa login, mở overlay login
+        this.isLoginOpen = !this.isLoginOpen;
+        if (!this.isLoginOpen) {
+          this.clearLoginForm();
+        }
+        if (this.isSearchOpen) {
+          this.isSearchOpen = false;
+        }
       }
     },
     closeSearch() {
@@ -311,7 +372,7 @@ export default {
       this.windowWidth = window.innerWidth;
       this.isMobile = this.windowWidth < 768;
     },
-    handleLogin(type) {
+    async handleLogin(type) {
       if (type === 'admin') {
         if (this.loginForm.username === 'admin' && this.loginForm.password === 'password') {
           localStorage.setItem('isAdmin', 'true')
@@ -320,9 +381,25 @@ export default {
           this.toggleLogin()
         } else {
           this.loginError = 'Invalid admin credentials'
+          toastr.error('Wrong credentials');
         }
       } else {
-        console.log('Regular user login:', this.loginForm)
+        try {
+          const res = await login(this.loginForm);
+          if (res.success) {
+            // alert('Login successful!');
+            toastr.success('Login successful!');
+            this.user = res.user; // Lưu thông tin user
+            this.isLoginOpen = false; // Đóng khung login sau khi đăng nhập thành công
+            // Optionally save user info to state or localStorage
+          } else {
+            this.loginError = res.message || 'Login failed';
+            toastr.error('Wrong credentials');
+          }
+        } catch (err) {
+          this.loginError = 'Login error';
+          toastr.error('Wrong credentials');
+        }
       }
     },
     clearLoginForm() {
@@ -334,17 +411,57 @@ export default {
       this.isLoginForm = !this.isLoginForm;
       this.loginError = '';
     },
-    handleSignup() {
-      // Implement signup logic here
-      console.log('Signup form submitted:', this.signupForm);
+    async handleSignup() {
+      try {
+        const res = await signup(this.signupForm);
+        if (res.success) {
+          alert('Signup successful! Please login.');
+          this.toggleForm();
+        } else {
+          alert(res.message || 'Signup failed');
+        }
+      } catch (err) {
+        alert('Signup error');
+      }
+    },
+    async handleLogout() {
+      await logout();
+      this.user = null;
+      this.isProfileOpen = false;
+      toastr.success('Successfully logged out!');
+    },
+    handleClickOutsideProfile(e) {
+      // Đóng dropdown nếu click ngoài
+      if (this.isProfileOpen) {
+        const dropdown = document.querySelector('.profile-dropdown');
+        const iconBtn = document.querySelector('.login-container .icon-btn');
+        if (
+          dropdown && !dropdown.contains(e.target) &&
+          iconBtn && !iconBtn.contains(e.target)
+        ) {
+          this.isProfileOpen = false;
+        }
+      }
     }
   },
-  mounted() {
+  async mounted() {
     this.checkScreen();
     window.addEventListener('resize', this.checkScreen);
+    document.addEventListener('click', this.handleClickOutsideProfile);
+
+    // Kiểm tra trạng thái đăng nhập khi load trang
+    try {
+      const res = await checkSession();
+      if (res.loggedIn) {
+        this.user = res.user;
+      }
+    } catch (e) {
+      // Không cần xử lý gì thêm
+    }
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.checkScreen);
+    document.removeEventListener('click', this.handleClickOutsideProfile);
   }
 }
 </script>
@@ -847,5 +964,38 @@ export default {
 
 .btn-outline-dark:hover {
   background: rgba(20, 40, 160, 0.1);
+}
+
+.profile-info p {
+  margin: 8px 0;
+  font-size: 15px;
+  color: #222;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  padding: 20px 24px 12px 24px;
+  min-width: 240px;
+  z-index: 2000;
+  animation: fadeInProfile 0.2s;
+}
+@keyframes fadeInProfile {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+
+</style>
+
+<style>
+/* Toastr custom font */
+#toast-container > div,
+#toast-container .toast {
+  font-family: 'Rubik', Arial, sans-serif !important;
 }
 </style>

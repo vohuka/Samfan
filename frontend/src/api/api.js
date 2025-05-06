@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-// Create an axios instance with the base URL of your PHP backend
 const apiClient = axios.create({
-  baseURL: 'http://localhost', // Apache thường chạy trên port 80
+  baseURL: 'http://localhost',
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true
 });
 
 // Function to fetch products
@@ -28,4 +28,24 @@ export const fetchFAQs = async () => {
     console.error('Error fetching FAQs:', error);
     throw error;
   }
+};
+
+export const signup = async (signupData) => {
+  const response = await apiClient.post('/signup.php', signupData);
+  return response.data;
+};
+
+export const login = async (loginData) => {
+  const response = await apiClient.post('/login.php', loginData);
+  return response.data;
+};
+
+export const logout = async () => {
+  const response = await apiClient.post('/logout.php');
+  return response.data;
+};
+
+export const checkSession = async () => {
+  const response = await apiClient.get('/check_session.php');
+  return response.data;
 };
