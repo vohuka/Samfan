@@ -21,6 +21,7 @@
             </div>
           </li>
           <li><router-link to="/contact">Contact</router-link></li>
+          <li><router-link to="/faq">FAQ</router-link></li> <!-- Thêm dòng này -->
         </ul>
       </nav>
       <div class="header-actions">
@@ -43,7 +44,7 @@
           </button>
         </div>
         <div class="login-container">
-          <button class="icon-btn">
+          <button class="icon-btn" @click="toggleLogin">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
@@ -108,6 +109,113 @@
         </div>
       </div>
     </div>
+
+    <!-- Login/Signup Overlay -->
+    <div v-if="isLoginOpen" class="login-overlay" :class="{ 'mobile-login': isMobile }">
+      <div class="login-modal">
+        <div class="login-header">
+          <h2>{{ isLoginForm ? 'Login' : 'Sign Up' }}</h2>
+          <button @click="toggleLogin" class="close-login">×</button>
+        </div>
+
+        <!-- Login Form -->
+        <form v-if="isLoginForm" class="login-form" @submit.prevent="handleLogin('user')">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+              type="text" 
+              id="username"
+              v-model="loginForm.username"
+              placeholder="Enter username"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+              type="password"
+              id="password" 
+              v-model="loginForm.password"
+              placeholder="Enter password"
+              required
+            >
+          </div>
+
+          <div v-if="loginError" class="login-error">
+            {{ loginError }}
+          </div>
+
+          <div class="login-buttons">
+            <button type="submit" class="btn-filled-dark">Login</button>
+            <button type="button" class="btn-outline-dark" @click="handleLogin('admin')">
+              Login as Admin
+            </button>
+          </div>
+
+          <div class="form-switch">
+            Don't have an account? 
+            <button type="button" class="switch-btn" @click="toggleForm">Sign Up</button>
+          </div>
+        </form>
+
+        <!-- Signup Form -->
+        <form v-else class="login-form" @submit.prevent="handleSignup">
+          <div class="form-group">
+            <label for="signup-username">Username</label>
+            <input 
+              type="text" 
+              id="signup-username"
+              v-model="signupForm.username"
+              placeholder="Choose username"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input 
+              type="email"
+              id="signup-email"
+              v-model="signupForm.email"
+              placeholder="Enter email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input 
+              type="password"
+              id="signup-password"
+              v-model="signupForm.password"
+              placeholder="Create password"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="signup-confirm">Confirm Password</label>
+            <input 
+              type="password"
+              id="signup-confirm"
+              v-model="signupForm.confirmPassword"
+              placeholder="Confirm password"
+              required
+            >
+          </div>
+
+          <div class="login-buttons">
+            <button type="submit" class="btn-filled-dark">Sign Up</button>
+          </div>
+
+          <div class="form-switch">
+            Already have an account? 
+            <button type="button" class="switch-btn" @click="toggleForm">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </header>
 </template>
 
@@ -124,8 +232,21 @@ export default {
       isSearchOpen: false,
       isMenuOpen: false,
       isMobile: false,
+      isLoginOpen: false,
       windowWidth: window.innerWidth,
       searchQuery: '',
+      loginForm: {
+        username: '',
+        password: ''
+      },
+      loginError: '',
+      isLoginForm: true, // true for login, false for signup
+      signupForm: {
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
       suggestedProducts: [
         {
           id: 1,
@@ -162,6 +283,15 @@ export default {
         this.isMenuOpen = false;
       }
     },
+    toggleLogin() {
+      this.isLoginOpen = !this.isLoginOpen;
+      if (!this.isLoginOpen) {
+        this.clearLoginForm();
+      }
+      if (this.isSearchOpen) {
+        this.isSearchOpen = false;
+      }
+    },
     closeSearch() {
       this.isSearchOpen = false;
       this.searchQuery = '';
@@ -180,6 +310,33 @@ export default {
     checkScreen() {
       this.windowWidth = window.innerWidth;
       this.isMobile = this.windowWidth < 768;
+    },
+    handleLogin(type) {
+      if (type === 'admin') {
+        if (this.loginForm.username === 'admin' && this.loginForm.password === 'password') {
+          localStorage.setItem('isAdmin', 'true')
+          // Sử dụng window.location để direct đến file HTML
+          window.location.href = '/admin/index.html'
+          this.toggleLogin()
+        } else {
+          this.loginError = 'Invalid admin credentials'
+        }
+      } else {
+        console.log('Regular user login:', this.loginForm)
+      }
+    },
+    clearLoginForm() {
+      this.loginForm.username = '';
+      this.loginForm.password = '';
+      this.loginError = '';
+    },
+    toggleForm() {
+      this.isLoginForm = !this.isLoginForm;
+      this.loginError = '';
+    },
+    handleSignup() {
+      // Implement signup logic here
+      console.log('Signup form submitted:', this.signupForm);
     }
   },
   mounted() {
@@ -188,8 +345,8 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.checkScreen);
-    }
   }
+}
 </script>
 
 <style scoped>
@@ -522,4 +679,173 @@ export default {
 }
 /* Hide images on very small screens */
 
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.login-modal {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.login-header h2 {
+  margin: 0;
+  font-family: 'Samsung Sharp Sans';
+  font-size: 24px;
+}
+
+.close-login {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #000;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Samsung Sharp Sans';
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #1428a0;
+}
+
+.form-group input::placeholder {
+  font-family: 'Samsung Sharp Sans';
+  color: #666;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.login-buttons button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: 'Samsung Sharp Sans';
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.login-error {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: -10px;
+  text-align: center;
+  font-family: 'Samsung Sharp Sans';
+}
+
+.form-switch {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+  font-family: 'Samsung Sharp Sans';
+}
+
+.switch-btn {
+  background: none;
+  border: none;
+  color: #1428a0;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0 5px;
+  font-family: 'Samsung Sharp Sans';
+  font-size: 14px;
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 1080px) {
+  .login-overlay.mobile-login {
+    align-items: flex-end;
+  }
+  
+  .login-overlay.mobile-login .login-modal {
+    width: 100%;
+    max-width: none;
+    border-radius: 10px 10px 0 0;
+    animation: slideUp 0.3s forwards;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Thêm style cho các nút filled và outline */
+.btn-filled-dark {
+  background: #1428a0;
+  color: white;
+  border: none;
+  font-family: 'Samsung Sharp Sans';
+}
+
+.btn-outline-dark {
+  background: transparent;
+  color: #1428a0;
+  border: 1px solid #1428a0;
+  font-family: 'Samsung Sharp Sans';
+}
+
+/* Thêm hover effects cho các nút */
+.btn-filled-dark:hover {
+  background: #0f1f7a;
+}
+
+.btn-outline-dark:hover {
+  background: rgba(20, 40, 160, 0.1);
+}
 </style>
