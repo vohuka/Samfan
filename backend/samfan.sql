@@ -11,17 +11,15 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `samfan`
---
-
--- --------------------------------------------------------
+-- Xóa database nếu đã tồn tại và tạo mới
+DROP DATABASE IF EXISTS samfan;
+CREATE DATABASE samfan;
+USE samfan;
 
 --
 -- Table structure for table `faq`
@@ -58,8 +56,6 @@ INSERT INTO `faq` (`ID`, `question`, `answer`) VALUES
 (18, 'Làm sao để gửi phản hồi hoặc góp ý?', 'Bạn có thể gửi phản hồi qua biểu mẫu liên hệ trên trang web.'),
 (19, 'Tôi có thể sử dụng tài khoản của mình trên nhiều thiết bị không?', 'Có, bạn có thể đăng nhập trên nhiều thiết bị cùng lúc.');
 
--- --------------------------------------------------------
-
 --
 -- Table structure for table `products`
 --
@@ -89,10 +85,7 @@ INSERT INTO `products` (`id`, `name`, `rating`, `price`, `color`, `memory`, `ram
 (7, 'Galaxy S24 FE', 5, 16990000.00, 'Graphite', '256GB', '8GB', 'galaxy_s24_fe.avif'),
 (8, 'Galaxy S24 Ultra', 4.7, 35990000.00, 'Titanium Gray', '512GB', '12GB', 'galaxy_s24_ultra.webp'),
 (9, 'Galaxy A26', 4.1, 6390000.00, 'Navy Blue', '128GB', '6GB', 'galaxy_a26.webp'),
-(10, 'Galaxy A56', 4.2, 9490000.00, 'Silver', '128GB', '6GB', 'galaxy_a56.webp'),
-(11, 'Galaxy Bruh', 4.2, 9490000.00, 'Silver', '128GB', '6GB', 'galaxy_a56.webp');
-
--- --------------------------------------------------------
+(10, 'Galaxy A56', 4.2, 9490000.00, 'Silver', '128GB', '6GB', 'galaxy_a56.webp');
 
 --
 -- Table structure for table `user`
@@ -148,6 +141,7 @@ ALTER TABLE `products`
 --
 ALTER TABLE `user`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
