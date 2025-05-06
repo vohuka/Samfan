@@ -683,4 +683,27 @@ export default {
   width: 0;
   left: 50%;
 }
+
+@media screen and (max-width: 600px) {
+  .banner-2,
+  .banner-3,
+  .banner-4 {
+    height: 520px;
+    max-height: 700px;
+    min-height: 400px;
+    border-radius: 16px;
+    width: 100%;
+  }
+  .banner2-content,
+  .banner3-content,
+  .banner4-content {
+    padding: 18px 18px 32px 24px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about-desc p {
+    text-align: justify;
+  }
+}
 </style>
