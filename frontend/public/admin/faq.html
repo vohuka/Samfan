@@ -47,6 +47,12 @@
                             <span>FAQ</span>
                         </a>
                     </li>
+                    <li class="sidebar-item">
+                        <a href="product.html" class='sidebar-link'>
+                            <i class="bi bi-box-seam-fill"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -71,19 +77,21 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <table class="table table-striped" id="faqTable">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Question</th>
-                                        <th>Answer</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="faqTableBody">
-                                    <!-- FAQ rows will be rendered here -->
-                                </tbody>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="faqTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Question</th>
+                                            <th>Answer</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="faqTableBody">
+                                        <!-- FAQ rows will be rendered here -->
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,6 +168,9 @@ function cleanupModal() {
   document.body.classList.remove('modal-open');
   document.body.style.overflow = '';
   document.body.style.paddingRight = '';
+  
+  // Thêm dòng này để reset instance
+  faqModalInstance = null;
 }
 
 function renderFAQs(faqs) {
@@ -230,10 +241,11 @@ document.getElementById('faqForm').addEventListener('submit', function(e) {
     if (data.success) {
       fetchFAQs();
       
+      // Đóng modal
       getFaqModalInstance().hide();
       
-      
-      setTimeout(cleanupModal, 300);
+      // Không cần setTimeout nữa vì hàm hidden.bs.modal sẽ tự gọi cleanupModal
+      // setTimeout(cleanupModal, 300);
     } else {
       alert(data.message || 'Error');
     }

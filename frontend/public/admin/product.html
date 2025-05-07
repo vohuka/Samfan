@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/compiled/css/app.css">
+    <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
+    <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+</head>
+
+<body>
+<script src="assets/static/js/initTheme.js"></script>
+<div id="app">
+    <div id="sidebar">
+        <div class="sidebar-wrapper active">
+            <div class="sidebar-header position-relative">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="logo">
+                        <a href="index.html"><img src="./assets/logo.png" style="height: 60px; width: auto;" alt="Logo"></a>
+                    </div>
+                    <div class="sidebar-toggler x">
+                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul class="menu">
+                    <li class="sidebar-title">Admin Menu</li>
+                    <li class="sidebar-item">
+                        <a href="index.html" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Main</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="manage-intro-page.html" class='sidebar-link'>
+                            <i class="bi bi-file-text-fill"></i>
+                            <span>Manage Pages</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="faq.html" class='sidebar-link'>
+                            <i class="bi bi-question-circle-fill"></i>
+                            <span>FAQ</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item active">
+                        <a href="product.html" class='sidebar-link'>
+                            <i class="bi bi-box-seam-fill"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        <div class="page-heading">
+            <h3>Product Management</h3>
+        </div>
+        <div class="page-content">
+            <section class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Product List</h4>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openAddModal()">
+                                <i class="bi bi-plus"></i> Add Product
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="productTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Image Path</th> 
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Rating</th>
+                                            <th>Color</th>
+                                            <th>Memory</th>
+                                            <th>RAM</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productTableBody">
+                                        <!-- Product rows will be rendered here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Add/Edit Product Modal -->
+        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form class="modal-content" id="productForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">Add/Edit Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="productId">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" placeholder="Enter product name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productPrice" class="form-label">Price</label>
+                            <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Enter price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productRating" class="form-label">Rating</label>
+                            <input type="number" step="0.1" min="0" max="5" class="form-control" id="productRating" placeholder="Enter rating (0-5)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productColor" class="form-label">Color</label>
+                            <input type="text" class="form-control" id="productColor" placeholder="Enter color">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productMemory" class="form-label">Memory</label>
+                            <input type="text" class="form-control" id="productMemory" placeholder="Enter memory (e.g., 128GB)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productRAM" class="form-label">RAM</label>
+                            <input type="text" class="form-control" id="productRAM" placeholder="Enter RAM (e.g., 8GB)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Image Path</label>
+                            <input type="text" class="form-control" id="productImage" placeholder="Enter image path" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer clearfix mb-0 text-muted">
+                <div class="float-start">
+                    <p>2025 &copy; Samfan</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="assets/static/js/components/dark.js"></script>
+<script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="assets/compiled/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const apiUrl = 'http://localhost/manage_product.php';
+
+let productModalInstance = null;
+
+function getProductModalInstance() {
+  if (!productModalInstance) {
+    productModalInstance = new bootstrap.Modal(document.getElementById('productModal'));
+    document.getElementById('productModal').addEventListener('hidden.bs.modal', cleanupModal);
+  }
+  return productModalInstance;
+}
+
+function cleanupModal() {
+  const backdrops = document.querySelectorAll('.modal-backdrop');
+  backdrops.forEach(backdrop => backdrop.remove());
+  
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
+  
+  // Reset instance
+  productModalInstance = null;
+}
+
+function renderProducts(products) {
+  const tbody = document.getElementById('productTableBody');
+  tbody.innerHTML = '';
+  if (products && products.length) {
+    products.forEach((product) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${product.id}</td>
+        <td>${product.image}</td> <!-- Hiển thị đường dẫn thay vì thẻ img -->
+        <td>${product.name}</td>
+        <td>${formatPrice(product.price)}</td>
+        <td>${product.rating || 0}</td>
+        <td>${product.color || '-'}</td>
+        <td>${product.memory || '-'}</td>
+        <td>${product.ram || '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" onclick="openEditModal(${product.id}, '${encodeURIComponent(product.name)}', ${product.price}, ${product.rating || 0}, '${encodeURIComponent(product.color || '')}', '${encodeURIComponent(product.memory || '')}', '${encodeURIComponent(product.ram || '')}', '${encodeURIComponent(product.image)}')">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } else {
+    tbody.innerHTML = '<tr><td colspan="9" class="text-center">No products found.</td></tr>';
+  }
+}
+
+function formatPrice(price) {
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+}
+
+function fetchProducts() {
+  fetch('http://localhost/get_products.php', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => renderProducts(data))
+    .catch(() => {
+      renderProducts([]);
+    });
+}
+
+function openAddModal() {
+  document.getElementById('productId').value = '';
+  document.getElementById('productName').value = '';
+  document.getElementById('productPrice').value = '';
+  document.getElementById('productRating').value = '';
+  document.getElementById('productColor').value = '';
+  document.getElementById('productMemory').value = '';
+  document.getElementById('productRAM').value = '';
+  document.getElementById('productImage').value = '';
+  document.getElementById('productModalLabel').innerText = 'Add Product';
+  getProductModalInstance().show();
+}
+
+function openEditModal(id, name, price, rating, color, memory, ram, image) {
+  document.getElementById('productId').value = id;
+  document.getElementById('productName').value = decodeURIComponent(name);
+  document.getElementById('productPrice').value = price;
+  document.getElementById('productRating').value = rating;
+  document.getElementById('productColor').value = decodeURIComponent(color);
+  document.getElementById('productMemory').value = decodeURIComponent(memory);
+  document.getElementById('productRAM').value = decodeURIComponent(ram);
+  document.getElementById('productImage').value = decodeURIComponent(image);
+  document.getElementById('productModalLabel').innerText = 'Edit Product';
+  getProductModalInstance().show();
+}
+
+document.getElementById('productForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const id = document.getElementById('productId').value;
+  const name = document.getElementById('productName').value;
+  const price = document.getElementById('productPrice').value;
+  const rating = document.getElementById('productRating').value || 0;
+  const color = document.getElementById('productColor').value;
+  const memory = document.getElementById('productMemory').value;
+  const ram = document.getElementById('productRAM').value;
+  const image = document.getElementById('productImage').value;
+  
+  const action = id ? 'edit' : 'add';
+  
+  fetch(apiUrl + '?action=' + action, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ id, name, price, rating, color, memory, ram, image })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      fetchProducts();
+      getProductModalInstance().hide();
+    } else {
+      alert(data.message || 'Error');
+    }
+  });
+});
+
+function deleteProduct(id) {
+  if (!confirm('Are you sure you want to delete this product?')) return;
+  fetch(apiUrl + '?action=delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ id })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      fetchProducts();
+    } else {
+      alert(data.message || 'Error');
+    }
+  });
+}
+
+fetchProducts();
+</script>
+</body>
+</html>
