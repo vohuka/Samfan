@@ -1,7 +1,8 @@
 <?php
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
 $allowed_origins = [
-    'http://localhost:8081',
+    'http://localhost:8080', 
+    // máy Lộc: 8081, máy Khang: 8080
 ];
 
 if (in_array($origin, $allowed_origins)) {
