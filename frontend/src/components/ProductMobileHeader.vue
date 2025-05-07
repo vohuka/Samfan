@@ -24,7 +24,7 @@
       <p class="product-promo">{{ currentProduct.promo }}</p>
       
       <div class="action-buttons">
-        <button class="btn" :class="currentProductIndex >= 1 && currentProductIndex <= 3 ? 'btn-outline-dark' : 'btn-outline'">Find more</button>
+        <button class="btn" :class="currentProductIndex >= 1 && currentProductIndex <= 3 ? 'btn-outline-dark' : 'btn-outline'">Learn more</button>
         <button class="btn" :class="currentProductIndex >= 1 && currentProductIndex <= 3 ? 'btn-filled-dark' : 'btn-filled'">Buy now</button>
       </div>
     </div>

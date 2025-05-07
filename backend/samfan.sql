@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2025 at 10:16 AM
+-- Generation Time: May 07, 2025 at 10:00 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -63,7 +63,6 @@ INSERT INTO `faq` (`ID`, `question`, `answer`) VALUES
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `rating` float DEFAULT 0,
   `price` decimal(10,2) NOT NULL,
   `color` varchar(50) DEFAULT NULL,
   `memory` varchar(50) DEFAULT NULL,
@@ -75,27 +74,405 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `rating`, `price`, `color`, `memory`, `ram`, `image`) VALUES
-(1, 'Galaxy S25 Ultra', 4.9, 37490000.00, 'Black', '512GB', '12GB', 'galaxy_s25_ultra.avif'),
-(2, 'Galaxy Z Fold5 (Special)', 4.8, 86500000.00, 'Special', '512GB', '12GB', 'galaxy_zflop5.avif'),
-(3, 'Galaxy Z Fold6', 4.6, 39900000.00, 'Gray', '256GB', '12GB', 'galaxy_z_fold6.avif'),
-(4, 'Galaxy Z Flip6', 4.5, 22900000.00, 'Black', '512GB', '12GB', 'galaxy_z_flip6.avif'),
-(5, 'Galaxy S25+', 4.5, 30490000.00, 'Blue', '256GB', '8GB', 'galaxy_s25+.avif'),
-(6, 'Galaxy S25', 4.3, 24990000.00, 'Blue', '128GB', '8GB', 'galaxy_s25.avif'),
-(7, 'Galaxy S24 FE', 5, 16990000.00, 'Graphite', '256GB', '8GB', 'galaxy_s24_fe.avif'),
-(8, 'Galaxy S24 Ultra', 4.7, 35990000.00, 'Titanium Gray', '512GB', '12GB', 'galaxy_s24_ultra.webp'),
-(9, 'Galaxy A26', 4.1, 6390000.00, 'Navy Blue', '128GB', '6GB', 'galaxy_a26.webp'),
-(10, 'Galaxy A56', 4.2, 9490000.00, 'Silver', '128GB', '6GB', 'galaxy_a56.webp');
+INSERT INTO `products` (`id`, `name`, `price`, `color`, `memory`, `ram`, `image`) VALUES
+(1, 'Galaxy S25 Ultra', 37490000.00, 'Black', '512GB', '12GB', 'galaxy_s25_ultra.avif'),
+(2, 'Galaxy Z Fold5 (Special)', 86500000.00, 'Special', '512GB', '12GB', 'galaxy_zflop5.avif'),
+(3, 'Galaxy Z Fold6', 39900000.00, 'Gray', '256GB', '12GB', 'galaxy_z_fold6.avif'),
+(4, 'Galaxy Z Flip6', 22900000.00, 'Black', '512GB', '12GB', 'galaxy_z_flip6.avif'),
+(5, 'Galaxy S25+', 30490000.00, 'Blue', '256GB', '8GB', 'galaxy_s25+.avif'),
+(6, 'Galaxy S25', 24990000.00, 'Blue', '128GB', '8GB', 'galaxy_s25.avif'),
+(7, 'Galaxy S24 FE', 16990000.00, 'Graphite', '256GB', '8GB', 'galaxy_s24_fe.avif'),
+(8, 'Galaxy S24 Ultra', 35990000.00, 'Titanium Gray', '512GB', '12GB', 'galaxy_s24_ultra.webp'),
+(9, 'Galaxy A26', 6390000.00, 'Navy Blue', '128GB', '6GB', 'galaxy_a26.webp'),
+(10, 'Galaxy A56', 9490000.00, 'Silver', '128GB', '6GB', 'galaxy_a56.webp');
+
+--
+-- Table structure for table `product_specs`
+--
+
+CREATE TABLE `product_specs` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `category` varchar(50) NOT NULL,
+  `spec_key` varchar(255) NOT NULL,
+  `spec_value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_specs`
+--
+
+-- Galaxy S25 Ultra (ID: 1)
+INSERT INTO `product_specs` (`id`, `product_id`, `category`, `spec_key`, `spec_value`) VALUES
+(1, 1, 'processor', 'CPU Speed', '4.47GHz, 3.5GHz'),
+(2, 1, 'processor', 'CPU Type', '8 cores'),
+(3, 1, 'display', 'Size (Main Display)', '174.2mm (6.9" full rectangle) / 172.2mm (6.8" rounded corners)'),
+(4, 1, 'display', 'Display Technology (Main Display)', 'Dynamic AMOLED 2X'),
+(5, 1, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(6, 1, 'display', 'Resolution (Main Display)', '3120 x 1440 (Quad HD+)'),
+(7, 1, 'display', 'Color Depth (Main Display)', '16M'),
+(8, 1, 'display', 'S Pen Support', 'Yes'),
+(9, 1, 'camera', 'Main Camera', '200.0MP + 50.0MP + 50.0MP + 10.0MP'),
+(10, 1, 'camera', 'Aperture (Main Camera)', 'F1.7, F3.4, F1.9, F2.4'),
+(12, 1, 'camera', 'Zoom (Rear Camera)', 'Optical Zoom 3x and 5x, Optical Quality Zoom 2x and 10x (Enabled by Adaptive Pixel Sensor), Digital Zoom up to 100x'),
+(13, 1, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(15, 1, 'camera', 'Slow Motion', '240fps @FHD, 120fps @FHD, 120fps @UHD'),
+(17, 1, 'camera', 'Resolution (Front Camera)', '12.0MP'),
+(19, 1, 'camera', 'Video Recording Resolution', 'UHD 8K (7680 x 4320) @ 30fps'),
+(20, 1, 'storage', 'RAM', '12GB'),
+(21, 1, 'storage', 'Storage (ROM)', '256GB'),
+(22, 1, 'storage', 'Available Storage', '222.7GB'),
+(23, 1, 'connectivity', 'USB Interface', 'USB Type-C'),
+(24, 1, 'connectivity', 'Earjack', 'USB Type-C'),
+(25, 1, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2 / SIM 1 + eSIM / Dual eSIM)'),
+(26, 1, 'physical', 'Dimensions (HxWxD)', '162.8 x 77.6 x 8.2 mm'),
+(27, 1, 'physical', 'Weight', '218g'),
+
+-- Galaxy Z Fold5 (Special) (ID: 2)
+(28, 2, 'processor', 'CPU Speed', '3.36GHz, 2.8GHz'),
+(29, 2, 'processor', 'CPU Type', '8 cores'),
+(30, 2, 'display', 'Size (Main Display)', '191.9mm (7.6" full rectangle) / 189.9mm (7.5" rounded corners)'),
+(31, 2, 'display', 'Display Technology (Main Display)', 'Dynamic AMOLED 2X'),
+(32, 2, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(33, 2, 'display', 'Resolution (Main Display)', '2176 x 1812 (QXGA+)'),
+(34, 2, 'display', 'Color Depth (Main Display)', '16M'),
+(35, 2, 'display', 'S Pen Support', 'Yes'),
+(36, 2, 'camera', 'Main Camera', '50.0MP + 12.0MP + 10.0MP'),
+(37, 2, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2, F2.4'),
+(39, 2, 'camera', 'Zoom (Rear Camera)', 'Optical Zoom 3x, Digital Zoom up to 30x'),
+(40, 2, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(42, 2, 'camera', 'Slow Motion', '240fps @FHD, 120fps @UHD'),
+(44, 2, 'camera', 'Resolution (Front Camera)', '10.0MP'),
+(46, 2, 'camera', 'Video Recording Resolution', 'UHD 8K (7680 x 4320) @ 30fps'),
+(47, 2, 'storage', 'RAM', '12GB'),
+(48, 2, 'storage', 'Storage (ROM)', '512GB'),
+(49, 2, 'storage', 'Available Storage', '480GB'),
+(50, 2, 'connectivity', 'USB Interface', 'USB Type-C'),
+(51, 2, 'connectivity', 'Earjack', 'USB Type-C'),
+(52, 2, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2 / SIM 1 + eSIM)'),
+(53, 2, 'physical', 'Dimensions (HxWxD)', '154.9 x 129.9 x 6.1 mm (unfolded)'),
+(54, 2, 'physical', 'Weight', '253g'),
+
+-- Galaxy Z Fold6 (ID: 3)
+(55, 3, 'processor', 'CPU Speed', '3.4GHz, 2.9GHz'),
+(56, 3, 'processor', 'CPU Type', '8 cores'),
+(57, 3, 'display', 'Size (Main Display)', '191.9mm (7.6" full rectangle) / 189.9mm (7.5" rounded corners)'),
+(58, 3, 'display', 'Display Technology (Main Display)', 'Dynamic AMOLED 2X'),
+(59, 3, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(60, 3, 'display', 'Resolution (Main Display)', '2176 x 1812 (QXGA+)'),
+(61, 3, 'display', 'Color Depth (Main Display)', '16M'),
+(62, 3, 'display', 'S Pen Support', 'Yes'),
+(63, 3, 'camera', 'Main Camera', '50.0MP + 12.0MP + 10.0MP'),
+(64, 3, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2, F2.4'),
+(66, 3, 'camera', 'Zoom (Rear Camera)', 'Optical Zoom 3x, Digital Zoom up to 30x'),
+(67, 3, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(69, 3, 'camera', 'Slow Motion', '240fps @FHD, 120fps @UHD'),
+(71, 3, 'camera', 'Resolution (Front Camera)', '10.0MP'),
+(73, 3, 'camera', 'Video Recording Resolution', 'UHD 8K (7680 x 4320) @ 30fps'),
+(74, 3, 'storage', 'RAM', '12GB'),
+(75, 3, 'storage', 'Storage (ROM)', '256GB'),
+(76, 3, 'storage', 'Available Storage', '230GB'),
+(77, 3, 'connectivity', 'USB Interface', 'USB Type-C'),
+(78, 3, 'connectivity', 'Earjack', 'USB Type-C'),
+(79, 3, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2 / SIM 1 + eSIM)'),
+(80, 3, 'physical', 'Dimensions (HxWxD)', '153.5 x 132.6 x 5.6 mm (unfolded)'),
+(81, 3, 'physical', 'Weight', '239g'),
+
+-- Galaxy Z Flip6 (ID: 4)
+(82, 4, 'processor', 'CPU Speed', '3.2GHz, 2.7GHz'),
+(83, 4, 'processor', 'CPU Type', '8 cores'),
+(84, 4, 'display', 'Size (Main Display)', '170.3mm (6.7" full rectangle) / 168.3mm (6.6" rounded corners)'),
+(85, 4, 'display', 'Display Technology (Main Display)', 'Dynamic AMOLED 2X'),
+(86, 4, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(87, 4, 'display', 'Resolution (Main Display)', '2640 x 1080 (FHD+)'),
+(88, 4, 'display', 'Color Depth (Main Display)', '16M'),
+(89, 4, 'display', 'S Pen Support', 'No'),
+(90, 4, 'camera', 'Main Camera', '50.0MP + 12.0MP'),
+(91, 4, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2'),
+(93, 4, 'camera', 'Zoom (Rear Camera)', 'Digital Zoom up to 10x'),
+(94, 4, 'camera', 'Aperture (Front Camera)', 'F2.4'),
+(96, 4, 'camera', 'Slow Motion', '240fps @FHD'),
+(98, 4, 'camera', 'Resolution (Front Camera)', '10.0MP'),
+(100, 4, 'camera', 'Video Recording Resolution', 'UHD 4K (3840 x 2160) @ 60fps'),
+(101, 4, 'storage', 'RAM', '12GB'),
+(102, 4, 'storage', 'Storage (ROM)', '512GB'),
+(103, 4, 'storage', 'Available Storage', '480GB'),
+(104, 4, 'connectivity', 'USB Interface', 'USB Type-C'),
+(105, 4, 'connectivity', 'Earjack', 'USB Type-C'),
+(106, 4, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + eSIM)'),
+(107, 4, 'physical', 'Dimensions (HxWxD)', '165.2 x 71.9 x 6.9 mm (unfolded)'),
+(108, 4, 'physical', 'Weight', '187g'),
+
+-- Galaxy S25+ (ID: 5)
+(109, 5, 'processor', 'CPU Speed', '4.2GHz, 3.2GHz'),
+(110, 5, 'processor', 'CPU Type', '8 cores'),
+(111, 5, 'display', 'Size (Main Display)', '169.5mm (6.7" full rectangle) / 167.5mm (6.6" rounded corners)'),
+(112, 5, 'display', 'Display Technology (Main Display)', 'Dynamic AMOLED 2X'),
+(113, 5, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(114, 5, 'display', 'Resolution (Main Display)', '3120 x 1440 (Quad HD+)'),
+(115, 5, 'display', 'Color Depth (Main Display)', '16M'),
+(116, 5, 'display', 'S Pen Support', 'No'),
+(117, 5, 'camera', 'Main Camera', '50.0MP + 12.0MP + 10.0MP'),
+(118, 5, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2, F2.4'),
+(120, 5, 'camera', 'Zoom (Rear Camera)', 'Optical Zoom 3x, Digital Zoom up to 30x'),
+(121, 5, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(123, 5, 'camera', 'Slow Motion', '240fps @FHD, 120fps @UHD'),
+(125, 5, 'camera', 'Resolution (Front Camera)', '12.0MP'),
+(127, 5, 'camera', 'Video Recording Resolution', 'UHD 8K (7680 x 4320) @ 30fps'),
+(128, 5, 'storage', 'RAM', '8GB'),
+(129, 5, 'storage', 'Storage (ROM)', '256GB'),
+(130, 5, 'storage', 'Available Storage', '230GB'),
+(131, 5, 'connectivity', 'USB Interface', 'USB Type-C'),
+(132, 5, 'connectivity', 'Earjack', 'USB Type-C'),
+(133, 5, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2 / SIM 1 + eSIM)'),
+(134, 5, 'physical', 'Dimensions (HxWxD)', '158.5 x 75.9 x 7.7 mm'),
+(135, 5, 'physical', 'Weight', '198g'),
+
+-- Galaxy S25 (ID: 6)
+(136, 6, 'processor', 'CPU Speed', '4.0GHz, 3.0GHz'),
+(137, 6, 'processor', 'CPU Type', '8 cores'),
+(138, 6, 'display', 'Size (Main Display)', '158.2mm (6.2" full rectangle) / 156.2mm (6.1" rounded corners)'),
+(139, 6, 'display', 'Display Technology (Main Display)', 'Dynamic AMOLED 2X'),
+(140, 6, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(141, 6, 'display', 'Resolution (Main Display)', '2340 x 1080 (FHD+)'),
+(142, 6, 'display', 'Color Depth (Main Display)', '16M'),
+(143, 6, 'display', 'S Pen Support', 'No'),
+(144, 6, 'camera', 'Main Camera', '50.0MP + 12.0MP + 10.0MP'),
+(145, 6, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2, F2.4'),
+(147, 6, 'camera', 'Zoom (Rear Camera)', 'Optical Zoom 3x, Digital Zoom up to 30x'),
+(148, 6, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(150, 6, 'camera', 'Slow Motion', '240fps @FHD, 120fps @UHD'),
+(152, 6, 'camera', 'Resolution (Front Camera)', '12.0MP'),
+(154, 6, 'camera', 'Video Recording Resolution', 'UHD 8K (7680 x 4320) @ 30fps'),
+(155, 6, 'storage', 'RAM', '8GB'),
+(156, 6, 'storage', 'Storage (ROM)', '128GB'),
+(157, 6, 'storage', 'Available Storage', '110GB'),
+(158, 6, 'connectivity', 'USB Interface', 'USB Type-C'),
+(159, 6, 'connectivity', 'Earjack', 'USB Type-C'),
+(160, 6, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2 / SIM 1 + eSIM)'),
+(161, 6, 'physical', 'Dimensions (HxWxD)', '146.5 x 70.9 x 7.6 mm'),
+(162, 6, 'physical', 'Weight', '168g'),
+
+-- Galaxy S24 FE (ID: 7)
+(163, 7, 'processor', 'CPU Speed', '2.8GHz, 2.4GHz'),
+(164, 7, 'processor', 'CPU Type', '8 cores'),
+(165, 7, 'display', 'Size (Main Display)', '165.1mm (6.5" full rectangle) / 163.1mm (6.4" rounded corners)'),
+(166, 7, 'display', 'Display Technology (Main Display)', 'Super AMOLED'),
+(167, 7, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(168, 7, 'display', 'Resolution (Main Display)', '2340 x 1080 (FHD+)'),
+(169, 7, 'display', 'Color Depth (Main Display)', '16M'),
+(170, 7, 'display', 'S Pen Support', 'No'),
+(171, 7, 'camera', 'Main Camera', '50.0MP + 12.0MP + 8.0MP'),
+(172, 7, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2, F2.4'),
+(174, 7, 'camera', 'Zoom (Rear Camera)', 'Optical Zoom 3x, Digital Zoom up to 30x'),
+(175, 7, 'camera', 'Aperture (Front Camera)', 'F2.4'),
+(177, 7, 'camera', 'Slow Motion', '240fps @FHD'),
+(179, 7, 'camera', 'Resolution (Front Camera)', '10.0MP'),
+(181, 7, 'camera', 'Video Recording Resolution', 'UHD 4K (3840 x 2160) @ 60fps'),
+(182, 7, 'storage', 'RAM', '8GB'),
+(183, 7, 'storage', 'Storage (ROM)', '256GB'),
+(184, 7, 'storage', 'Available Storage', '230GB'),
+(185, 7, 'connectivity', 'USB Interface', 'USB Type-C'),
+(186, 7, 'connectivity', 'Earjack', 'USB Type-C'),
+(187, 7, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2 / SIM 1 + eSIM)'),
+(188, 7, 'physical', 'Dimensions (HxWxD)', '162.0 x 77.3 x 8.2 mm'),
+(189, 7, 'physical', 'Weight', '209g'),
+
+-- Galaxy S24 Ultra (ID: 8)
+(190, 8, 'processor', 'CPU Speed', '4.3GHz, 3.4GHz'),
+(191, 8, 'processor', 'CPU Type', '8 cores'),
+(192, 8, 'display', 'Size (Main Display)', '172.2mm (6.8" full rectangle) / 170.2mm (6.7" rounded corners)'),
+(193, 8, 'display', 'Display Technology (Main Display)', 'Dynamic AMOLED 2X'),
+(194, 8, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(195, 8, 'display', 'Resolution (Main Display)', '3120 x 1440 (Quad HD+)'),
+(196, 8, 'display', 'Color Depth (Main Display)', '16M'),
+(197, 8, 'display', 'S Pen Support', 'Yes'),
+(198, 8, 'camera', 'Main Camera', '200.0MP + 50.0MP + 12.0MP + 10.0MP'),
+(199, 8, 'camera', 'Aperture (Main Camera)', 'F1.7, F3.4, F2.2, F2.4'),
+(201, 8, 'camera', 'Zoom (Rear Camera)', 'Optical Zoom 3x and 5x, Digital Zoom up to 100x'),
+(202, 8, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(204, 8, 'camera', 'Slow Motion', '240fps @FHD, 120fps @UHD'),
+(206, 8, 'camera', 'Resolution (Front Camera)', '12.0MP'),
+(208, 8, 'camera', 'Video Recording Resolution', 'UHD 8K (7680 x 4320) @ 30fps'),
+(209, 8, 'storage', 'RAM', '12GB'),
+(210, 8, 'storage', 'Storage (ROM)', '512GB'),
+(211, 8, 'storage', 'Available Storage', '480GB'),
+(212, 8, 'connectivity', 'USB Interface', 'USB Type-C'),
+(213, 8, 'connectivity', 'Earjack', 'USB Type-C'),
+(214, 8, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2 / SIM 1 + eSIM)'),
+(215, 8, 'physical', 'Dimensions (HxWxD)', '163.4 x 78.1 x 8.9 mm'),
+(216, 8, 'physical', 'Weight', '233g'),
+
+-- Galaxy A26 (ID: 9)
+(217, 9, 'processor', 'CPU Speed', '2.4GHz, 2.0GHz'),
+(218, 9, 'processor', 'CPU Type', '8 cores'),
+(219, 9, 'display', 'Size (Main Display)', '165.1mm (6.5" full rectangle) / 163.1mm (6.4" rounded corners)'),
+(220, 9, 'display', 'Display Technology (Main Display)', 'PLS LCD'),
+(221, 9, 'display', 'Display Refresh Rate (Main Display)', '90Hz'),
+(222, 9, 'display', 'Resolution (Main Display)', '1600 x 720 (HD+)'),
+(223, 9, 'display', 'Color Depth (Main Display)', '16M'),
+(224, 9, 'display', 'S Pen Support', 'No'),
+(225, 9, 'camera', 'Main Camera', '50.0MP + 5.0MP + 2.0MP'),
+(226, 9, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2, F2.4'),
+(228, 9, 'camera', 'Zoom (Rear Camera)', 'Digital Zoom up to 10x'),
+(229, 9, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(231, 9, 'camera', 'Slow Motion', '120fps @HD'),
+(233, 9, 'camera', 'Resolution (Front Camera)', '8.0MP'),
+(235, 9, 'camera', 'Video Recording Resolution', 'FHD (1920 x 1080) @ 30fps'),
+(236, 9, 'storage', 'RAM', '6GB'),
+(237, 9, 'storage', 'Storage (ROM)', '128GB'),
+(238, 9, 'storage', 'Available Storage', '105GB'),
+(239, 9, 'connectivity', 'USB Interface', 'USB Type-C'),
+(240, 9, 'connectivity', 'Earjack', '3.5mm Stereo'),
+(241, 9, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2)'),
+(242, 9, 'physical', 'Dimensions (HxWxD)', '164.5 x 76.5 x 8.4 mm'),
+(243, 9, 'physical', 'Weight', '195g'),
+
+-- Galaxy A56 (ID: 10)
+(244, 10, 'processor', 'CPU Speed', '2.7GHz, 2.2GHz'),
+(245, 10, 'processor', 'CPU Type', '8 cores'),
+(246, 10, 'display', 'Size (Main Display)', '165.1mm (6.5" full rectangle) / 163.1mm (6.4" rounded corners)'),
+(247, 10, 'display', 'Display Technology (Main Display)', 'Super AMOLED'),
+(248, 10, 'display', 'Display Refresh Rate (Main Display)', '120Hz'),
+(249, 10, 'display', 'Resolution (Main Display)', '2340 x 1080 (FHD+)'),
+(250, 10, 'display', 'Color Depth (Main Display)', '16M'),
+(251, 10, 'display', 'S Pen Support', 'No'),
+(252, 10, 'camera', 'Main Camera', '64.0MP + 12.0MP + 5.0MP'),
+(253, 10, 'camera', 'Aperture (Main Camera)', 'F1.8, F2.2, F2.4'),
+(255, 10, 'camera', 'Zoom (Rear Camera)', 'Digital Zoom up to 10x'),
+(256, 10, 'camera', 'Aperture (Front Camera)', 'F2.2'),
+(258, 10, 'camera', 'Slow Motion', '240fps @FHD'),
+(260, 10, 'camera', 'Resolution (Front Camera)', '32.0MP'),
+(262, 10, 'camera', 'Video Recording Resolution', 'UHD 4K (3840 x 2160) @ 30fps'),
+(263, 10, 'storage', 'RAM', '6GB'),
+(264, 10, 'storage', 'Storage (ROM)', '128GB'),
+(265, 10, 'storage', 'Available Storage', '105GB'),
+(266, 10, 'connectivity', 'USB Interface', 'USB Type-C'),
+(267, 10, 'connectivity', 'Earjack', 'USB Type-C'),
+(268, 10, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2)'),
+(269, 10, 'physical', 'Dimensions (HxWxD)', '159.9 x 74.5 x 8.1 mm'),
+(270, 10, 'physical', 'Weight', '189g');
 
 --
 -- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
-  `ID` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `full_name`, `email`, `phone`, `address`) VALUES
+(1, 'john_doe', '123456', 'John Doe', 'john@example.com', '0901234567', '123 Main St'),
+(2, 'jane_smith', 'password', 'Jane Smith', 'jane@example.com', '0902345678', '456 Oak St'),
+(3, 'bob_nguyen', 'abc123', 'Nguyen Van Bob', 'bob@example.com', '0903456789', '789 Pine St'),
+(4, 'alice_lee', 'alicelee', 'Alice Lee', 'alice@example.com', '0904567890', '321 Elm St'),
+(5, 'charlie_k', 'charlie1', 'Charlie Kim', 'charlie@example.com', '0905678901', '654 Maple St'),
+(6, 'david_tran', 'davidtran', 'Tran Minh David', 'david@example.com', '0906789012', '987 Cedar St'),
+(7, 'emma_wat', 'emma123', 'Emma Watson', 'emma@example.com', '0907890123', '159 Birch St'),
+(8, 'lucas_ho', 'lucasho', 'Ho Quang Lucas', 'lucas@example.com', '0908901234', '753 Spruce St'),
+(9, 'sophie_phan', 'sophiep', 'Phan Thi Sophie', 'sophie@example.com', '0909012345', '357 Ash St'),
+(10, 'michael_t', 'michael1', 'Michael Truong', 'michael@example.com', '0910123456', '951 Walnut St'),
+(11, 'Hehe123', '$2y$10$QFpkR5kTX6V5UfogrGZovuBq.kZtgbl.By6sXtg5gXdLZgqhSeERC', 'Debug Account', 'debug@account.com', '0123456789', 'Debug debug');
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL CHECK (rating >= 1 AND rating <= 5),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ratings` (5 users rating each product based on old ratings)
+--
+
+INSERT INTO `ratings` (`id`, `product_id`, `user_id`, `rating`, `created_at`) VALUES
+-- Galaxy S25 Ultra (old rating: 4.9 → rounded to 5 for simplicity)
+(1, 1, 1, 5, '2025-05-07 03:00:00'),
+(2, 1, 2, 5, '2025-05-07 03:00:00'),
+(3, 1, 3, 5, '2025-05-07 03:00:00'),
+(4, 1, 4, 5, '2025-05-07 03:00:00'),
+(5, 1, 5, 4, '2025-05-07 03:00:00'),
+-- Galaxy Z Fold5 (Special) (old rating: 4.8 → rounded to 5)
+(6, 2, 1, 5, '2025-05-07 03:00:00'),
+(7, 2, 2, 5, '2025-05-07 03:00:00'),
+(8, 2, 3, 5, '2025-05-07 03:00:00'),
+(9, 2, 4, 4, '2025-05-07 03:00:00'),
+(10, 2, 5, 5, '2025-05-07 03:00:00'),
+-- Galaxy Z Fold6 (old rating: 4.6 → rounded to 5)
+(11, 3, 1, 5, '2025-05-07 03:00:00'),
+(12, 3, 2, 5, '2025-05-07 03:00:00'),
+(13, 3, 3, 4, '2025-05-07 03:00:00'),
+(14, 3, 4, 5, '2025-05-07 03:00:00'),
+(15, 3, 5, 4, '2025-05-07 03:00:00'),
+-- Galaxy Z Flip6 (old rating: 4.5 → rounded to 5)
+(16, 4, 1, 5, '2025-05-07 03:00:00'),
+(17, 4, 2, 4, '2025-05-07 03:00:00'),
+(18, 4, 3, 5, '2025-05-07 03:00:00'),
+(19, 4, 4, 4, '2025-05-07 03:00:00'),
+(20, 4, 5, 5, '2025-05-07 03:00:00'),
+-- Galaxy S25+ (old rating: 4.5 → rounded to 5)
+(21, 5, 1, 5, '2025-05-07 03:00:00'),
+(22, 5, 2, 4, '2025-05-07 03:00:00'),
+(23, 5, 3, 5, '2025-05-07 03:00:00'),
+(24, 5, 4, 4, '2025-05-07 03:00:00'),
+(25, 5, 5, 5, '2025-05-07 03:00:00'),
+-- Galaxy S25 (old rating: 4.3 → rounded to 4)
+(26, 6, 1, 4, '2025-05-07 03:00:00'),
+(27, 6, 2, 5, '2025-05-07 03:00:00'),
+(28, 6, 3, 4, '2025-05-07 03:00:00'),
+(29, 6, 4, 4, '2025-05-07 03:00:00'),
+(30, 6, 5, 4, '2025-05-07 03:00:00'),
+-- Galaxy S24 FE (old rating: 5 → all 5)
+(31, 7, 1, 5, '2025-05-07 03:00:00'),
+(32, 7, 2, 5, '2025-05-07 03:00:00'),
+(33, 7, 3, 5, '2025-05-07 03:00:00'),
+(34, 7, 4, 5, '2025-05-07 03:00:00'),
+(35, 7, 5, 5, '2025-05-07 03:00:00'),
+-- Galaxy S24 Ultra (old rating: 4.7 → rounded to 5)
+(36, 8, 1, 5, '2025-05-07 03:00:00'),
+(37, 8, 2, 5, '2025-05-07 03:00:00'),
+(38, 8, 3, 4, '2025-05-07 03:00:00'),
+(39, 8, 4, 5, '2025-05-07 03:00:00'),
+(40, 8, 5, 5, '2025-05-07 03:00:00'),
+-- Galaxy A26 (old rating: 4.1 → rounded to 4)
+(41, 9, 1, 4, '2025-05-07 03:00:00'),
+(42, 9, 2, 4, '2025-05-07 03:00:00'),
+(43, 9, 3, 5, '2025-05-07 03:00:00'),
+(44, 9, 4, 4, '2025-05-07 03:00:00'),
+(45, 9, 5, 4, '2025-05-07 03:00:00'),
+-- Galaxy A56 (old rating: 4.2 → rounded to 4)
+(46, 10, 1, 4, '2025-05-07 03:00:00'),
+(47, 10, 2, 5, '2025-05-07 03:00:00'),
+(48, 10, 3, 4, '2025-05-07 03:00:00'),
+(49, 10, 4, 4, '2025-05-07 03:00:00'),
+(50, 10, 5, 4, '2025-05-07 03:00:00');
 
 --
 -- Indexes for dumped tables
@@ -114,11 +491,35 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `product_specs`
+--
+ALTER TABLE `product_specs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`ID`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -128,19 +529,61 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `faq`
 --
 ALTER TABLE `faq`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `product_specs`
+--
+ALTER TABLE `product_specs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=271;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `product_specs`
+--
+ALTER TABLE `product_specs`
+  ADD CONSTRAINT `product_specs_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 COMMIT;
 

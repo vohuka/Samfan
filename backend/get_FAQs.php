@@ -1,7 +1,5 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-
+require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/database.php';
 
 $sql = "SELECT * FROM FAQ";
