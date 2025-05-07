@@ -29,6 +29,7 @@ $full_name = $data['fullName'] ?? '';
 $email = $data['email'] ?? '';
 $phone = $data['phone'] ?? '';
 $address = $data['address'] ?? '';
+$image_url = $data['imageUrl'] ?? ''; // Add this line
 
 if (!$username || !$password || !$email) {
     echo json_encode(['success' => false, 'message' => 'Missing required fields']);
@@ -48,8 +49,9 @@ $stmt->close();
 
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$stmt = $conn->prepare("INSERT INTO user (username, password, full_name, email, phone, address) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssss", $username, $hashedPassword, $full_name, $email, $phone, $address);
+// Update the SQL query to include image_url
+$stmt = $conn->prepare("INSERT INTO user (username, password, full_name, email, phone, address, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sssssss", $username, $hashedPassword, $full_name, $email, $phone, $address, $image_url);
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);

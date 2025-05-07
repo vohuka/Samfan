@@ -104,3 +104,15 @@ export const checkSession = async () => {
   const response = await apiClient.get('/check_session.php');
   return response.data;
 };
+
+// Add this function to your existing API functions
+
+export const updateProfile = async (profileData) => {
+  try {
+    const response = await apiClient.post('/update_profile.php', profileData);
+    return response.data;
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    throw error;
+  }
+};

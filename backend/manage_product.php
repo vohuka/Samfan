@@ -6,7 +6,6 @@ error_reporting(E_ERROR | E_PARSE);
 require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/database.php';
 
-
 header('Content-Type: application/json');
 
 try {
@@ -31,10 +30,8 @@ try {
     }
 
     if ($method === 'POST' && $action === 'add') {
-        
         $name = $data['name'] ?? '';
         $price = $data['price'] ?? 0;
-        $rating = $data['rating'] ?? 0;
         $color = $data['color'] ?? '';
         $memory = $data['memory'] ?? '';
         $ram = $data['ram'] ?? '';
@@ -45,18 +42,15 @@ try {
             exit;
         }
         
-        
-        $stmt = $conn->prepare("INSERT INTO products (name, price, rating, color, memory, ram, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO products (name, price, color, memory, ram, image) VALUES (?, ?, ?, ?, ?, ?)");
         
         if (!$stmt) {
             throw new Exception("Prepare failed: " . $conn->error);
         }
         
-        
         $price = (float)$price;
-        $rating = (float)$rating;
         
-        if (!$stmt->bind_param("sddssss", $name, $price, $rating, $color, $memory, $ram, $image)) {
+        if (!$stmt->bind_param("sdssss", $name, $price, $color, $memory, $ram, $image)) {
             throw new Exception("Binding parameters failed: " . $stmt->error);
         }
         
@@ -71,11 +65,9 @@ try {
     }
 
     if ($method === 'POST' && $action === 'edit') {
-        
         $id = $data['id'] ?? 0;
         $name = $data['name'] ?? '';
         $price = $data['price'] ?? 0;
-        $rating = $data['rating'] ?? 0;
         $color = $data['color'] ?? '';
         $memory = $data['memory'] ?? '';
         $ram = $data['ram'] ?? '';
@@ -86,20 +78,16 @@ try {
             exit;
         }
         
-        
-        $stmt = $conn->prepare("UPDATE products SET name=?, price=?, rating=?, color=?, memory=?, ram=?, image=? WHERE id=?");
+        $stmt = $conn->prepare("UPDATE products SET name=?, price=?, color=?, memory=?, ram=?, image=? WHERE id=?");
         
         if (!$stmt) {
             throw new Exception("Prepare failed: " . $conn->error);
         }
         
-        
         $price = (float)$price;
-        $rating = (float)$rating;
         $id = (int)$id;
         
-        
-        if (!$stmt->bind_param("sddssssi", $name, $price, $rating, $color, $memory, $ram, $image, $id)) {
+        if (!$stmt->bind_param("sdssssi", $name, $price, $color, $memory, $ram, $image, $id)) {
             throw new Exception("Binding parameters failed: " . $stmt->error);
         }
         
@@ -114,7 +102,6 @@ try {
     }
 
     if ($method === 'POST' && $action === 'delete') {
-        
         $id = $data['id'] ?? 0;
         if (!$id) {
             echo json_encode(['success' => false, 'message' => 'Missing id']);
@@ -131,7 +118,6 @@ try {
     echo json_encode(['success' => false, 'message' => 'Invalid request']);
 
 } catch (Exception $e) {
-    
     echo json_encode([
         'success' => false,
         'message' => $e->getMessage(),
