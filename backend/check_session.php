@@ -1,27 +1,27 @@
 <?php
 session_start();
-$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
-$allowed_origins = ['http://localhost:8081'];
-if (in_array($origin, $allowed_origins)) {
-    header("Access-Control-Allow-Origin: $origin");
-    header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Headers: Content-Type');
-    header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-}
-header('Content-Type: application/json');
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
+require_once __DIR__ . '/cors.php';
+require_once __DIR__ . '/database.php';
 
 if (isset($_SESSION['user_id'])) {
-    echo json_encode([
-        'loggedIn' => true,
-        'user' => [
-            'id' => $_SESSION['user_id'],
-            'username' => $_SESSION['username']
-        ]
-    ]);
+    $user_id = $_SESSION['user_id'];
+    $stmt = $conn->prepare("SELECT id, username, full_name, email, phone, address FROM user WHERE id = ?");
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if ($user) {
+        echo json_encode([
+            'loggedIn' => true,
+            'user' => $user
+        ]);
+    } else {
+        echo json_encode(['loggedIn' => false]);
+    }
+    $stmt->close();
 } else {
     echo json_encode(['loggedIn' => false]);
 }
+$conn->close();
+?>
