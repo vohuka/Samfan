@@ -11,6 +11,8 @@ const About = () => import('./components/About.vue')
 const Product = () => import('./components/Product.vue')
 const Contact = () => import('./components/Contact.vue')
 const FAQ = () => import('./components/FAQ.vue')
+// const AdminLayout = () => import('../admin/AdminLayout.vue');
+
 const routes = [
   {
     path: '/',
@@ -54,6 +56,11 @@ const routes = [
     name: 'ProductApplication',
     component: ProductApplication
   },
+  // {
+  //   path: '/admin',
+  //   name: 'Admin',
+  //   component: AdminLayout
+  // },
 ]
 
 const router = createRouter({

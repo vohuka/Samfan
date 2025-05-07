@@ -377,8 +377,9 @@ export default {
         if (this.loginForm.username === 'admin' && this.loginForm.password === 'password') {
           localStorage.setItem('isAdmin', 'true')
           // Sử dụng window.location để direct đến file HTML
-          window.location.href = '/admin/index.html'
+          window.location.href = 'admin/index.html'
           this.toggleLogin()
+          // this.$router.push('/admin')
         } else {
           this.loginError = 'Invalid admin credentials'
           toastr.error('Wrong credentials');
