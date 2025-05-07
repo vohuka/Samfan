@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/compiled/css/app.css">
+    <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
+    <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+</head>
+
+<body>
+<script src="assets/static/js/initTheme.js"></script>
+<div id="app">
+    <div id="sidebar">
+        <div class="sidebar-wrapper active">
+            <div class="sidebar-header position-relative">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="logo">
+                        <a href="index.html"><img src="./assets/logo.png" style="height: 60px; width: auto;" alt="Logo"></a>
+                    </div>
+                    <div class="sidebar-toggler x">
+                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul class="menu">
+                    <li class="sidebar-title">Admin Menu</li>
+                    <li class="sidebar-item">
+                        <a href="index.html" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Main</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="manage-intro-page.html" class='sidebar-link'>
+                            <i class="bi bi-file-text-fill"></i>
+                            <span>Manage Pages</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="faq.html" class='sidebar-link'>
+                            <i class="bi bi-question-circle-fill"></i>
+                            <span>FAQ</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item active">
+                        <a href="product.html" class='sidebar-link'>
+                            <i class="bi bi-box-seam-fill"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        <div class="page-heading">
+            <h3>Product Management</h3>
+        </div>
+        <div class="page-content">
+            <section class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="card-title mb-0">Product List</h4>
+                            <button class="btn btn-primary" onclick="openAddModal()">
+                                <i class="bi bi-plus"></i> Add Product
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products-tab-pane" type="button" role="tab" aria-controls="products-tab-pane" aria-selected="true">Products</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs-tab-pane" type="button" role="tab" aria-controls="specs-tab-pane" aria-selected="false">Specifications</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3" id="productTabsContent">
+                                <!-- Products Tab Content -->
+                                <div class="tab-pane fade show active" id="products-tab-pane" role="tabpanel" aria-labelledby="products-tab" tabindex="0">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="productTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Image Path</th> 
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Color</th>
+                                                    <th>Memory</th>
+                                                    <th>RAM</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="productTableBody">
+                                                <!-- Product rows will be rendered here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Specs Tab Content -->
+                                <div class="tab-pane fade" id="specs-tab-pane" role="tabpanel" aria-labelledby="specs-tab" tabindex="0">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <label for="specProductSelect">Select Product:</label>
+                                            <select id="specProductSelect" class="form-select" style="width: auto;">
+                                                <option value="">-- Select a product --</option>
+                                            </select>
+                                        </div>
+                                        <button id="addSpecBtn" class="btn btn-primary" onclick="openAddSpecModal()" disabled>
+                                            <i class="bi bi-plus"></i> Add Specification
+                                        </button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped" id="specTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Category</th>
+                                                    <th>Name</th>
+                                                    <th>Value</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="specTableBody">
+                                                <!-- Spec rows will be rendered here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Add/Edit Product Modal -->
+        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form class="modal-content" id="productForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">Add/Edit Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="productId">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" placeholder="Enter product name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productPrice" class="form-label">Price</label>
+                            <input type="number" step="0.01" class="form-control" id="productPrice" placeholder="Enter price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productColor" class="form-label">Color</label>
+                            <input type="text" class="form-control" id="productColor" placeholder="Enter color">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productMemory" class="form-label">Memory</label>
+                            <input type="text" class="form-control" id="productMemory" placeholder="Enter memory (e.g., 128GB)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productRAM" class="form-label">RAM</label>
+                            <input type="text" class="form-control" id="productRAM" placeholder="Enter RAM (e.g., 8GB)">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Image Path</label>
+                            <input type="text" class="form-control" id="productImage" placeholder="Enter image path" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add/Edit Specification Modal -->
+        <div class="modal fade" id="specModal" tabindex="-1" aria-labelledby="specModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form class="modal-content" id="specForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="specModalLabel">Add/Edit Specification</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="specId">
+                        <input type="hidden" id="specProductId">
+                        <div class="mb-3">
+                            <label for="specCategory" class="form-label">Category</label>
+                            <select class="form-select" id="specCategory" required>
+                                <option value="">Select category</option>
+                                <option value="processor">Processor</option>
+                                <option value="display">Display</option>
+                                <option value="camera">Camera</option>
+                                <option value="storage">Storage</option>
+                                <option value="connectivity">Connectivity</option>
+                                <option value="network">Network</option>
+                                <option value="physical">Physical</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="specKey" class="form-label">Specification Name</label>
+                            <input type="text" class="form-control" id="specKey" placeholder="Enter specification name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="specValue" class="form-label">Value</label>
+                            <textarea class="form-control" id="specValue" rows="3" placeholder="Enter specification value" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer clearfix mb-0 text-muted">
+                <div class="float-start">
+                    <p>2025 &copy; Samfan</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="assets/static/js/components/dark.js"></script>
+<script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="assets/compiled/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const apiUrl = 'http://localhost/manage_product.php';
+const specApiUrl = 'http://localhost/manage_product_specs.php';
+
+let productModalInstance = null;
+let specModalInstance = null;
+let selectedProductId = null;
+
+function getProductModalInstance() {
+  if (!productModalInstance) {
+    productModalInstance = new bootstrap.Modal(document.getElementById('productModal'));
+    document.getElementById('productModal').addEventListener('hidden.bs.modal', cleanupModal);
+  }
+  return productModalInstance;
+}
+
+function getSpecModalInstance() {
+  if (!specModalInstance) {
+    specModalInstance = new bootstrap.Modal(document.getElementById('specModal'));
+    document.getElementById('specModal').addEventListener('hidden.bs.modal', cleanupSpecModal);
+  }
+  return specModalInstance;
+}
+
+function cleanupModal() {
+  const backdrops = document.querySelectorAll('.modal-backdrop');
+  backdrops.forEach(backdrop => backdrop.remove());
+  
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
+  
+  // Reset instance
+  productModalInstance = null;
+}
+
+function cleanupSpecModal() {
+  const backdrops = document.querySelectorAll('.modal-backdrop');
+  backdrops.forEach(backdrop => backdrop.remove());
+  
+  document.body.classList.remove('modal-open');
+  document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
+  
+  // Reset instance
+  specModalInstance = null;
+}
+
+function renderProducts(products) {
+  const tbody = document.getElementById('productTableBody');
+  tbody.innerHTML = '';
+  
+  // Also populate the product select dropdown
+  const productSelect = document.getElementById('specProductSelect');
+  productSelect.innerHTML = '<option value="">-- Select a product --</option>';
+  
+  if (products && products.length) {
+    products.forEach((product) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${product.id}</td>
+        <td>${product.image}</td>
+        <td>${product.name}</td>
+        <td>${formatPrice(product.price)}</td>
+        <td>${product.color || '-'}</td>
+        <td>${product.memory || '-'}</td>
+        <td>${product.ram || '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" onclick="openEditModal(${product.id}, '${encodeURIComponent(product.name)}', ${product.price}, '${encodeURIComponent(product.color || '')}', '${encodeURIComponent(product.memory || '')}', '${encodeURIComponent(product.ram || '')}', '${encodeURIComponent(product.image)}')">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="deleteProduct(${product.id})">
+            <i class="bi bi-trash"></i>
+          </button>
+          <button class="btn btn-sm btn-info" onclick="viewProductSpecs(${product.id}, '${encodeURIComponent(product.name)}')">
+            <i class="bi bi-gear"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+      
+      // Add to select dropdown
+      const option = document.createElement('option');
+      option.value = product.id;
+      option.textContent = product.name;
+      productSelect.appendChild(option);
+    });
+  } else {
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center">No products found.</td></tr>';
+  }
+}
+
+function renderSpecs(specs) {
+  const tbody = document.getElementById('specTableBody');
+  tbody.innerHTML = '';
+  
+  if (specs && specs.length) {
+    specs.forEach((spec) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${spec.id}</td>
+        <td>${spec.category}</td>
+        <td>${spec.spec_key}</td>
+        <td>${spec.spec_value}</td>
+        <td>
+          <button class="btn btn-sm btn-warning" onclick="openEditSpecModal(${spec.id}, '${encodeURIComponent(spec.category)}', '${encodeURIComponent(spec.spec_key)}', '${encodeURIComponent(spec.spec_value)}')">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="deleteSpec(${spec.id})">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  } else {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center">No specifications found for this product.</td></tr>';
+  }
+}
+
+function formatPrice(price) {
+  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+}
+
+function fetchProducts() {
+  fetch('http://localhost/get_products.php', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => renderProducts(data))
+    .catch(() => {
+      renderProducts([]);
+    });
+}
+
+function fetchProductSpecs(productId) {
+  if (!productId) {
+    renderSpecs([]);
+    return;
+  }
+  
+  fetch(`http://localhost/get_product_specs.php?product_id=${productId}`, { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        renderSpecs(data.specs);
+      } else {
+        alert(data.message || 'Error loading specifications');
+        renderSpecs([]);
+      }
+    })
+    .catch(() => {
+      renderSpecs([]);
+    });
+}
+
+function viewProductSpecs(productId, productName) {
+  document.getElementById('specProductSelect').value = productId;
+  document.getElementById('addSpecBtn').disabled = false;
+  selectedProductId = productId;
+  
+  // Switch to specs tab
+  const specsTab = new bootstrap.Tab(document.getElementById('specs-tab'));
+  specsTab.show();
+  
+  // Fetch specs for this product
+  fetchProductSpecs(productId);
+}
+
+// Product CRUD operations
+function openAddModal() {
+  document.getElementById('productId').value = '';
+  document.getElementById('productName').value = '';
+  document.getElementById('productPrice').value = '';
+  document.getElementById('productColor').value = '';
+  document.getElementById('productMemory').value = '';
+  document.getElementById('productRAM').value = '';
+  document.getElementById('productImage').value = '';
+  document.getElementById('productModalLabel').innerText = 'Add Product';
+  getProductModalInstance().show();
+}
+
+function openEditModal(id, name, price, color, memory, ram, image) {
+  document.getElementById('productId').value = id;
+  document.getElementById('productName').value = decodeURIComponent(name);
+  document.getElementById('productPrice').value = price;
+  document.getElementById('productColor').value = decodeURIComponent(color);
+  document.getElementById('productMemory').value = decodeURIComponent(memory);
+  document.getElementById('productRAM').value = decodeURIComponent(ram);
+  document.getElementById('productImage').value = decodeURIComponent(image);
+  document.getElementById('productModalLabel').innerText = 'Edit Product';
+  getProductModalInstance().show();
+}
+
+document.getElementById('productForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const id = document.getElementById('productId').value;
+  const name = document.getElementById('productName').value;
+  const price = document.getElementById('productPrice').value;
+  const color = document.getElementById('productColor').value;
+  const memory = document.getElementById('productMemory').value;
+  const ram = document.getElementById('productRAM').value;
+  const image = document.getElementById('productImage').value;
+  
+  const action = id ? 'edit' : 'add';
+  
+  fetch(apiUrl + '?action=' + action, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ id, name, price, color, memory, ram, image })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      fetchProducts();
+      getProductModalInstance().hide();
+    } else {
+      alert(data.message || 'Error');
+    }
+  });
+});
+
+function deleteProduct(id) {
+  if (!confirm('Are you sure you want to delete this product? This will also delete all specifications.')) return;
+  fetch(apiUrl + '?action=delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ id })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      fetchProducts();
+      // If specs tab is active and this product is selected, clear specs
+      if (selectedProductId === id) {
+        selectedProductId = null;
+        document.getElementById('specProductSelect').value = '';
+        document.getElementById('addSpecBtn').disabled = true;
+        renderSpecs([]);
+      }
+    } else {
+      alert(data.message || 'Error');
+    }
+  });
+}
+
+// Specification CRUD operations
+function openAddSpecModal() {
+  document.getElementById('specId').value = '';
+  document.getElementById('specProductId').value = selectedProductId;
+  document.getElementById('specCategory').value = '';
+  document.getElementById('specKey').value = '';
+  document.getElementById('specValue').value = '';
+  document.getElementById('specModalLabel').innerText = 'Add Specification';
+  getSpecModalInstance().show();
+}
+
+function openEditSpecModal(id, category, key, value) {
+  document.getElementById('specId').value = id;
+  document.getElementById('specProductId').value = selectedProductId;
+  document.getElementById('specCategory').value = decodeURIComponent(category);
+  document.getElementById('specKey').value = decodeURIComponent(key);
+  document.getElementById('specValue').value = decodeURIComponent(value);
+  document.getElementById('specModalLabel').innerText = 'Edit Specification';
+  getSpecModalInstance().show();
+}
+
+document.getElementById('specForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const id = document.getElementById('specId').value;
+  const product_id = document.getElementById('specProductId').value;
+  const category = document.getElementById('specCategory').value;
+  const spec_key = document.getElementById('specKey').value;
+  const spec_value = document.getElementById('specValue').value;
+  
+  const action = id ? 'edit' : 'add';
+  
+  fetch(specApiUrl + '?action=' + action, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ id, product_id, category, spec_key, spec_value })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      fetchProductSpecs(product_id);
+      getSpecModalInstance().hide();
+    } else {
+      alert(data.message || 'Error');
+    }
+  });
+});
+
+function deleteSpec(id) {
+  if (!confirm('Are you sure you want to delete this specification?')) return;
+  fetch(specApiUrl + '?action=delete', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ id, product_id: selectedProductId })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      fetchProductSpecs(selectedProductId);
+    } else {
+      alert(data.message || 'Error');
+    }
+  });
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+  fetchProducts();
+  
+  // Set up product select change handler
+  document.getElementById('specProductSelect').addEventListener('change', function(e) {
+    const productId = e.target.value;
+    selectedProductId = productId || null;
+    document.getElementById('addSpecBtn').disabled = !productId;
+    fetchProductSpecs(productId);
+  });
+});
+</script>
+</body>
+</html>
