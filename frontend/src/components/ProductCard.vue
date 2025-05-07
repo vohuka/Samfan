@@ -23,7 +23,9 @@
     </div>
     <div class="button-group">
       <button class="buy-button">Buy now</button>
-      <button class="learn-more">Learn more</button>
+      <router-link :to="'/product/' + product.id" class="learn-more" custom v-slot="{ navigate }">
+        <button class="learn-more" @click="navigate" role="link">Learn More</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -118,7 +120,7 @@ export default {
   background-color: black;
   color: white;
   width: 90%;
-  border: none;
+  border: 2px solid black;
   padding: 12px 20px;
   border-radius: 50px;
   cursor: pointer;
@@ -129,10 +131,11 @@ export default {
 .buy-button:hover {
   background-color: white;
   color: black;
-  border: 2px solid black;
 }
 .learn-more {
   background-color: white;
+  text-decoration: none;
+  text-align: center;
   color: black;
   width: 90%;
   border: none;
@@ -143,5 +146,10 @@ export default {
   font-family: 'Samsung Sharp Sans';
   transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
   border: 2px solid black;
+  display: inline-block;
+}
+.learn-more:hover {
+  background-color: black;
+  color: white;
 }
 </style>

@@ -11,7 +11,7 @@ const apiClient = axios.create({
 // Function to fetch products
 export const fetchProducts = async () => {
   try {
-    const response = await apiClient.get('/get_products.php'); // Bỏ "/api" vì DocumentRoot đã trỏ thẳng vào backend
+    const response = await apiClient.get('/get_products.php');
     return response.data;
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -26,6 +26,61 @@ export const fetchFAQs = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching FAQs:', error);
+    throw error;
+  }
+};
+
+// Function to fetch product details
+export const fetchProductDetails = async (productId) => {
+  try {
+    const response = await apiClient.get(`/get_product_details.php?id=${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching product details:', error);
+    throw error;
+  }
+};
+
+// Function to fetch comments
+export const fetchComments = async (productId) => {
+  try {
+    const response = await apiClient.get(`/get_comments.php?product_id=${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    throw error;
+  }
+};
+
+// Function to fetch average rating
+export const fetchRating = async (productId) => {
+  try {
+    const response = await apiClient.get(`/get_rating.php?product_id=${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching rating:', error);
+    throw error;
+  }
+};
+
+// Function to post a comment
+export const postComment = async (productId, comment) => {
+  try {
+    const response = await apiClient.post('/post_comment.php', { product_id: productId, comment });
+    return response.data;
+  } catch (error) {
+    console.error('Error posting comment:', error);
+    throw error;
+  }
+};
+
+// Function to post a rating
+export const postRating = async (productId, rating) => {
+  try {
+    const response = await apiClient.post('/post_rating.php', { product_id: productId, rating });
+    return response.data;
+  } catch (error) {
+    console.error('Error posting rating:', error);
     throw error;
   }
 };

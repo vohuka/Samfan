@@ -786,6 +786,7 @@ export default {
   min-height: 100px;
   width: 100%;
   padding: 0;
+  bottom: 0;
   margin: 0;
 }
 
