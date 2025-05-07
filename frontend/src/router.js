@@ -59,6 +59,7 @@ const routes = [
     name: 'ProductDetail',
     component: ProductDetail
   },
+
 ]
 
 const router = createRouter({
