@@ -11,11 +11,11 @@
               Business Areas
               <span
                 class="nav-arrow"
-                :class="{ 'arrow-up': isBusinessDropdownOpen }"
+                :class="{ 'arrow-up': dropdownOpen['business'] }"
               >▼</span>
             </a>
             <transition name="fade-dropdown">
-              <div class="dropdown-content" v-if="isBusinessDropdownOpen" @click.stop>
+              <div class="dropdown-content" v-if="dropdownOpen['business']" @click.stop>
                 <a href="#" @click.prevent="$router.push('/business-areas')">Overview</a>
                 <a href="#">Consumer Electronics</a>
                 <a href="#">Mobile & Network</a>
@@ -29,11 +29,11 @@
               Brand Identity
               <span
                 class="nav-arrow"
-                :class="{ 'arrow-up': isBrandDropdownOpen }"
+                :class="{ 'arrow-up': dropdownOpen['brand'] }"
               >▼</span>
             </a>
             <transition name="fade-dropdown">
-              <div class="dropdown-content" v-if="isBrandDropdownOpen" @click.stop>
+              <div class="dropdown-content" v-if="dropdownOpen['brand']" @click.stop>
                 <a href="#">Overview</a>
                 <a href="#">Brand Story</a>
                 <a href="#">Heritage</a>
@@ -48,11 +48,11 @@
               Careers
               <span
                 class="nav-arrow"
-                :class="{ 'arrow-up': isCareersDropdownOpen }"
+                :class="{ 'arrow-up': dropdownOpen['careers'] }"
               >▼</span>
             </a>
             <transition name="fade-dropdown">
-              <div class="dropdown-content" v-if="isCareersDropdownOpen" @click.stop>
+              <div class="dropdown-content" v-if="dropdownOpen['careers']" @click.stop>
                 <a href="#">Overview</a>
                 <a href="#">Working at Samfan</a>
                 <a href="#">Job Categories</a>
@@ -75,23 +75,16 @@
     <!-- Banner Section -->
     <section class="banner">
       <div class="banner-content">
-        <h2 class="section-title">Company Information</h2>
-        <h1 class="banner-title">Mission & Values</h1>
-        <p class="banner-text">
-          Our commitment is to operate responsibly 
-          as a leading global company.
-        </p>
+        <h2 class="section-title">{{ aboutContent.main_banner.section_title }}</h2>
+        <h1 class="banner-title">{{ aboutContent.main_banner.title }}</h1>
+        <p class="banner-text">{{ aboutContent.main_banner.text }}</p>
       </div>
       <div class="banner-image"></div>
     </section>
 
     <section class="about-desc">
-      <p>
-        Samfan is committed to complying with local laws and regulations as well as applying a strict global code of conduct to all employees. The company believes that ethical management is not only a tool for responding to the rapid changes in the global business environment, but also a means for building trust with various stakeholders including customers, shareholders, employees, business partners, and local communities. With the goal of becoming one of the world’s most ethical companies, Samfan continues to train its employees and operate monitoring systems, while practicing transparent and fair corporate management.
-      </p>
+      <p>{{ aboutContent.about_desc.text }}</p>
     </section>
-
-
 
     <!-- Banner Section 2 -->
     <section
@@ -100,10 +93,8 @@
       ref="banner2"
     >
       <div class="banner2-content">
-        <h2 class="banner2-title">Mission & Approach</h2>
-        <p class="banner2-text">
-          Samfan follows a simple business philosophy: to devote its talent and technology to creating superior products and services that contribute to a better global society. To achieve this, Samfan highly values its people and technology.
-        </p>
+        <h2 class="banner2-title">{{ aboutContent.banner2.title }}</h2>
+        <p class="banner2-text">{{ aboutContent.banner2.text }}</p>
       </div>
       <div class="banner2-image"></div>
     </section>
@@ -115,10 +106,8 @@
       ref="banner3"
     >
       <div class="banner3-content">
-        <h2 class="banner3-title">Samfan’s Core Values</h2>
-        <p class="banner3-text">
-          Samfan believes that living by strong values is the key to good business. That’s why these core values, together with a strict code of conduct, are at the heart of every decision the company makes.
-        </p>
+        <h2 class="banner3-title">{{ aboutContent.banner3.title }}</h2>
+        <p class="banner3-text">{{ aboutContent.banner3.text }}</p>
       </div>
       <div class="banner3-image"></div>
     </section>
@@ -130,10 +119,8 @@
       ref="banner4"
     >
       <div class="banner4-content">
-        <h2 class="banner4-title">Samfan Business Principles</h2>
-        <p class="banner4-text">
-          To demonstrate its commitment to social responsibility as a leading global company, Samfan Electronics announced the 'Samfan Business Principles' in 2005. 
-        </p>
+        <h2 class="banner4-title">{{ aboutContent.banner4.title }}</h2>
+        <p class="banner4-text">{{ aboutContent.banner4.text }}</p>
       </div>
       <div class="banner4-image"></div>
     </section>
@@ -141,57 +128,56 @@
 
   <!-- CEO Information Section -->
   <section class="ceo-info">
-    <h2 class="ceo-title">Our CEO Information</h2>
+    <h2 class="ceo-title">{{ aboutContent.ceo_info.title }}</h2>
     <div class="ceo-photo">
-      <img src="@/assets/ceo.jpg" alt="Samfan CEO" />
+      <img :src="aboutContent.ceo_info.image || ceoImageUrl" 
+           :alt="aboutContent.ceo_info.name"
+           @error="aboutContent.ceo_info.image = ceoImageUrl">
     </div>
-    <h3 class="ceo-name">Bob</h3>
+    <h3 class="ceo-name">{{ aboutContent.ceo_info.name }}</h3>
     <ul class="ceo-details">
-      <li>Vice Chairman and CEO [2025~Present]</li>
-      <li>Head of Device Solutions (DS) & Memory Business & SAIT [2024~Present]</li>
-      <li>Head of Future Business Division [2023~2024]</li>
-      <li>Chairman of the Board, Samsung SDI Co., Ltd. [2022~2023]</li>
-      <li>CEO, Samsung SDI Co., Ltd. [2017~2022]</li>
-      <li>Head of Memory Business [2014~2017]</li>
+      <li v-for="(detail, index) in aboutContent.ceo_info?.details?.split('\n') || []" :key="index">
+        {{ detail }}
+      </li>
     </ul>
   </section>
 </template>
 
 <script>
+import { fetchAboutContent } from '../api/api';
+import ceoPhoto from '../assets/ceo.jpg'; // Import the image
+
 export default {
   name: 'AboutPage',
   data() {
     return {
-      isBusinessDropdownOpen: false,
-      isBrandDropdownOpen: false,
-      isCareersDropdownOpen: false,
+      banner1Visible: false,
       banner2Visible: false,
       banner3Visible: false,
-      banner4Visible: false
-    }
+      banner4Visible: false,
+      dropdownOpen: {},
+      ceoImageUrl: ceoPhoto, // Store the imported image URL
+      aboutContent: {
+        main_banner: {},
+        about_desc: {},
+        banner2: {},
+        banner3: {},
+        banner4: {},
+        ceo_info: {}
+      }
+    };
   },
   methods: {
-    toggleDropdown(type) {
-      if (type === 'business') {
-        this.isBusinessDropdownOpen = !this.isBusinessDropdownOpen;
-        this.isBrandDropdownOpen = false;
-        this.isCareersDropdownOpen = false;
-      } else if (type === 'brand') {
-        this.isBrandDropdownOpen = !this.isBrandDropdownOpen;
-        this.isBusinessDropdownOpen = false;
-        this.isCareersDropdownOpen = false;
-      } else if (type === 'careers') {
-        this.isCareersDropdownOpen = !this.isCareersDropdownOpen;
-        this.isBusinessDropdownOpen = false;
-        this.isBrandDropdownOpen = false;
-      }
+    toggleDropdown(key) {
+      this.dropdownOpen = {
+        ...this.dropdownOpen,
+        [key]: !this.dropdownOpen[key]
+      };
     },
     handleClickOutside(event) {
       // Kiểm tra nếu click ngoài dropdown thì đóng tất cả dropdown
       if (!this.$el.contains(event.target)) {
-        this.isBusinessDropdownOpen = false;
-        this.isBrandDropdownOpen = false;
-        this.isCareersDropdownOpen = false;
+        this.dropdownOpen = {};
       }
     },
     observeBanner2() {
@@ -235,9 +221,28 @@ export default {
         { threshold: 0.2 }
       );
       observer.observe(banner4);
+    },
+    async loadAboutContent() {
+      try {
+        const response = await fetchAboutContent();
+        if (response.success) {
+          this.aboutContent = response.sections;
+          
+          // If the API returns an invalid image path, use our local image
+          if (!this.aboutContent.ceo_info?.image || this.aboutContent.ceo_info.image.includes('../assets/')) {
+            this.aboutContent.ceo_info.image = this.ceoImageUrl;
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load about content:', error);
+      }
     }
   },
   mounted() {
+    // Load content from API
+    this.loadAboutContent();
+    
+    // Your existing code
     document.addEventListener('click', this.handleClickOutside);
     this.observeBanner2();
     this.observeBanner3();
