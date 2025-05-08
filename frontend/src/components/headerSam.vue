@@ -351,7 +351,9 @@
 
 <script>
 import toastr from 'toastr'
+import { mapState } from 'vuex'
 import 'toastr/build/toastr.min.css'
+import ProductCard from './ProductCard.vue'
 import galaxyA56 from '../assets/galaxy-a56.webp'
 import galaxyA36 from '../assets/galaxy-a36.avif'
 import galaxyA06 from '../assets/galaxy-a06.avif'
@@ -410,6 +412,7 @@ export default {
     },
     isMobile() {
       return this.windowWidth < 768;
+    }
   },
   methods: {
     toggleSearch() {

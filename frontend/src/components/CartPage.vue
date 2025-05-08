@@ -321,9 +321,14 @@ export default {
           const res = await login(this.loginForm);
           if (res.success) {
             toastr.success('Login successful!');
+            // Update the user state in Vuex
             this.$store.dispatch('setUser', res.user);
+            // Close the login modal
             this.isLoginOpen = false;
+            // Immediately load cart data
             await this.loadCart();
+            // Force component to update
+            this.$forceUpdate();
           } else {
             this.loginError = res.message || 'Login failed';
             toastr.error('Wrong credentials');
@@ -380,7 +385,27 @@ export default {
       this.checkScreen();
     }
   },
-  mounted() {
+  watch: {
+    // Add this watcher to react to user state changes
+    user(newValue) {
+      if (newValue) {
+        // User is logged in, load the cart
+        this.loadCart();
+      }
+    }
+  },
+  async mounted() {
+    // Check session status on component mount
+    try {
+      const res = await login.checkSession();
+      if (res && res.loggedIn) {
+        // If already logged in, update user state
+        this.$store.dispatch('setUser', res.user);
+      }
+    } catch (error) {
+      console.error('Error checking session:', error);
+    }
+    
     this.loadCart();
     this.checkScreen();
     window.addEventListener('resize', this.handleResize);
