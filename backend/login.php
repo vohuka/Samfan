@@ -22,6 +22,7 @@ if (!$username || !$password) {
     exit;
 }
 
+// Modified query to include status check
 $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
@@ -29,6 +30,12 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 
 if ($user && password_verify($password, $user['password'])) {
+    // Check if user is active
+    if ($user['status'] === 'inactive') {
+        echo json_encode(['success' => false, 'message' => 'This account has been locked. Please contact an administrator.']);
+        exit;
+    }
+    
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['username'] = $user['username'];
     echo json_encode(['success' => true, 'user' => [
@@ -37,7 +44,8 @@ if ($user && password_verify($password, $user['password'])) {
         'full_name' => $user['full_name'],
         'email' => $user['email'],
         'phone' => $user['phone'],
-        'address' => $user['address']
+        'address' => $user['address'],
+        'image_url' => $user['image_url']
     ]]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid credentials']);
