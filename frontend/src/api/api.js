@@ -165,3 +165,15 @@ export const updateProfile = async (profileData) => {
     throw error;
   }
 };
+
+// Add these functions to your existing API.js file
+
+export const fetchAboutContent = async () => {
+  try {
+    const response = await apiClient.get('/get_about_content.php');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching about content:', error);
+    throw error;
+  }
+};

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Page Management</title>
+    <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/compiled/css/app.css">
+    <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
+    <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+</head>
+
+<body>
+<script src="assets/static/js/initTheme.js"></script>
+<div id="app">
+    <div id="sidebar">
+        <div class="sidebar-wrapper active">
+            <div class="sidebar-header position-relative">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="logo">
+                        <a href="index.html"><img src="./assets/logo.png" style="height: 60px; width: auto;" alt="Logo"></a>
+                    </div>
+                    <div class="sidebar-toggler x">
+                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul class="menu">
+                    <li class="sidebar-title">Admin Menu</li>
+                    <li class="sidebar-item">
+                        <a href="index.html" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Main</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item active">
+                        <a href="about.html" class='sidebar-link'>
+                            <i class="bi bi-info-circle-fill"></i>
+                            <span>About Page</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="faq.html" class='sidebar-link'>
+                            <i class="bi bi-question-circle-fill"></i>
+                            <span>FAQ</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="product.html" class='sidebar-link'>
+                            <i class="bi bi-box-seam-fill"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="user.html" class='sidebar-link'>
+                            <i class="bi bi-people-fill"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <header class="mb-3">
+            <a href="#" class="burger-btn d-block d-xl-none">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+        </header>
+        <div class="page-heading">
+            <h3>About Page Management</h3>
+        </div>
+        <div class="page-content">
+            <section class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4>Page Sections</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="aboutTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="main-banner-tab" data-bs-toggle="tab" data-bs-target="#main-banner" type="button" role="tab" aria-controls="main-banner" aria-selected="true">Main Banner</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="about-desc-tab" data-bs-toggle="tab" data-bs-target="#about-desc" type="button" role="tab" aria-controls="about-desc" aria-selected="false">About Description</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="banner2-tab" data-bs-toggle="tab" data-bs-target="#banner2" type="button" role="tab" aria-controls="banner2" aria-selected="false">Banner 2</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="banner3-tab" data-bs-toggle="tab" data-bs-target="#banner3" type="button" role="tab" aria-controls="banner3" aria-selected="false">Banner 3</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="banner4-tab" data-bs-toggle="tab" data-bs-target="#banner4" type="button" role="tab" aria-controls="banner4" aria-selected="false">Banner 4</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="ceo-info-tab" data-bs-toggle="tab" data-bs-target="#ceo-info" type="button" role="tab" aria-controls="ceo-info" aria-selected="false">CEO Information</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content p-3" id="aboutTabsContent">
+                                <!-- Main Banner Section -->
+                                <div class="tab-pane fade show active" id="main-banner" role="tabpanel" aria-labelledby="main-banner-tab">
+                                    <form id="mainBannerForm">
+                                        <input type="hidden" id="mainBannerId" value="">
+                                        <div class="mb-3">
+                                            <label for="mainBannerSectionTitle" class="form-label">Section Title</label>
+                                            <input type="text" class="form-control" id="mainBannerSectionTitle" name="section_title">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="mainBannerTitle" class="form-label">Banner Title</label>
+                                            <input type="text" class="form-control" id="mainBannerTitle" name="title">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="mainBannerText" class="form-label">Banner Text</label>
+                                            <textarea class="form-control" id="mainBannerText" name="text" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary ms-2" onclick="resetSection('main_banner')">Reset to Default</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- About Description Section -->
+                                <div class="tab-pane fade" id="about-desc" role="tabpanel" aria-labelledby="about-desc-tab">
+                                    <form id="aboutDescForm">
+                                        <input type="hidden" id="aboutDescId" value="">
+                                        <div class="mb-3">
+                                            <label for="aboutDescText" class="form-label">Description Text</label>
+                                            <textarea class="form-control" id="aboutDescText" name="text" rows="5"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary ms-2" onclick="resetSection('about_desc')">Reset to Default</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Banner 2 Section -->
+                                <div class="tab-pane fade" id="banner2" role="tabpanel" aria-labelledby="banner2-tab">
+                                    <form id="banner2Form">
+                                        <input type="hidden" id="banner2Id" value="">
+                                        <div class="mb-3">
+                                            <label for="banner2Title" class="form-label">Banner Title</label>
+                                            <input type="text" class="form-control" id="banner2Title" name="title">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="banner2Text" class="form-label">Banner Text</label>
+                                            <textarea class="form-control" id="banner2Text" name="text" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary ms-2" onclick="resetSection('banner2')">Reset to Default</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Banner 3 Section -->
+                                <div class="tab-pane fade" id="banner3" role="tabpanel" aria-labelledby="banner3-tab">
+                                    <form id="banner3Form">
+                                        <input type="hidden" id="banner3Id" value="">
+                                        <div class="mb-3">
+                                            <label for="banner3Title" class="form-label">Banner Title</label>
+                                            <input type="text" class="form-control" id="banner3Title" name="title">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="banner3Text" class="form-label">Banner Text</label>
+                                            <textarea class="form-control" id="banner3Text" name="text" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary ms-2" onclick="resetSection('banner3')">Reset to Default</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- Banner 4 Section -->
+                                <div class="tab-pane fade" id="banner4" role="tabpanel" aria-labelledby="banner4-tab">
+                                    <form id="banner4Form">
+                                        <input type="hidden" id="banner4Id" value="">
+                                        <div class="mb-3">
+                                            <label for="banner4Title" class="form-label">Banner Title</label>
+                                            <input type="text" class="form-control" id="banner4Title" name="title">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="banner4Text" class="form-label">Banner Text</label>
+                                            <textarea class="form-control" id="banner4Text" name="text" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary ms-2" onclick="resetSection('banner4')">Reset to Default</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- CEO Information Section -->
+                                <div class="tab-pane fade" id="ceo-info" role="tabpanel" aria-labelledby="ceo-info-tab">
+                                    <form id="ceoInfoForm">
+                                        <input type="hidden" id="ceoInfoId" value="">
+                                        <div class="mb-3">
+                                            <label for="ceoName" class="form-label">CEO Name</label>
+                                            <input type="text" class="form-control" id="ceoName" name="name">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="ceoTitle" class="form-label">CEO Title</label>
+                                            <input type="text" class="form-control" id="ceoTitle" name="title">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="ceoDetails" class="form-label">CEO Details (comma separated list items)</label>
+                                            <textarea class="form-control" id="ceoDetails" name="details" rows="3"></textarea>
+                                            <small class="text-muted">Enter each detail on a new line</small>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="ceoImage" class="form-label">CEO Image URL</label>
+                                            <input type="text" class="form-control" id="ceoImage" name="image">
+                                        </div>
+                                        <div class="mb-3">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary ms-2" onclick="resetSection('ceo_info')">Reset to Default</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <footer>
+            <div class="footer clearfix mb-0 text-muted">
+                <div class="float-start">
+                    <p>2025 &copy; SAMFAN</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="assets/static/js/components/dark.js"></script>
+<script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="assets/compiled/js/app.js"></script>
+<!-- Add JavaScript for handling the forms -->
+<script>
+// API URL for managing about page content
+const apiUrl = 'http://localhost/manage_about.php';
+
+// Load the content for all sections when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    fetchAllSections();
+});
+
+// Function to fetch all sections from the backend
+function fetchAllSections() {
+    fetch('http://localhost/get_about_content.php', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                populateFormsWithData(data.sections);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching about content:', error);
+        });
+}
+
+// Function to populate the forms with the fetched data
+function populateFormsWithData(sections) {
+    // Main Banner
+    if (sections.main_banner) {
+        document.getElementById('mainBannerId').value = sections.main_banner.id || '';
+        document.getElementById('mainBannerSectionTitle').value = sections.main_banner.section_title || '';
+        document.getElementById('mainBannerTitle').value = sections.main_banner.title || '';
+        document.getElementById('mainBannerText').value = sections.main_banner.text || '';
+    }
+    
+    // About Description
+    if (sections.about_desc) {
+        document.getElementById('aboutDescId').value = sections.about_desc.id || '';
+        document.getElementById('aboutDescText').value = sections.about_desc.text || '';
+    }
+    
+    // Banner 2
+    if (sections.banner2) {
+        document.getElementById('banner2Id').value = sections.banner2.id || '';
+        document.getElementById('banner2Title').value = sections.banner2.title || '';
+        document.getElementById('banner2Text').value = sections.banner2.text || '';
+    }
+    
+    // Banner 3
+    if (sections.banner3) {
+        document.getElementById('banner3Id').value = sections.banner3.id || '';
+        document.getElementById('banner3Title').value = sections.banner3.title || '';
+        document.getElementById('banner3Text').value = sections.banner3.text || '';
+    }
+    
+    // Banner 4
+    if (sections.banner4) {
+        document.getElementById('banner4Id').value = sections.banner4.id || '';
+        document.getElementById('banner4Title').value = sections.banner4.title || '';
+        document.getElementById('banner4Text').value = sections.banner4.text || '';
+    }
+    
+    // CEO Information
+    if (sections.ceo_info) {
+        document.getElementById('ceoInfoId').value = sections.ceo_info.id || '';
+        document.getElementById('ceoName').value = sections.ceo_info.name || '';
+        document.getElementById('ceoTitle').value = sections.ceo_info.title || '';
+        document.getElementById('ceoDetails').value = sections.ceo_info.details || '';
+        document.getElementById('ceoImage').value = sections.ceo_info.image || '';
+    }
+}
+
+// Event listeners for form submissions
+document.getElementById('mainBannerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    saveSection('main_banner', {
+        id: document.getElementById('mainBannerId').value,
+        section_title: document.getElementById('mainBannerSectionTitle').value,
+        title: document.getElementById('mainBannerTitle').value,
+        text: document.getElementById('mainBannerText').value
+    });
+});
+
+document.getElementById('aboutDescForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    saveSection('about_desc', {
+        id: document.getElementById('aboutDescId').value,
+        text: document.getElementById('aboutDescText').value
+    });
+});
+
+document.getElementById('banner2Form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    saveSection('banner2', {
+        id: document.getElementById('banner2Id').value,
+        title: document.getElementById('banner2Title').value,
+        text: document.getElementById('banner2Text').value
+    });
+});
+
+document.getElementById('banner3Form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    saveSection('banner3', {
+        id: document.getElementById('banner3Id').value,
+        title: document.getElementById('banner3Title').value,
+        text: document.getElementById('banner3Text').value
+    });
+});
+
+document.getElementById('banner4Form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    saveSection('banner4', {
+        id: document.getElementById('banner4Id').value,
+        title: document.getElementById('banner4Title').value,
+        text: document.getElementById('banner4Text').value
+    });
+});
+
+document.getElementById('ceoInfoForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    saveSection('ceo_info', {
+        id: document.getElementById('ceoInfoId').value,
+        name: document.getElementById('ceoName').value,
+        title: document.getElementById('ceoTitle').value,
+        details: document.getElementById('ceoDetails').value,
+        image: document.getElementById('ceoImage').value
+    });
+});
+
+// Function to save a section to the backend
+function saveSection(section, data) {
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+            action: 'save',
+            section: section,
+            data: data
+        })
+    })
+    .then(res => res.json())
+    .then(response => {
+        if (response.success) {
+            alert('Section updated successfully!');
+            // Refresh data after successful update
+            fetchAllSections();
+        } else {
+            alert('Error: ' + (response.message || 'Unknown error'));
+        }
+    })
+    .catch(error => {
+        console.error('Error saving section:', error);
+        alert('Failed to save section. Please try again.');
+    });
+}
+
+// Add to the existing script in about.html
+function resetSection(section) {
+    if (confirm(`Are you sure you want to reset the ${section.replace('_', ' ')} section to default values?`)) {
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({
+                action: 'reset',
+                section: section
+            })
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.success) {
+                alert('Section reset to default values successfully!');
+                // Refresh data after successful reset
+                fetchAllSections();
+            } else {
+                alert('Error: ' + (response.message || 'Unknown error'));
+            }
+        })
+        .catch(error => {
+            console.error('Error resetting section:', error);
+            alert('Failed to reset section. Please try again.');
+        });
+    }
+}
+</script>
+</body>
+</html>

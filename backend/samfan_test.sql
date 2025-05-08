@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2025 at 01:03 PM
+-- Generation Time: May 08, 2025 at 04:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,9 +39,12 @@ CREATE TABLE `about_content` (
 --
 
 INSERT INTO `about_content` (`id`, `section`, `content`, `last_updated`) VALUES
-(1, 'main_banner', '{\"section_title\":\"Company Information\",\"title\":\"Mission & Values\",\"text\":\"Our commitment is to operate responsibly as a leading global company.\",\"image\":\"\"}', '2025-05-08 06:06:15'),
-(2, 'ceo_info', '{\"title\":\"\",\"name\":\"\",\"photo\":\"\",\"positions\":[]}', '2025-05-08 06:09:24'),
-(3, 'banner4', '{\"title\":\"Samfan Business Principles\",\"text\":\"To demonstrate its commitment to social responsibility as a leading global company, Samfan Electronics announced the \'Samfan Business Principles\' in 2005.\"}', '2025-05-08 05:37:02');
+(1, 'main_banner', '{\"section_title\":\"Company Information\",\"title\":\"Mission & Values\",\"text\":\"Our commitment is to operate responsibly as a leading global company.\"}', '2025-05-08 14:51:22'),
+(2, 'about_desc', '{\"text\":\"Samfan believes in creating innovative products that enhance people\'s lives. Our commitment to excellence drives everything we do.\"}', '2025-05-08 14:23:42'),
+(3, 'banner2', '{\"title\":\"Samfan\'s Vision\",\"text\":\"To inspire the world with innovative technologies, products and design that enrich people\'s lives and contribute to social prosperity.\"}', '2025-05-08 14:23:42'),
+(4, 'banner3', '{\"title\":\"Samfan\'s Core Values\",\"text\":\"Samfan believes that living by strong values is the key to good business. That\'s why these core values, together with a strict code of conduct, are at the heart of every decision the company makes.\"}', '2025-05-08 14:23:42'),
+(5, 'banner4', '{\"title\":\"Samfan Business Principles\",\"text\":\"Our business principles serve as the foundation for our actions and strategies. We are committed to ethical business practices, environmental sustainability, and making a positive impact on society.\"}', '2025-05-08 14:23:42'),
+(6, 'ceo_info', '{\"name\":\"John Smith\",\"title\":\"Chief Executive Officer\",\"details\":\"Joined Samfan in 2010\\nPreviously CEO of Tech Innovations Inc\\nHolds an MBA from Harvard Business School\\nLed the company through digital transformation\",\"image\":\"..\\/assets\\/ceo.jpg\"}', '2025-05-08 14:52:20');
 
 -- --------------------------------------------------------
 
@@ -577,7 +580,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `about_content`
 --
 ALTER TABLE `about_content`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
