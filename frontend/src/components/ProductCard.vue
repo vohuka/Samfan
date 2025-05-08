@@ -51,11 +51,6 @@ export default {
         if (!user) {
           alert('Please login to add items to your cart.');
           // Kiểm tra xem action showLoginOverlay có tồn tại không
-          if (this.$store._actions && this.$store._actions.showLoginOverlay) {
-            this.$store.dispatch('showLoginOverlay');
-          } else {
-            this.$router.push('/'); // Redirect to home/login page as fallback
-          }
           return;
         }
 
@@ -108,7 +103,6 @@ export default {
   width: 100%;
   height: 192px;
   object-fit: contain;
-  margin-bottom: 16px;
 }
 .product-name {
   font-size: 18px;

@@ -76,7 +76,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `name`, `price`, `color`, `memory`, `ram`, `image`) VALUES
 (1, 'Galaxy S25 Ultra', 37490000.00, 'Black', '512GB', '12GB', 'galaxy_s25_ultra.avif'),
-(2, 'Galaxy Z Fold5 (Special)', 86500000.00, 'Special', '512GB', '12GB', 'galaxy_zflop5.avif'),
+(2, 'Galaxy Z Fold5 (VIP)', 86500000.00, 'Special', '512GB', '12GB', 'galaxy_zflop5.avif'),
 (3, 'Galaxy Z Fold6', 39900000.00, 'Gray', '256GB', '12GB', 'galaxy_z_fold6.avif'),
 (4, 'Galaxy Z Flip6', 22900000.00, 'Black', '512GB', '12GB', 'galaxy_z_flip6.avif'),
 (5, 'Galaxy S25+', 30490000.00, 'Blue', '256GB', '8GB', 'galaxy_s25+.avif'),
@@ -128,7 +128,7 @@ INSERT INTO `product_specs` (`id`, `product_id`, `category`, `spec_key`, `spec_v
 (26, 1, 'physical', 'Dimensions (HxWxD)', '162.8 x 77.6 x 8.2 mm'),
 (27, 1, 'physical', 'Weight', '218g'),
 
--- Galaxy Z Fold5 (Special) (ID: 2)
+-- Galaxy Z Fold5 (VIP) (ID: 2)
 (28, 2, 'processor', 'CPU Speed', '3.36GHz, 2.8GHz'),
 (29, 2, 'processor', 'CPU Type', '8 cores'),
 (30, 2, 'display', 'Size (Main Display)', '191.9mm (7.6" full rectangle) / 189.9mm (7.5" rounded corners)'),
@@ -429,7 +429,7 @@ INSERT INTO `ratings` (`id`, `product_id`, `user_id`, `rating`, `created_at`) VA
 (3, 1, 3, 5, '2025-05-07 03:00:00'),
 (4, 1, 4, 5, '2025-05-07 03:00:00'),
 (5, 1, 5, 4, '2025-05-07 03:00:00'),
--- Galaxy Z Fold5 (Special) (old rating: 4.8 → rounded to 5)
+-- Galaxy Z Fold5 (VIP) (old rating: 4.8 → rounded to 5)
 (6, 2, 1, 5, '2025-05-07 03:00:00'),
 (7, 2, 2, 5, '2025-05-07 03:00:00'),
 (8, 2, 3, 5, '2025-05-07 03:00:00'),

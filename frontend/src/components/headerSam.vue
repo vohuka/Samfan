@@ -851,6 +851,7 @@ export default {
   overflow-y: auto;
 }
 .search-input-container {
+  
   display: flex;
   align-items: center;
   border-bottom: 1px solid #ddd;
@@ -883,18 +884,19 @@ export default {
 }
 .search-results h3 {
   color: #666;
+  font-size: 18px;
   margin-bottom: 10px;
 }
 .results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-auto-rows: minmax(200px, auto); /* Chiều cao tối thiểu của mỗi sản phẩm */
   gap: 20px;
   max-height: 500px; /* Chiều cao tối đa của vùng lưới (có thể điều chỉnh) */
   overflow-y: auto; /* Kích hoạt cuộn dọc khi vượt quá chiều cao */
   padding: 10px;
   border: 1px solid #ddd;
   background-color: #f9f9f9;
+  border-radius: 8px;
 }
 
 .search-suggestions {
@@ -935,12 +937,15 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  width: 100%;
 }
 .product-name {
   font-weight: bold;
+
 }
 .product-price {
   color: #666;
+  font-weight: 500;
 }
 @media screen and (max-width: 1080px) {
   .samfan-header {
@@ -992,7 +997,7 @@ export default {
   }
   .search-overlay.mobile-search {
     padding-top: 0;
-    justify-content: flex-end;
+    align-items: stretch;
   }
   .search-overlay.mobile-search .search-modal {
     width: 85%;
@@ -1006,11 +1011,9 @@ export default {
     flex-direction: column;
   }
   .suggested-products {
-    justify-content: space-between;
+    grid-template-columns: repeat(2, 1fr);
   }
-  .product-card {
-    width: calc(50% - 10px);
-  }
+  
   .product-card img {
     max-width: 100%;
   }
@@ -1151,7 +1154,7 @@ export default {
 
 @media (max-width: 768px) {
   .results-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
