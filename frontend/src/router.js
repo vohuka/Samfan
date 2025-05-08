@@ -5,6 +5,7 @@ import ProductMobile from './components/ProductMobile.vue'
 import ProductTVAV from './components/ProductTVAV.vue'
 import ProductApplication from './components/ProductApplication.vue'
 import ProductDetail from './components/ProductDetail.vue' // Thêm import cho ProductDetail
+import CartPage from './components/CartPage.vue' 
 
 // Giả sử bạn có các component này 
 // (nếu chưa có, hãy tạo chúng)
@@ -58,6 +59,11 @@ const routes = [
     path: '/product/:id', // Thêm route mới cho trang chi tiết sản phẩm
     name: 'ProductDetail',
     component: ProductDetail
+  },
+  { 
+    path: '/cart', 
+    name: 'Cart', 
+    component: CartPage
   },
 ]
 
