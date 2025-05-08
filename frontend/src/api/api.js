@@ -177,3 +177,31 @@ export const fetchAboutContent = async () => {
     throw error;
   }
 };
+
+// Thay đổi hàm uploadProfileImage
+export const uploadProfileImage = async (formData) => {
+  try {
+    console.log('Uploading profile image...');
+    console.log('FormData content:', [...formData.entries()]);
+    
+    // Sử dụng đường dẫn tuyệt đối với baseURL giống apiClient
+    const response = await fetch('http://localhost/upload_image.php', {
+      method: 'POST',
+      body: formData,
+      credentials: 'include'
+    });
+    
+    const text = await response.text();
+    console.log('Server response:', text);
+    
+    try {
+      return JSON.parse(text);
+    } catch (parseError) {
+      console.error('Failed to parse JSON:', parseError);
+      return { success: false, message: 'Lỗi phân tích dữ liệu từ server' };
+    }
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    return { success: false, message: 'Lỗi kết nối server' };
+  }
+};

@@ -806,4 +806,23 @@ export default {
     text-align: justify;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .banner {
+    height: 400px;
+  }
+  
+  .banner-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+}
 </style>

@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root';
 $password = '';
-$database = 'samfan_test';
+$database = 'samfan_final';
 
 $conn = new mysqli($host, $user, $password, $database);
 
