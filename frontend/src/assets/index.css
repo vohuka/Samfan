@@ -1,25 +1,5 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;
 
 /* Import font faces */
-@font-face {
-  font-family: 'Samsung Sharp Sans';
-  src: url('./fonts/samsungsharpsans.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Samsung Sharp Sans';
-  src: url('./fonts/samsungsharpsans-bold.otf') format('opentype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Samsung Sharp Sans';
-  src: url('./fonts/samsungsharpsans-medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-}
