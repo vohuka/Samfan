@@ -59,6 +59,12 @@
                             <span>Users</span>
                         </a>
                     </li>
+                    <li class="sidebar-item">
+                        <a href="cart.html" class='sidebar-link'>
+                            <i class="bi bi-cart-fill"></i>
+                            <span>Orders</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -213,9 +219,18 @@
                                             <textarea class="form-control" id="ceoDetails" name="details" rows="3"></textarea>
                                             <small class="text-muted">Enter each detail on a new line</small>
                                         </div>
+                                        <!-- Replace the existing CEO image field with this -->
                                         <div class="mb-3">
-                                            <label for="ceoImage" class="form-label">CEO Image URL</label>
-                                            <input type="text" class="form-control" id="ceoImage" name="image">
+                                            <label for="ceoImage" class="form-label">CEO Image</label>
+                                            <div class="input-group mb-2">
+                                                <input type="file" class="form-control" id="ceoImageUpload" accept="image/jpeg,image/png,image/gif,image/webp">
+                                                <button class="btn btn-outline-secondary" type="button" id="uploadCeoImage">Upload</button>
+                                            </div>
+                                            <div id="uploadStatus" class="form-text"></div>
+                                            <input type="hidden" id="ceoImage" name="image">
+                                            <div class="mt-2">
+                                                <img id="ceoImagePreview" src="" alt="CEO Preview" style="max-width: 200px; max-height: 200px; display: none;" class="img-thumbnail">
+                                            </div>
                                         </div>
                                         <div class="mb-3">
                                             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -309,6 +324,17 @@ function populateFormsWithData(sections) {
         document.getElementById('ceoTitle').value = sections.ceo_info.title || '';
         document.getElementById('ceoDetails').value = sections.ceo_info.details || '';
         document.getElementById('ceoImage').value = sections.ceo_info.image || '';
+        
+        // Display the existing CEO image
+        const imageUrl = sections.ceo_info.image || '';
+        const preview = document.getElementById('ceoImagePreview');
+        if (imageUrl && !imageUrl.includes('../assets/')) {
+            // Display the image if it's a valid URL (not a relative asset path)
+            preview.src = imageUrl;
+            preview.style.display = 'block';
+        } else {
+            preview.style.display = 'none';
+        }
     }
 }
 
@@ -425,6 +451,78 @@ function resetSection(section) {
         });
     }
 }
+
+// Add these JavaScript functions
+
+// Image preview and upload handling
+document.getElementById('ceoImageUpload').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('ceoImagePreview');
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('uploadCeoImage').addEventListener('click', async function() {
+    const fileInput = document.getElementById('ceoImageUpload');
+    const statusDiv = document.getElementById('uploadStatus');
+    
+    if (!fileInput.files.length) {
+        statusDiv.textContent = 'Please select a file first';
+        statusDiv.className = 'form-text text-danger';
+        return;
+    }
+    
+    const file = fileInput.files[0];
+    const formData = new FormData();
+    formData.append('ceo_image', file);
+    
+    statusDiv.textContent = 'Uploading...';
+    statusDiv.className = 'form-text text-info';
+    
+    try {
+        console.log('Sending upload request to:', 'http://localhost/upload_ceo_image.php');
+        const response = await fetch('http://localhost/upload_ceo_image.php', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+        });
+        
+        // Log raw response for debugging
+        const responseText = await response.text();
+        console.log('Raw server response:', responseText);
+        
+        // Try to parse JSON
+        let result;
+        try {
+            result = JSON.parse(responseText);
+        } catch (parseError) {
+            console.error('JSON parse error:', parseError);
+            statusDiv.textContent = 'Error: Invalid response from server';
+            statusDiv.className = 'form-text text-danger';
+            return;
+        }
+        
+        if (result.success) {
+            statusDiv.textContent = 'Upload successful';
+            statusDiv.className = 'form-text text-success';
+            document.getElementById('ceoImage').value = result.image_url;
+        } else {
+            statusDiv.textContent = result.message || 'Upload failed';
+            statusDiv.className = 'form-text text-danger';
+        }
+    } catch (error) {
+        console.error('Error uploading image:', error);
+        statusDiv.textContent = 'Upload failed: ' + error.message;
+        statusDiv.className = 'form-text text-danger';
+    }
+});
 </script>
 </body>
 </html>

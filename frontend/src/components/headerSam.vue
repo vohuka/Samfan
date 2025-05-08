@@ -282,15 +282,25 @@
         <!-- Edit Profile Form -->
         <form class="login-form" @submit.prevent="handleEditProfile">
           <div class="profile-image-edit">
-            <img :src="editProfileForm.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'" alt="Profile Picture" class="edit-profile-avatar">
+            <img :src="previewImage || user.image_url || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'" 
+                 alt="Profile Picture" 
+                 class="edit-profile-avatar">
             <div class="image-input-container">
-              <label for="edit-image-url">Profile Image URL</label>
-              <input 
-                type="text"
-                id="edit-image-url"
-                v-model="editProfileForm.imageUrl"
-                placeholder="Enter image URL"
-              >
+              <div class="upload-controls">
+                <label for="profile-image-upload" class="file-upload-btn">Choose Image</label>
+                <input 
+                  type="file"
+                  id="profile-image-upload"
+                  @change="handleImageUpload"
+                  accept="image/jpeg,image/png,image/gif,image/webp"
+                  class="file-input"
+                >
+                <span v-if="uploadStatus" 
+                      :class="{'upload-success': uploadStatus.type === 'success', 
+                              'upload-error': uploadStatus.type === 'error'}">
+                  {{ uploadStatus.message }}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -394,7 +404,7 @@ import galaxyA56 from '../assets/galaxy-a56.webp'
 import galaxyA36 from '../assets/galaxy-a36.avif'
 import galaxyA06 from '../assets/galaxy-a06.avif'
 import galaxyA16 from '../assets/galaxy-a16.avif'
-import { signup, login, logout, checkSession, updateProfile, fetchCart, searchProducts } from '../api/api';
+import { signup, login, logout, checkSession, updateProfile, fetchCart, searchProducts, uploadProfileImage } from '../api/api';
 
 export default {
   name: 'SamfanHeader',
@@ -441,7 +451,10 @@ export default {
         newPassword: '',       // Add this for new password
         confirmNewPassword: '' // Add this for password confirmation
       },
-      editProfileError: ''
+      editProfileError: '',
+      previewImage: null, // Add this for image preview
+      uploadStatus: null, // Add this for upload status
+      uploadedFile: null // Add this for uploaded file
     }
   },
   computed: {
@@ -603,15 +616,19 @@ export default {
         this.editProfileForm.email = this.user.email || '';
         this.editProfileForm.phone = this.user.phone || '';
         this.editProfileForm.address = this.user.address || '';
-        this.editProfileForm.imageUrl = this.user.image_url || '';
+        // Không cần imageUrl nữa vì đã xóa field này
+        
         // Reset password fields
         this.editProfileForm.newPassword = '';
         this.editProfileForm.confirmNewPassword = '';
       }
       
-      this.showPasswordReset = false; // Always hide password reset section initially
+      this.showPasswordReset = false;
+      this.previewImage = null; // Reset preview
+      this.uploadedFile = null; // Reset uploaded file
+      this.uploadStatus = null; // Reset status
       this.isEditProfileOpen = true;
-      this.isProfileOpen = false; // Close the profile dropdown
+      this.isProfileOpen = false;
     },
     
     toggleEditProfile() {
@@ -624,23 +641,63 @@ export default {
     
     async handleEditProfile() {
       try {
-        // Validate password if user is trying to change it
-        if (this.showPasswordReset) {
-          if (!this.editProfileForm.newPassword || !this.editProfileForm.confirmNewPassword) {
-            this.editProfileError = 'Please fill in all password fields';
-            return;
-          }
+        // Upload image if file selected
+        let imageUrl = this.user.image_url; // Keep current image if no new image
+        
+        if (this.uploadedFile) {
+          this.uploadStatus = {
+            type: 'info',
+            message: 'Uploading image...'
+          };
           
-          if (this.editProfileForm.newPassword !== this.editProfileForm.confirmNewPassword) {
-            this.editProfileError = 'Passwords do not match';
-            return;
-          }
+          const formData = new FormData();
+          formData.append('profile_image', this.uploadedFile);
           
-          if (this.editProfileForm.newPassword.length < 6) {
-            this.editProfileError = 'Password must be at least 6 characters';
+          // Call upload API directly
+          try {
+            const response = await fetch('http://localhost/upload_image.php', {
+              method: 'POST',
+              body: formData,
+              credentials: 'include'
+            });
+            
+            const text = await response.text();
+            console.log('Image upload response:', text);
+            
+            try {
+              const result = JSON.parse(text);
+              if (result.success) {
+                imageUrl = result.image_url;
+                this.uploadStatus = {
+                  type: 'success',
+                  message: 'Image uploaded successfully!'
+                };
+              } else {
+                this.uploadStatus = {
+                  type: 'error',
+                  message: result.message || 'Error uploading image'
+                };
+                return; // Stop if image upload fails
+              }
+            } catch (parseError) {
+              console.error('Failed to parse JSON:', parseError);
+              this.uploadStatus = {
+                type: 'error', 
+                message: 'Error parsing server data'
+              };
+              return;
+            }
+          } catch (uploadError) {
+            console.error('Error uploading image:', uploadError);
+            this.uploadStatus = {
+              type: 'error',
+              message: 'Server connection error while uploading image'
+            };
             return;
           }
         }
+        
+        console.log('Image URL to save:', imageUrl);
         
         // Prepare data for API call
         const updateData = {
@@ -648,38 +705,135 @@ export default {
           email: this.editProfileForm.email,
           phone: this.editProfileForm.phone,
           address: this.editProfileForm.address,
-          imageUrl: this.editProfileForm.imageUrl
+          imageUrl: imageUrl
         };
         
-        // Add password if it's being changed
+        // Add password if being changed
         if (this.showPasswordReset && this.editProfileForm.newPassword) {
+          // Check passwords match before adding
+          if (this.editProfileForm.newPassword !== this.editProfileForm.confirmNewPassword) {
+            this.editProfileError = 'Passwords do not match';
+            return;
+          }
           updateData.password = this.editProfileForm.newPassword;
         }
         
+        console.log('Updating profile with data:', updateData);
+        
         const response = await updateProfile(updateData);
+        console.log('Profile update response:', response);
         
         if (response.success) {
-          // Update the user object with the new values
+          // Update user info
           this.user.full_name = this.editProfileForm.fullName;
           this.user.email = this.editProfileForm.email;
           this.user.phone = this.editProfileForm.phone;
           this.user.address = this.editProfileForm.address;
-          this.user.image_url = this.editProfileForm.imageUrl;
+          this.user.image_url = imageUrl;
           
           // Update Vuex store
           this.$store.dispatch('setUser', this.user);
           
-          // Close the edit profile modal
+          // Reset states
+          this.previewImage = null;
+          this.uploadedFile = null;
+          this.uploadStatus = null;
+          
+          // Close modal
           this.isEditProfileOpen = false;
           
           // Show success message
           toastr.success('Profile updated successfully!');
         } else {
-          this.editProfileError = response.message || 'Failed to update profile';
+          this.editProfileError = response.message || 'Error updating profile';
         }
       } catch (error) {
         console.error('Profile update error:', error);
-        this.editProfileError = 'Failed to update profile. Please try again.';
+        this.editProfileError = 'Error updating profile. Please try again.';
+      }
+    },
+    handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      // Check file type
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      console.log('File type:', file.type);
+      
+      if (!validTypes.includes(file.type)) {
+        this.uploadStatus = {
+          type: 'error',
+          message: 'Invalid file format. Only JPG, PNG, GIF and WEBP are accepted'
+        };
+        return;
+      }
+      
+      // Check file size (max 2MB)
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      console.log('File size:', file.size, 'bytes');
+      
+      if (file.size > maxSize) {
+        this.uploadStatus = {
+          type: 'error',
+          message: 'File too large. Maximum size is 2MB'
+        };
+        return;
+      }
+      
+      // Save file for later upload
+      this.uploadedFile = file;
+      console.log('File prepared for upload:', file.name);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.previewImage = e.target.result;
+        // Clear URL input to prioritize selected file
+        this.editProfileForm.imageUrl = '';
+      };
+      reader.readAsDataURL(file);
+      
+      this.uploadStatus = {
+        type: 'info',
+        message: 'Image selected, click Save to update'
+      };
+    },
+    
+    async uploadProfileImage() {
+      if (!this.uploadedFile) return null;
+      
+      try {
+        this.uploadStatus = {
+          type: 'info',
+          message: 'Uploading image...'
+        };
+        
+        const formData = new FormData();
+        formData.append('profile_image', this.uploadedFile);
+        
+        // Call upload API
+        const response = await uploadProfileImage(formData);
+        
+        if (response.success) {
+          this.uploadStatus = {
+            type: 'success',
+            message: 'Image uploaded successfully!'
+          };
+          return response.image_url;
+        } else {
+          this.uploadStatus = {
+            type: 'error',
+            message: response.message || 'Error uploading image'
+          };
+          return null;
+        }
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        this.uploadStatus = {
+          type: 'error',
+          message: 'Error uploading image'
+        };
+        return null;
       }
     }
   },
@@ -1347,6 +1501,59 @@ export default {
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #1428a0; /* Adding thin blue border */
+}
+.file-upload-btn {
+  background-color: #a4b2ff;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.url-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.upload-success {
+  color: green;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.upload-error {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.url-input {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.url-input label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #666;
 }
 </style>
 

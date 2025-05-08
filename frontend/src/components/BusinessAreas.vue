@@ -555,4 +555,174 @@ export default {
     font-size: 15px;
   }
 }
+
+/* Keep your existing styles and add/modify these responsive sections */
+
+/* Business Highlight Banner - adjust padding based on screen width */
+.highlight-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  padding-left: 120px; /* Left padding to push content right */
+  width: 100%;
+  color: white;
+}
+
+/* Large Desktop (1200px+) - Current styles are good */
+
+/* Desktop (992px-1199px) */
+@media screen and (max-width: 1199px) {
+  .highlight-content {
+    padding-left: 80px; /* Reduce left padding */
+  }
+  
+  .business-desc p {
+    font-size: 40px; /* Reduce font size for business description */
+    padding: 0 20px;
+  }
+}
+
+/* Tablet (768px-991px) */
+@media screen and (max-width: 991px) {
+  .highlight-content {
+    padding-left: 60px;
+  }
+  
+  .business-desc p {
+    font-size: 32px;
+    padding: 0 30px;
+  }
+  
+  .business-highlight-banner {
+    height: 500px;
+  }
+  
+  .banner {
+    height: 450px;
+  }
+}
+
+/* Mobile Landscape (576px-767px) */
+@media screen and (max-width: 767px) {
+  .highlight-content {
+    padding: 0 30px;
+    padding-left: 40px; /* Further reduce left padding */
+  }
+  
+  .business-desc {
+    padding: 40px 15px;
+    margin: 40px auto 0 auto;
+  }
+  
+  .business-desc p {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+  
+  .highlight-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  
+  .highlight-text {
+    max-width: 450px;
+  }
+  
+  .highlight-text p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .learn-more-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+  
+  .banner-title {
+    font-size: 28px;
+  }
+}
+
+/* Mobile Portrait (<=575px) */
+@media screen and (max-width: 575px) {
+  .highlight-content {
+    padding: 0 20px; /* Even spacing on both sides */
+    text-align: center; /* Center align content on smallest screens */
+  }
+  
+  .highlight-title {
+    font-size: 28px;
+    max-width: 100%; /* Full width */
+  }
+  
+  .highlight-text {
+    max-width: 100%; /* Full width */
+  }
+  
+  .business-desc p {
+    font-size: 20px; /* Significantly reduce font size */
+  }
+  
+  .business-highlight-banner {
+    height: 400px;
+    margin: 40px 0;
+  }
+  
+  .banner {
+    height: 300px;
+  }
+  
+  .banner-content {
+    width: 90%;
+    padding: 10px;
+  }
+  
+  .banner-title {
+    font-size: 24px;
+    margin: 10px 0;
+  }
+  
+  .banner-text {
+    font-size: 13px;
+  }
+  
+  .section-title {
+    font-size: 12px;
+  }
+  
+  /* Navigation adjustments */
+  .nav-container {
+    padding: 0 15px;
+  }
+}
+
+/* Very small screens */
+@media screen and (max-width: 375px) {
+  .highlight-content {
+    padding: 0 15px;
+  }
+  
+  .highlight-title {
+    font-size: 24px;
+  }
+  
+  .business-desc p {
+    font-size: 18px;
+  }
+  
+  .business-highlight-banner {
+    height: 350px;
+  }
+  
+  .learn-more-btn {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+  
+  .banner-title {
+    font-size: 20px;
+  }
+}
 </style>
