@@ -1,12 +1,12 @@
 <?php
 require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/database.php';
-// Kiểm tra kết nối
+
 if ($conn->connect_error) {
     die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
 }
 
-// Truy vấn dữ liệu
+
 $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
 

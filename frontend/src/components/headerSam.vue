@@ -210,6 +210,16 @@
             >
           </div>
           <div class="form-group">
+            <label for="signup-image">Profile Image URL</label>
+            <input 
+              type="text"
+              id="signup-image"
+              v-model="signupForm.imageUrl"
+              placeholder="Enter profile image URL (optional)"
+            >
+          </div>
+
+          <div class="form-group">
             <label for="signup-password">Password</label>
             <input 
               type="password"
@@ -241,29 +251,112 @@
     </div>
     <div v-if="isProfileOpen" class="profile-dropdown" @click.stop>
       <div class="profile-info" v-if="user">
-        <p><strong>Username:</strong> {{ user.username }}</p>
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <img :src="user.image_url || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'" alt="Profile Picture">
+          </div>
+        </div>
+        <p><strong>User:</strong> {{ user.username }}</p>
         <p><strong>Full Name:</strong> {{ user.full_name }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Phone:</strong> {{ user.phone }}</p>
         <p><strong>Address:</strong> {{ user.address }}</p>
         <div class="login-buttons">
-          <button class="btn-filled-dark" @click="handleLogout">Logout</button>
+          <button class="btn-filled-dark edit-profile-btn" @click="openEditProfile">Edit Profile</button>
+          <button class="btn-outline-dark" @click="handleLogout">Logout</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Add the Edit Profile Modal -->
+    <div v-if="isEditProfileOpen" class="login-overlay" :class="{ 'mobile-login': isMobile }">
+      <div class="login-modal">
+        <div class="login-header">
+          <h2>Edit Profile</h2>
+          <button @click="toggleEditProfile" class="close-login">×</button>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <form class="login-form" @submit.prevent="handleEditProfile">
+          <div class="profile-image-edit">
+            <img :src="editProfileForm.imageUrl || 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg'" alt="Profile Picture" class="edit-profile-avatar">
+            <div class="image-input-container">
+              <label for="edit-image-url">Profile Image URL</label>
+              <input 
+                type="text"
+                id="edit-image-url"
+                v-model="editProfileForm.imageUrl"
+                placeholder="Enter image URL"
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-fullname">Full Name</label>
+            <input 
+              type="text"
+              id="edit-fullname"
+              v-model="editProfileForm.fullName"
+              placeholder="Enter your full name"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="edit-email">Email</label>
+            <input 
+              type="email"
+              id="edit-email"
+              v-model="editProfileForm.email"
+              placeholder="Enter email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="edit-phone">Phone</label>
+            <input 
+              type="text"
+              id="edit-phone"
+              v-model="editProfileForm.phone"
+              placeholder="Enter phone number"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="edit-address">Address</label>
+            <input 
+              type="text"
+              id="edit-address"
+              v-model="editProfileForm.address"
+              placeholder="Enter address"
+              required
+            >
+          </div>
+
+          <div v-if="editProfileError" class="login-error">
+            {{ editProfileError }}
+          </div>
+
+          <div class="login-buttons">
+            <button type="submit" class="btn-filled-dark">Save Changes</button>
+            <button type="button" class="btn-outline-dark" @click="toggleEditProfile">Cancel</button>
+          </div>
+        </form>
       </div>
     </div>
   </header>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import toastr from 'toastr';
-import 'toastr/build/toastr.min.css';
-import galaxyA56 from '../assets/galaxy-a56.webp';
-import galaxyA36 from '../assets/galaxy-a36.avif';
-import galaxyA06 from '../assets/galaxy-a06.avif';
-import galaxyA16 from '../assets/galaxy-a16.avif';
-import { signup, login, logout, checkSession, fetchCart, searchProducts } from '../api/api';
-import ProductCard from './ProductCard.vue';
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+import galaxyA56 from '../assets/galaxy-a56.webp'
+import galaxyA36 from '../assets/galaxy-a36.avif'
+import galaxyA06 from '../assets/galaxy-a06.avif'
+import galaxyA16 from '../assets/galaxy-a16.avif'
+import { signup, login, logout, checkSession, updateProfile, fetchCart, searchProducts } from '../api/api';
 
 export default {
   name: 'SamfanHeader',
@@ -287,6 +380,7 @@ export default {
         email: '',
         phone: '',
         address: '',
+        imageUrl: '',
         password: '',
         confirmPassword: ''
       },
@@ -296,9 +390,18 @@ export default {
         { id: 3, name: 'Galaxy A06', price: '3.489.500 VND', image: galaxyA06 },
         { id: 4, name: 'Galaxy A16 5G', price: '5.889.600 VND', image: galaxyA16 }
       ],
-      user: null,
-      isProfileOpen: false,
-    };
+      user: null, // Thêm biến user
+      isProfileOpen: false, // Thêm biến trạng thái overlay profile
+      isEditProfileOpen: false, // Thêm biến trạng thái overlay edit profile
+      editProfileForm: {
+        fullName: '',
+        email: '',
+        phone: '',
+        address: '',
+        imageUrl: '' // Thêm trường imageUrl
+      },
+      editProfileError: ''
+    }
   },
   computed: {
     ...mapState(['cartItems', 'user']),
@@ -307,7 +410,6 @@ export default {
     },
     isMobile() {
       return this.windowWidth < 768;
-    }
   },
   methods: {
     toggleSearch() {
@@ -361,9 +463,11 @@ export default {
     async handleLogin(type) {
       if (type === 'admin') {
         if (this.loginForm.username === 'admin' && this.loginForm.password === 'password') {
-          localStorage.setItem('isAdmin', 'true');
-          window.location.href = '/admin/index.html';
-          this.toggleLogin();
+          localStorage.setItem('isAdmin', 'true')
+          // Sử dụng window.location để direct đến file HTML
+          window.location.href = 'admin/index.html'
+          this.toggleLogin()
+          // this.$router.push('/admin')
         } else {
           this.loginError = 'Invalid admin credentials';
           toastr.error('Wrong credentials');
@@ -441,6 +545,50 @@ export default {
         }
       }
     },
+    openEditProfile() {
+      // Pre-fill the form with the current user data
+      if (this.user) {
+        this.editProfileForm.fullName = this.user.full_name || '';
+        this.editProfileForm.email = this.user.email || '';
+        this.editProfileForm.phone = this.user.phone || '';
+        this.editProfileForm.address = this.user.address || '';
+        this.editProfileForm.imageUrl = this.user.image_url || ''; // Add this line
+      }
+      
+      this.isEditProfileOpen = true;
+      this.isProfileOpen = false; // Close the profile dropdown
+    },
+    
+    toggleEditProfile() {
+      this.isEditProfileOpen = !this.isEditProfileOpen;
+      if (!this.isEditProfileOpen) {
+        this.editProfileError = '';
+      }
+    },
+    
+    async handleEditProfile() {
+      try {
+        const response = await updateProfile(this.editProfileForm);
+        if (response.success) {
+          // Update the user object with the new values
+          this.user.full_name = this.editProfileForm.fullName;
+          this.user.email = this.editProfileForm.email;
+          this.user.phone = this.editProfileForm.phone;
+          this.user.address = this.editProfileForm.address;
+          this.user.image_url = this.editProfileForm.imageUrl; // Add this line
+          
+          // Close the edit profile modal
+          this.isEditProfileOpen = false;
+          
+          // Show success message
+          toastr.success('Profile updated successfully!');
+        } else {
+          this.editProfileError = response.message || 'Failed to update profile';
+        }
+      } catch (error) {
+        this.editProfileError = 'Failed to update profile. Please try again.';
+      }
+    }
   },
   async mounted() {
     this.checkScreen();
@@ -939,13 +1087,19 @@ export default {
   color: #1428a0;
   border: 1px solid #1428a0;
   font-family: 'Samsung Sharp Sans';
-}
-.btn-filled-dark:hover {
-  background: #0f1f7a;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 .btn-outline-dark:hover {
   background: rgba(20, 40, 160, 0.1);
 }
+
+.btn-filled-dark:hover {
+  background: #0f1f7a;
+}
+
 .profile-info p {
   margin: 8px 0;
   font-size: 15px;
@@ -967,6 +1121,93 @@ export default {
   from { opacity: 0; transform: translateY(-10px);}
   to { opacity: 1; transform: translateY(0);}
 }
+/* Edit Profile button styling */
+.edit-profile-btn {
+  margin-bottom: 0 !important;
+}
+
+/* Add this CSS rule specifically for the profile dropdown buttons */
+.profile-info .login-buttons {
+  display: flex;
+  flex-direction: column;  /* Change to column layout */
+  gap: 10px;               /* Adjust spacing between buttons */
+  margin-top: 15px;        /* Adjust top margin as needed */
+  width: 100%;             /* Make buttons full width */
+}
+
+/* Make both buttons consistent width */
+.profile-info .login-buttons button {
+  width: 100%;             /* Full width buttons */
+  padding: 10px 0;         /* Consistent padding */
+  justify-content: center; /* Center button text */
+  border-radius: 5px;      /* Match the rounded corners in screenshot */
+}
+
+/* Remove the bottom margin since we're using flex column with gap */
+.edit-profile-btn {
+  margin-bottom: 0 !important;
+}
+
+/* Add these styles to your existing <style> section */
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border: 2px solid #1428a0;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-image-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.edit-profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #1428a0;
+}
+
+.image-input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.image-input-container label {
+  font-weight: 500;
+  color: #333;
+}
+
+.image-input-container input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Samsung Sharp Sans';
+}
+
 </style>
 
 <style>

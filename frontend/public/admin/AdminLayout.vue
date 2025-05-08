@@ -1,6 +1,8 @@
 <template>
   <div class="admin-page">
-    <iframe src="/src/admin/index.html" style="width:100%; height:100vh; border:none;"></iframe>
+    <h1>Welcome, Admin!</h1>
+    <p>This is your admin dashboard.</p>
+    <!-- Thêm các chức năng quản trị ở đây -->
   </div>
 </template>
 
@@ -12,12 +14,8 @@ export default {
 
 <style>
 .admin-page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 9999;
+  padding: 40px;
   background: white;
+  min-height: 100vh;
 }
 </style>
