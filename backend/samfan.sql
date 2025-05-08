@@ -327,7 +327,6 @@ INSERT INTO `product_specs` (`id`, `product_id`, `category`, `spec_key`, `spec_v
 (241, 9, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2)'),
 (242, 9, 'physical', 'Dimensions (HxWxD)', '164.5 x 76.5 x 8.4 mm'),
 (243, 9, 'physical', 'Weight', '195g'),
-
 -- Galaxy A56 (ID: 10)
 (244, 10, 'processor', 'CPU Speed', '2.7GHz, 2.2GHz'),
 (245, 10, 'processor', 'CPU Type', '8 cores'),
@@ -352,7 +351,6 @@ INSERT INTO `product_specs` (`id`, `product_id`, `category`, `spec_key`, `spec_v
 (268, 10, 'network', 'Number of SIMs', 'Dual SIM (SIM 1 + SIM 2)'),
 (269, 10, 'physical', 'Dimensions (HxWxD)', '159.9 x 74.5 x 8.1 mm'),
 (270, 10, 'physical', 'Weight', '189g');
-
 --
 -- Table structure for table `user`
 --
@@ -383,6 +381,18 @@ INSERT INTO `user` (`id`, `username`, `password`, `full_name`, `email`, `phone`,
 (9, 'sophie_phan', 'sophiep', 'Phan Thi Sophie', 'sophie@example.com', '0909012345', '357 Ash St'),
 (10, 'michael_t', 'michael1', 'Michael Truong', 'michael@example.com', '0910123456', '951 Walnut St'),
 (11, 'Hehe123', '$2y$10$QFpkR5kTX6V5UfogrGZovuBq.kZtgbl.By6sXtg5gXdLZgqhSeERC', 'Debug Account', 'debug@account.com', '0123456789', 'Debug debug');
+
+--
+-- Table structure for table `cart_items`
+--
+
+CREATE TABLE `cart_items` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `added_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Table structure for table `comments`
@@ -478,6 +488,8 @@ INSERT INTO `ratings` (`id`, `product_id`, `user_id`, `rating`, `created_at`) VA
 -- Indexes for dumped tables
 --
 
+
+
 --
 -- Indexes for table `faq`
 --
@@ -504,6 +516,14 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `comments`
@@ -550,10 +570,16 @@ ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -570,6 +596,13 @@ ALTER TABLE `ratings`
 --
 ALTER TABLE `product_specs`
   ADD CONSTRAINT `product_specs_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `comments`

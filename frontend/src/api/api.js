@@ -8,6 +8,19 @@ const apiClient = axios.create({
   withCredentials: true
 });
 
+// Function to search products by keyword
+export const searchProducts = async (keyword) => {
+  try {
+    const response = await apiClient.get('/search_products.php', {
+      params: { keyword }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error searching products:', error);
+    throw error;
+  }
+};
+
 // Function to fetch products
 export const fetchProducts = async () => {
   try {
@@ -82,6 +95,42 @@ export const postRating = async (productId, rating) => {
   } catch (error) {
     console.error('Error posting rating:', error);
     throw error;
+  }
+};
+
+export const fetchCart = async () => {
+  try {
+    const response = await apiClient.get('/get_cart.php');
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch cart: ' + error.message);
+  }
+};
+
+export const updateCart = async (itemId, action) => {
+  try {
+    const response = await apiClient.post('/update_cart.php', { itemId, action });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to update cart: ' + error.message);
+  }
+};
+
+export const removeFromCart = async (itemId) => {
+  try {
+    const response = await apiClient.post('/update_cart.php', { itemId, action: 'remove' });
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to remove item from cart: ' + error.message);
+  }
+};
+
+export const addToCart = async (data) => {
+  try {
+    const response = await apiClient.post('/add_to_cart.php', data);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to add to cart: ' + error.message);
   }
 };
 
