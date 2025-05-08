@@ -1,22 +1,25 @@
 <?php
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // Cho phép CORS
+require_once __DIR__ . '/cors.php';
+require_once __DIR__ . '/database.php';
 
-// Kết nối với MySQL
-$host = 'localhost';
-$user = 'root';
-$password = ''; // Thay bằng mật khẩu MySQL của bạn nếu có
-$database = 'samsung_products';
-
-$conn = new mysqli($host, $user, $password, $database);
-
-// Kiểm tra kết nối
 if ($conn->connect_error) {
     die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
 }
 
-// Truy vấn dữ liệu
-$sql = "SELECT * FROM products";
+// Sửa SQL query để tính toán giá trị rating giống như trong search_products.php
+$sql = "SELECT 
+    p.id, 
+    p.name, 
+    p.image, 
+    p.price, 
+    p.color, 
+    p.memory, 
+    p.ram, 
+    COALESCE(ROUND(AVG(r.rating), 1), 0) AS rating
+FROM products p
+LEFT JOIN ratings r ON p.id = r.product_id
+GROUP BY p.id, p.name, p.image, p.price, p.color, p.memory, p.ram";
+
 $result = $conn->query($sql);
 
 $products = [];
