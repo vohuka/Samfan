@@ -8,8 +8,8 @@
       </video>
       <div class="banner-content">
         <div class="banner-actions">
-          <button class="primary-btn">Learn More</button>
-          <button class="secondary-btn">Buy Now</button>
+          <button class="primary-btn" @click="handleLearnMore">Learn More</button>
+          <button class="secondary-btn" @click="handleBuyNow">Buy Now</button>
         </div>
       </div>
     </section>
@@ -296,6 +296,7 @@
 import ProductMobileHeader from './ProductMobileHeader.vue';
 import ProductTVLoaHeader from './ProductTVAVHeader.vue';
 import ProductApplicationHeader from './ProductApplicationHeader.vue';
+import { addToCart } from '../api/api';
 
 export default {
   name: 'SamsungHome',
@@ -318,6 +319,9 @@ export default {
       isMobile: true,
       currentProductIndex: 0,
       productsToShow: 4,
+      s25UltraProduct: {
+        id: 1, 
+      },
       // Array of all products for the carousel
       products: [
         {
@@ -389,6 +393,43 @@ export default {
       return window.innerWidth <= 768
         ? require('../assets/galaxy-s25-banner-mobile.webm')
         : require('../assets/galaxy-s25-banner.webm')
+    },
+    async handleBuyNow() {
+      // Only handle for Galaxy S25 Ultra
+      try {
+        const user = this.$store.state.user;
+        if (!user) {
+          alert('Please login to add items to your cart.');
+          return;
+        }
+
+        const response = await addToCart({
+          product_id: this.s25UltraProduct.id,
+          quantity: 1
+        });
+
+        if (response.success) {
+          const cartItem = {
+            id: response.cartItemId,
+            product_id: this.s25UltraProduct.id,
+            quantity: 1,
+            name: this.s25UltraProduct.name,
+            price: this.s25UltraProduct.price,
+            image: this.s25UltraProduct.image,
+          };
+          this.$store.dispatch('addToCart', cartItem);
+          alert('Galaxy S25 Ultra added to cart successfully!');
+        } else {
+          alert('Failed to add Galaxy S25 Ultra to cart: ' + response.message);
+        }
+      } catch (error) {
+        console.error('Error adding Galaxy S25 Ultra to cart:', error);
+        alert('An error occurred while adding Galaxy S25 Ultra to the cart.');
+      }
+    },
+    handleLearnMore() {
+      // Navigate to product details page for Galaxy S25 Ultra
+      this.$router.push(`/product/${this.s25UltraProduct.id}`);
     },
     handleResize() {
       const newIsMobile = window.innerWidth <= 768

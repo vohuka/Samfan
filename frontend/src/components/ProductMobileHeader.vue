@@ -24,14 +24,15 @@
       <p class="product-promo">{{ currentProduct.promo }}</p>
       
       <div class="action-buttons">
-        <button class="btn" :class="currentProductIndex >= 1 && currentProductIndex <= 3 ? 'btn-outline-dark' : 'btn-outline'">Learn more</button>
-        <button class="btn" :class="currentProductIndex >= 1 && currentProductIndex <= 3 ? 'btn-filled-dark' : 'btn-filled'">Buy now</button>
+        <button class="btn" :class="currentProductIndex >= 1 && currentProductIndex <= 3 ? 'btn-outline-dark' : 'btn-outline'" @click="handleLearnMore">Learn more</button>
+        <button class="btn" :class="currentProductIndex >= 1 && currentProductIndex <= 3 ? 'btn-filled-dark' : 'btn-filled'" @click="handleBuyNow">Buy now</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { addToCart } from '../api/api';
 export default {
   name: 'SamsungProductHeader',
   data() {
@@ -42,7 +43,8 @@ export default {
           name: 'Galaxy S25 Ultra',
           title: 'Galaxy S25 Ultra',
           promo: 'Offer x2 rewards points redemption value up to 1 million',
-          backgroundImage: require('@/assets/mobile-header.jpg')
+          backgroundImage: require('@/assets/mobile-header.jpg'),
+          id: 1
         },
         {
           name: 'Galaxy S25 | S25+',
@@ -77,6 +79,46 @@ export default {
     }
   },
   methods: {
+    async handleBuyNow() {
+      // Only handle for Galaxy S25 Ultra (index 0)
+      if (this.currentProductIndex !== 0) return;
+
+      try {
+        const user = this.$store.state.user;
+        if (!user) {
+          alert('Please login to add items to your cart.');
+          return;
+        }
+
+        const response = await addToCart({
+          product_id: this.currentProduct.id,
+          quantity: 1
+        });
+
+        if (response.success) {
+          const cartItem = {
+            id: response.cartItemId,
+            product_id: this.currentProduct.id,
+            quantity: 1,
+            name: this.currentProduct.name,
+            price: this.currentProduct.price,
+            image: this.currentProduct.image,
+          };
+          this.$store.dispatch('addToCart', cartItem);
+          alert('Galaxy S25 Ultra added to cart successfully!');
+        } else {
+          alert('Failed to add Galaxy S25 Ultra to cart: ' + response.message);
+        }
+      } catch (error) {
+        console.error('Error adding Galaxy S25 Ultra to cart:', error);
+        alert('An error occurred while adding Galaxy S25 Ultra to the cart.');
+      }
+    },
+    handleLearnMore() {
+      // Only handle for Galaxy S25 Ultra (index 0)
+      if (this.currentProductIndex !== 0) return;
+      this.$router.push(`/product/${this.currentProduct.id}`);
+    },
     changeProduct(index) {
       this.currentProductIndex = index;
       

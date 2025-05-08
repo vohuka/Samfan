@@ -6,7 +6,7 @@
         <option value="default">Sort by:</option>
         <option value="price-asc">Price: Low to High</option>
         <option value="price-desc">Price: High to Low</option>
-        <option value="rating-desc">Best ratting</option>
+        <option value="rating-desc">Best rating</option>
       </select>
     </div>
     <div class="product-grid">
@@ -46,7 +46,12 @@ export default {
       } else if (this.sortOption === 'price-desc') {
         sorted.sort((a, b) => b.price - a.price);
       } else if (this.sortOption === 'rating-desc') {
-        sorted.sort((a, b) => b.rating - a.rating);
+        // Chuyển đổi rating sang số để đảm bảo sắp xếp chính xác
+        sorted.sort((a, b) => {
+          const ratingA = parseFloat(a.rating) || 0;
+          const ratingB = parseFloat(b.rating) || 0;
+          return ratingB - ratingA;
+        });
       }
       this.sortedProducts = sorted;
     },

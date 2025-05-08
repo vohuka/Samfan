@@ -6,8 +6,20 @@ if ($conn->connect_error) {
     die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
 }
 
+// Sửa SQL query để tính toán giá trị rating giống như trong search_products.php
+$sql = "SELECT 
+    p.id, 
+    p.name, 
+    p.image, 
+    p.price, 
+    p.color, 
+    p.memory, 
+    p.ram, 
+    COALESCE(ROUND(AVG(r.rating), 1), 0) AS rating
+FROM products p
+LEFT JOIN ratings r ON p.id = r.product_id
+GROUP BY p.id, p.name, p.image, p.price, p.color, p.memory, p.ram";
 
-$sql = "SELECT * FROM products";
 $result = $conn->query($sql);
 
 $products = [];
