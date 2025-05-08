@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="./assets/compiled/css/app.css">
     <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
     <link rel="stylesheet" href="./assets/compiled/css/iconly.css">
+    <!-- Add Datatable CSS -->
+    <link rel="stylesheet" href="assets/extensions/simple-datatables/style.css">
+    <link rel="stylesheet" href="./assets/compiled/css/table-datatable.css">
 </head>
 
 <body>
@@ -19,7 +22,7 @@
             <div class="sidebar-header position-relative">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="logo">
-                        <a href="index.html"><img src="./assets/logo.png" style="height: 60px; width: auto;" alt="Logo"></a>
+                        <a href="admin.html"><img src="./assets/logo.png" style="height: 60px; width: auto;" alt="Logo"></a>
                     </div>
                     <div class="sidebar-toggler x">
                         <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -30,7 +33,7 @@
                 <ul class="menu">
                     <li class="sidebar-title">Admin Menu</li>
                     <li class="sidebar-item">
-                        <a href="index.html" class='sidebar-link'>
+                        <a href="admin.html" class='sidebar-link'>
                             <i class="bi bi-grid-fill"></i>
                             <span>Main</span>
                         </a>
@@ -79,32 +82,30 @@
             <h3>FAQ Management</h3>
         </div>
         <div class="page-content">
-            <section class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4 class="card-title mb-0">FAQ List</h4>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#faqModal" onclick="openAddModal()">
-                                <i class="bi bi-plus"></i> Add FAQ
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="faqTable">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Question</th>
-                                            <th>Answer</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="faqTableBody">
-                                        <!-- FAQ rows will be rendered here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <section class="section">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title">
+                            FAQ List
+                        </h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#faqModal" onclick="openAddModal()">
+                            <i class="bi bi-plus"></i> Add FAQ
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="faqTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Question</th>
+                                    <th>Answer</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="faqTableBody">
+                                <!-- FAQ rows will be rendered here -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -142,147 +143,185 @@
                 <div class="float-start">
                     <p>2025 &copy; Samfan</p>
                 </div>
-                <!-- <div class="float-end">
-                    <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span> by You</p>
-                </div> -->
             </div>
         </footer>
     </div>
 </div>
+
+<!-- Scripts -->
 <script src="assets/static/js/components/dark.js"></script>
 <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="assets/compiled/js/app.js"></script>
-<!-- Add Bootstrap JS if needed -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Add Datatable Scripts -->
+<script src="assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
+
 <script>
 const apiUrl = 'http://localhost/manage_faq.php';
-
 let faqModalInstance = null;
-
+let dataTable = null;
+let allFaqs = [];
 
 function getFaqModalInstance() {
-  if (!faqModalInstance) {
-    faqModalInstance = new bootstrap.Modal(document.getElementById('faqModal'));
-    
-    
-    document.getElementById('faqModal').addEventListener('hidden.bs.modal', cleanupModal);
-  }
-  return faqModalInstance;
+    if (!faqModalInstance) {
+        faqModalInstance = new bootstrap.Modal(document.getElementById('faqModal'));
+        document.getElementById('faqModal').addEventListener('hidden.bs.modal', cleanupModal);
+    }
+    return faqModalInstance;
 }
-
 
 function cleanupModal() {
-  
-  const backdrops = document.querySelectorAll('.modal-backdrop');
-  backdrops.forEach(backdrop => backdrop.remove());
-  
-  
-  document.body.classList.remove('modal-open');
-  document.body.style.overflow = '';
-  document.body.style.paddingRight = '';
-  
-  // Thêm dòng này để reset instance
-  faqModalInstance = null;
+    const backdrops = document.querySelectorAll('.modal-backdrop');
+    backdrops.forEach(backdrop => backdrop.remove());
+    
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    
+    faqModalInstance = null;
 }
 
-function renderFAQs(faqs) {
-  const tbody = document.getElementById('faqTableBody');
-  tbody.innerHTML = '';
-  if (faqs && faqs.length) {
-    faqs.forEach((faq, idx) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${faq.ID}</td>
-        <td>${faq.question}</td>
-        <td>${faq.answer}</td>
-        <td>
-          <button class="btn btn-sm btn-warning" onclick="openEditModal(${faq.ID}, '${encodeURIComponent(faq.question)}', '${encodeURIComponent(faq.answer)}')">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button class="btn btn-sm btn-danger" onclick="deleteFAQ(${faq.ID})">
-            <i class="bi bi-trash"></i>
-          </button>
-        </td>
-      `;
-      tbody.appendChild(tr);
+function renderFAQs() {
+    const tbody = document.getElementById('faqTableBody');
+    tbody.innerHTML = '';
+    
+    if (allFaqs && allFaqs.length) {
+        allFaqs.forEach((faq) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${faq.ID}</td>
+                <td>${faq.question}</td>
+                <td>${faq.answer}</td>
+                <td>
+                    <div class="buttons">
+                        <button class="btn btn-sm icon btn-warning" onclick="openEditModal(${faq.ID}, '${encodeURIComponent(faq.question)}', '${encodeURIComponent(faq.answer)}')">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm icon btn-danger" onclick="deleteFAQ(${faq.ID})">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+        
+        // Initialize or refresh datatable
+        if (dataTable) {
+            dataTable.destroy();
+        }
+        dataTable = new simpleDatatables.DataTable(document.getElementById("faqTable"), {
+            searchable: true,
+            perPage: 15,
+            perPageSelect: [15, 30, 50, 100]
+        });
+        
+        // Add Bootstrap 5 styling to pagination
+        adaptDataTableComponents();
+        
+    } else {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No FAQs found.</td></tr>';
+    }
+}
+
+// Add Bootstrap 5 styling to datatable components
+function adaptDataTableComponents() {
+    // Add bs5 classes to pagination elements
+    const paginationItems = document.querySelectorAll(".dataTable-pagination li");
+    paginationItems.forEach(item => {
+        item.classList.add("page-item");
+        const link = item.querySelector("a");
+        if (link) link.classList.add("page-link");
     });
-  } else {
-    tbody.innerHTML = '<tr><td colspan="4" class="text-center">No FAQs found.</td></tr>';
-  }
+    
+    // Move "per page dropdown" selector element out of label
+    const selector = document.querySelector(".dataTable-selector");
+    if (selector) {
+        selector.parentNode.parentNode.insertBefore(selector, selector.parentNode);
+        selector.classList.add("form-select", "form-select-sm");
+    }
+    
+    const info = document.querySelector(".dataTable-info");
+    if (info) {
+        info.classList.add("text-muted");
+    }
 }
 
 function fetchFAQs() {
-  fetch('http://localhost/get_FAQs.php', { credentials: 'include' })
-    .then(res => res.json())
-    .then(data => renderFAQs(data))
-    .catch(() => {
-      renderFAQs([]);
-    });
+    fetch('http://localhost/get_FAQs.php', { credentials: 'include' })
+        .then(res => res.json())
+        .then(data => {
+            allFaqs = data;
+            renderFAQs();
+        })
+        .catch(() => {
+            allFaqs = [];
+            renderFAQs();
+        });
 }
 
 function openAddModal() {
-  document.getElementById('faqId').value = '';
-  document.getElementById('faqQuestion').value = '';
-  document.getElementById('faqAnswer').value = '';
-  document.getElementById('faqModalLabel').innerText = 'Add FAQ';
-  getFaqModalInstance().show();
+    document.getElementById('faqId').value = '';
+    document.getElementById('faqQuestion').value = '';
+    document.getElementById('faqAnswer').value = '';
+    document.getElementById('faqModalLabel').innerText = 'Add FAQ';
+    getFaqModalInstance().show();
 }
 
 function openEditModal(id, question, answer) {
-  document.getElementById('faqId').value = id;
-  document.getElementById('faqQuestion').value = decodeURIComponent(question);
-  document.getElementById('faqAnswer').value = decodeURIComponent(answer);
-  document.getElementById('faqModalLabel').innerText = 'Edit FAQ';
-  getFaqModalInstance().show();
+    document.getElementById('faqId').value = id;
+    document.getElementById('faqQuestion').value = decodeURIComponent(question);
+    document.getElementById('faqAnswer').value = decodeURIComponent(answer);
+    document.getElementById('faqModalLabel').innerText = 'Edit FAQ';
+    getFaqModalInstance().show();
 }
 
 document.getElementById('faqForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const id = document.getElementById('faqId').value;
-  const question = document.getElementById('faqQuestion').value;
-  const answer = document.getElementById('faqAnswer').value;
-  const action = id ? 'edit' : 'add';
-  fetch(apiUrl + '?action=' + action, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ id, question, answer })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      fetchFAQs();
-      
-      // Đóng modal
-      getFaqModalInstance().hide();
-      
-      // Không cần setTimeout nữa vì hàm hidden.bs.modal sẽ tự gọi cleanupModal
-      // setTimeout(cleanupModal, 300);
-    } else {
-      alert(data.message || 'Error');
-    }
-  });
+    e.preventDefault();
+    const id = document.getElementById('faqId').value;
+    const question = document.getElementById('faqQuestion').value;
+    const answer = document.getElementById('faqAnswer').value;
+    const action = id ? 'edit' : 'add';
+    fetch(apiUrl + '?action=' + action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ id, question, answer })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            fetchFAQs();
+            getFaqModalInstance().hide();
+        } else {
+            alert(data.message || 'Error');
+        }
+    });
 });
 
 function deleteFAQ(id) {
-  if (!confirm('Are you sure you want to delete this FAQ?')) return;
-  fetch(apiUrl + '?action=delete', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include',
-    body: JSON.stringify({ id })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      fetchFAQs();
-    } else {
-      alert(data.message || 'Error');
-    }
-  });
+    if (!confirm('Are you sure you want to delete this FAQ?')) return;
+    fetch(apiUrl + '?action=delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            fetchFAQs();
+        } else {
+            alert(data.message || 'Error');
+        }
+    });
 }
 
-fetchFAQs();
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    fetchFAQs();
+});
 </script>
 </body>
 </html>

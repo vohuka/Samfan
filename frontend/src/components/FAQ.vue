@@ -17,6 +17,13 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
         </span>
+        <button 
+          v-if="search" 
+          class="faq-banner-search-clear" 
+          @click="search = ''"
+        >
+          ×
+        </button>
       </div>
       <div class="faq-banner-tags">
         <button v-for="tag in tags" :key="tag" class="faq-banner-tag" @click="search = tag">{{ tag }}</button>
@@ -39,9 +46,12 @@
     <div
       class="faq-list"
       :class="{ 'fade-in': faqFade }"
-      :key="currentPage"
+      :key="currentPage + search"
     >
-      <div class="faq-item" v-for="(faq, idx) in paginatedFaqs" :key="(currentPage-1)*pageSize + idx">
+      <div v-if="filteredFaqs.length === 0" class="no-results">
+        <p>No FAQs found matching "{{ search }}". Please try a different search term.</p>
+      </div>
+      <div class="faq-item" v-else v-for="(faq, idx) in paginatedFaqs" :key="(currentPage-1)*pageSize + idx">
         <div class="faq-question" @click="toggle(idx)">
           <span>{{ faq.question }}</span>
           <span>{{ activeIndexes.includes(idx) ? '-' : '+' }}</span>
@@ -107,7 +117,7 @@ export default {
   data() {
     return {
       search: '',
-      tags: ['payment', 'shipping', 'returns', 'cancellation', 'transaction', 'warranty'],
+      tags: ['payment', 'shipping', 'Samfan', 'cancellation', 'transaction', 'warranty'],
       activeIndexes: [], // Change from activeIndex: null
       faqs: [],
       currentPage: 1,
@@ -116,12 +126,25 @@ export default {
     }
   },
   computed: {
+    filteredFaqs() {
+      if (!this.search.trim()) {
+        return this.faqs;
+      }
+      
+      const searchTerm = this.search.toLowerCase().trim();
+      return this.faqs.filter(faq => 
+        faq.question.toLowerCase().includes(searchTerm) || 
+        faq.answer.toLowerCase().includes(searchTerm)
+      );
+    },
     paginatedFaqs() {
       const start = (this.currentPage - 1) * this.pageSize;
-      return this.faqs.slice(start, start + this.pageSize);
+      // Change to use filteredFaqs instead of faqs
+      return this.filteredFaqs.slice(start, start + this.pageSize);
     },
     totalPages() {
-      return Math.ceil(this.faqs.length / this.pageSize);
+      // Change to use filteredFaqs instead of faqs
+      return Math.ceil(this.filteredFaqs.length / this.pageSize);
     }
   },
   async mounted() {
@@ -182,6 +205,14 @@ export default {
         }, 10);
       });
     }
+  },
+  watch: {
+    // Reset to first page when search term changes
+    search() {
+      this.currentPage = 1;
+      this.activeIndexes = [];
+      this.triggerFade();
+    }
   }
 }
 </script>
@@ -207,18 +238,18 @@ export default {
   z-index: 2;
   text-align: center;
   width: 100%;
-  max-width: 700px; /* Giảm kích thước tối đa */
+  max-width: 700px; 
   margin: 0 auto;
   padding: 24px 10px;
 }
 .faq-banner-subtitle {
-  font-size: 18px; /* Nhỏ lại */
+  font-size: 18px; 
   margin-bottom: 8px;
   font-weight: 500;
   opacity: 0.9;
 }
 .faq-banner-title {
-  font-size: 36px; /* Nhỏ lại */
+  font-size: 36px; 
   font-weight: bold;
   margin-bottom: 24px;
   line-height: 1.1;
@@ -227,20 +258,24 @@ export default {
 .faq-banner-search {
   position: relative;
   width: 90%;
-  max-width: 500px; /* Nhỏ lại */
+  max-width: 500px; 
   margin: 0 auto 14px auto;
+  box-sizing: border-box;
+  left: 0; 
+  right: 0; 
 }
 .faq-banner-search input {
   width: 100%;
-  padding: 12px 48px 12px 38px; /* Nhỏ lại */
+  padding: 12px 40px; 
   border-radius: 40px;
   border: none;
-  font-size: 15px; /* Nhỏ lại */
+  font-size: 15px; 
   font-family: 'Samsung Sharp Sans', Arial, sans-serif;
   color: #222;
   background: #fff;
   outline: none;
   box-shadow: 0 2px 16px 0 rgba(0,0,0,0.07);
+  box-sizing: border-box; 
 }
 .faq-banner-search-icon {
   position: absolute;
@@ -248,6 +283,23 @@ export default {
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
+}
+.faq-banner-search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #999;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+}
+
+.faq-banner-search-clear:hover {
+  color: #2d2eaa;
 }
 .faq-banner-tags {
   margin-top: 8px;
@@ -290,7 +342,7 @@ export default {
 .icon.lock { left: 90%; top: 40%; }
 .icon.ticket { left: 30%; top: 10%; }
 .icon.clock { left: 60%; top: 12%; }
-/* Bạn có thể dùng icon font hoặc SVG thực tế ở đây nếu muốn */
+
 
 .faq-page {
   max-width: 700px;
@@ -321,14 +373,14 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* font-family: 'Samsung Sharp Sans', Arial, sans-serif; */
+  
   font-family: 'Rubik', Arial, sans-serif;
 }
 .faq-answer {
   margin-top: 20px;
   font-size: 18px;
   color: #333;
-  /* font-family: 'Samsung Sharp Sans', Arial, sans-serif; */
+  
   font-family: 'Rubik', Arial, sans-serif;
 }
 
@@ -596,7 +648,90 @@ export default {
 }
 .faq-slide-enter-to,
 .faq-slide-leave-from {
-  max-height: 200px; /* Đủ lớn cho nội dung, có thể tăng nếu cần */
+  max-height: 200px; 
   opacity: 1;
+}
+
+.no-results {
+  text-align: center;
+  padding: 30px 0;
+  color: #666;
+  font-size: 18px;
+}
+
+
+
+
+.faq-banner-search {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto 14px;
+  box-sizing: border-box;
+}
+
+
+@media (max-width: 768px) {
+  .faq-banner-search {
+    width: 90%;
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .faq-banner-search input {
+    padding: 10px 40px 10px 40px; 
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .faq-banner-search-icon {
+    left: 12px; 
+  }
+  
+  .faq-banner-search-clear {
+    right: 12px; 
+  }
+}
+
+
+@media (max-width: 480px) {
+  .faq-banner-content {
+    padding: 20px 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .faq-banner-search {
+    width: 94%;
+    padding: 0;
+    margin: 0 auto 14px;
+  }
+  
+  .faq-banner-search input {
+    padding: 8px 36px 8px 36px; 
+    font-size: 13px;
+  }
+  
+  .faq-banner-search-icon {
+    left: 12px;
+  }
+  
+  .faq-banner-search-clear {
+    right: 12px;
+  }
+}
+
+
+@media (max-width: 360px) {
+  .faq-banner-search {
+    width: 90%;
+  }
+  
+  .faq-banner-search input {
+    padding: 7px 32px 7px 32px; 
+    font-size: 12px;
+  }
 }
 </style>
