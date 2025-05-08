@@ -5,7 +5,7 @@
       <div class="nav-container">
         <div class="brand-text">About Us</div>
         <ul>
-          <li><a href="#">Company Information</a></li>
+          <li><a href="#" @click.prevent="$router.push('/about')">Company Information</a></li>
           <li class="dropdown">
             <a href="#" @click.prevent.stop="toggleDropdown('business')">
               Business Areas
@@ -16,7 +16,7 @@
             </a>
             <transition name="fade-dropdown">
               <div class="dropdown-content" v-if="isBusinessDropdownOpen" @click.stop>
-                <a href="#">Overview</a>
+                <a href="#" @click.prevent="$router.push('/business-areas')">Overview</a>
                 <a href="#">Consumer Electronics</a>
                 <a href="#">Mobile & Network</a>
                 <a href="#">Device Solutions</a>
@@ -322,6 +322,7 @@ export default {
   height: 600px;
   background: url('../assets/samsung_building.jpg') center/cover;
   color: black;
+  font-family: 'Samsung Sharp Sans';
 }
 
 .banner-content {
@@ -332,29 +333,123 @@ export default {
   max-width: 600px;
 }
 
-.section-title {
-  font-family: 'Samsung Sharp Sans';
-  font-size: 16px;
-  margin-bottom: 20px;
+/* Add these responsive styles for the main banner */
+@media screen and (max-width: 768px) {
+  .banner {
+    height: 400px; /* Reduce height on smaller screens */
+  }
+  
+  .banner-content {
+    left: 0;
+    padding: 0 20px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .section-title {
+    font-size: 14px;
+  }
+  
+  .banner-title {
+    font-size: 32px;
+    margin: 15px 0;
+  }
+  
+  .banner-text {
+    font-size: 16px;
+  }
 }
 
-.banner-title {
-  font-family: 'Samsung Sharp Sans';
-  font-size: 48px;
-  margin: 20px 0;
-  font-weight: bold;
+/* Further adjustments for very small screens */
+@media screen and (max-width: 480px) {
+  .banner {
+    height: 350px;
+  }
+  
+  .banner-title {
+    font-size: 28px;
+  }
+  
+  .banner-text {
+    font-size: 14px;
+  }
 }
 
-.banner-text {
-  font-family: 'Samsung Sharp Sans';
-  font-size: 18px;
-  line-height: 1.6;
+/* Improve responsive styles for banner 2, 3, 4 */
+@media screen and (max-width: 768px) {
+  .banner-2,
+  .banner-3,
+  .banner-4 {
+    height: 400px;
+    margin: 30px auto;
+  }
+  
+  .banner2-content,
+  .banner3-content,
+  .banner4-content {
+    padding: 25px 20px;
+    text-align: center;
+  }
+  
+  .banner2-title,
+  .banner3-title,
+  .banner4-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .banner2-text,
+  .banner3-text,
+  .banner4-text {
+    font-size: 16px;
+  }
 }
 
-.banner-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* Enhance CEO section responsiveness */
+@media screen and (max-width: 768px) {
+  .ceo-info {
+    margin: 40px auto;
+    padding: 30px 15px;
+  }
+  
+  .ceo-title {
+    font-size: 28px;
+  }
+  
+  .ceo-photo img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .ceo-name {
+    font-size: 22px;
+  }
+  
+  .ceo-details {
+    font-size: 16px;
+    padding: 0 10px;
+    text-align: left;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+  
+  .ceo-details li {
+    margin-bottom: 8px;
+  }
+}
+
+/* Improve about description responsiveness */
+@media screen and (max-width: 768px) {
+  .about-desc {
+    margin: 40px auto 0 auto;
+    padding: 30px 20px;
+  }
+  
+  .about-desc p {
+    font-size: 16px;
+    text-align: left;
+    line-height: 1.5;
+  }
 }
 
 /* Banner 2, 3, 4 Styles chung */

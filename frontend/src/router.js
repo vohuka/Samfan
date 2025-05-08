@@ -13,6 +13,7 @@ const About = () => import('./components/About.vue')
 const Product = () => import('./components/Product.vue')
 const Contact = () => import('./components/Contact.vue')
 const FAQ = () => import('./components/FAQ.vue')
+const BusinessAreas = () => import('./components/BusinessAreas.vue')
 
 const routes = [
   {
@@ -59,6 +60,11 @@ const routes = [
     path: '/product/:id', // Thêm route mới cho trang chi tiết sản phẩm
     name: 'ProductDetail',
     component: ProductDetail
+  },
+  {
+    path: '/business-areas',
+    name: 'BusinessAreas',
+    component: BusinessAreas
   },
   { 
     path: '/cart', 
