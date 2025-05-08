@@ -22,14 +22,30 @@ $full_name = $data['fullName'] ?? '';
 $email = $data['email'] ?? '';
 $phone = $data['phone'] ?? '';
 $address = $data['address'] ?? '';
-$image_url = $data['imageUrl'] ?? null; // Add this line
+$image_url = $data['imageUrl'] ?? null;
 
-// Update user profile with image URL
-$stmt = $conn->prepare("UPDATE user SET full_name = ?, email = ?, phone = ?, address = ?, image_url = ? WHERE id = ?");
-$stmt->bind_param("sssssi", $full_name, $email, $phone, $address, $image_url, $user_id);
+// Check if password is being updated
+$password_updated = false;
+if (isset($data['password']) && !empty($data['password'])) {
+    $new_password = $data['password'];
+    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+    $password_updated = true;
+    
+    // Update user profile with password
+    $stmt = $conn->prepare("UPDATE user SET full_name = ?, email = ?, phone = ?, address = ?, image_url = ?, password = ? WHERE id = ?");
+    $stmt->bind_param("ssssssi", $full_name, $email, $phone, $address, $image_url, $hashed_password, $user_id);
+} else {
+    // Update user profile without changing password
+    $stmt = $conn->prepare("UPDATE user SET full_name = ?, email = ?, phone = ?, address = ?, image_url = ? WHERE id = ?");
+    $stmt->bind_param("sssssi", $full_name, $email, $phone, $address, $image_url, $user_id);
+}
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Profile updated successfully']);
+    $response_message = $password_updated ? 
+        'Profile and password updated successfully' : 
+        'Profile updated successfully';
+        
+    echo json_encode(['success' => true, 'message' => $response_message]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Failed to update profile: ' . $conn->error]);
 }

@@ -321,13 +321,9 @@ export default {
           const res = await login(this.loginForm);
           if (res.success) {
             toastr.success('Login successful!');
-            // Update the user state in Vuex
             this.$store.dispatch('setUser', res.user);
-            // Close the login modal
             this.isLoginOpen = false;
-            // Immediately load cart data
             await this.loadCart();
-            // Force component to update
             this.$forceUpdate();
           } else {
             this.loginError = res.message || 'Login failed';

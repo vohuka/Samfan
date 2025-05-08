@@ -48,7 +48,10 @@
         </div>
         <div class="login-container">
           <button class="icon-btn" @click="toggleLogin">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Show profile image if logged in, otherwise show default SVG icon -->
+            <img v-if="user && user.image_url" :src="user.image_url" alt="Profile" class="profile-button-img">
+            <img v-else-if="user" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" alt="Profile" class="profile-button-img">
+            <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
@@ -334,6 +337,39 @@
               required
             >
           </div>
+          
+          <!-- Password Reset Section -->
+          <div class="password-reset-section">
+            <div class="password-reset-header">
+              <h3>Reset Password</h3>
+              <button type="button" @click="togglePasswordReset" class="toggle-password-btn">
+                {{ showPasswordReset ? 'Cancel' : 'Change Password' }}
+              </button>
+            </div>
+            
+            <div v-if="showPasswordReset" class="password-reset-fields">
+              <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input 
+                  type="password"
+                  id="new-password"
+                  v-model="editProfileForm.newPassword"
+                  placeholder="Enter new password"
+                  required
+                >
+              </div>
+              <div class="form-group">
+                <label for="confirm-new-password">Confirm New Password</label>
+                <input 
+                  type="password"
+                  id="confirm-new-password"
+                  v-model="editProfileForm.confirmNewPassword"
+                  placeholder="Confirm new password"
+                  required
+                >
+              </div>
+            </div>
+          </div>
 
           <div v-if="editProfileError" class="login-error">
             {{ editProfileError }}
@@ -392,15 +428,18 @@ export default {
         { id: 3, name: 'Galaxy A06', price: '3.489.500 VND', image: galaxyA06 },
         { id: 4, name: 'Galaxy A16 5G', price: '5.889.600 VND', image: galaxyA16 }
       ],
-      user: null, // Thêm biến user
-      isProfileOpen: false, // Thêm biến trạng thái overlay profile
-      isEditProfileOpen: false, // Thêm biến trạng thái overlay edit profile
+      user: null, 
+      isProfileOpen: false, 
+      isEditProfileOpen: false, 
+      showPasswordReset: false, // Add this new state
       editProfileForm: {
         fullName: '',
         email: '',
         phone: '',
         address: '',
-        imageUrl: '' // Thêm trường imageUrl
+        imageUrl: '',
+        newPassword: '',       // Add this for new password
+        confirmNewPassword: '' // Add this for password confirmation
       },
       editProfileError: ''
     }
@@ -548,6 +587,15 @@ export default {
         }
       }
     },
+    togglePasswordReset() {
+      this.showPasswordReset = !this.showPasswordReset;
+      if (!this.showPasswordReset) {
+        // Clear password fields when canceling
+        this.editProfileForm.newPassword = '';
+        this.editProfileForm.confirmNewPassword = '';
+      }
+    },
+    
     openEditProfile() {
       // Pre-fill the form with the current user data
       if (this.user) {
@@ -555,9 +603,13 @@ export default {
         this.editProfileForm.email = this.user.email || '';
         this.editProfileForm.phone = this.user.phone || '';
         this.editProfileForm.address = this.user.address || '';
-        this.editProfileForm.imageUrl = this.user.image_url || ''; // Add this line
+        this.editProfileForm.imageUrl = this.user.image_url || '';
+        // Reset password fields
+        this.editProfileForm.newPassword = '';
+        this.editProfileForm.confirmNewPassword = '';
       }
       
+      this.showPasswordReset = false; // Always hide password reset section initially
       this.isEditProfileOpen = true;
       this.isProfileOpen = false; // Close the profile dropdown
     },
@@ -566,19 +618,56 @@ export default {
       this.isEditProfileOpen = !this.isEditProfileOpen;
       if (!this.isEditProfileOpen) {
         this.editProfileError = '';
+        this.showPasswordReset = false;
       }
     },
     
     async handleEditProfile() {
       try {
-        const response = await updateProfile(this.editProfileForm);
+        // Validate password if user is trying to change it
+        if (this.showPasswordReset) {
+          if (!this.editProfileForm.newPassword || !this.editProfileForm.confirmNewPassword) {
+            this.editProfileError = 'Please fill in all password fields';
+            return;
+          }
+          
+          if (this.editProfileForm.newPassword !== this.editProfileForm.confirmNewPassword) {
+            this.editProfileError = 'Passwords do not match';
+            return;
+          }
+          
+          if (this.editProfileForm.newPassword.length < 6) {
+            this.editProfileError = 'Password must be at least 6 characters';
+            return;
+          }
+        }
+        
+        // Prepare data for API call
+        const updateData = {
+          fullName: this.editProfileForm.fullName,
+          email: this.editProfileForm.email,
+          phone: this.editProfileForm.phone,
+          address: this.editProfileForm.address,
+          imageUrl: this.editProfileForm.imageUrl
+        };
+        
+        // Add password if it's being changed
+        if (this.showPasswordReset && this.editProfileForm.newPassword) {
+          updateData.password = this.editProfileForm.newPassword;
+        }
+        
+        const response = await updateProfile(updateData);
+        
         if (response.success) {
           // Update the user object with the new values
           this.user.full_name = this.editProfileForm.fullName;
           this.user.email = this.editProfileForm.email;
           this.user.phone = this.editProfileForm.phone;
           this.user.address = this.editProfileForm.address;
-          this.user.image_url = this.editProfileForm.imageUrl; // Add this line
+          this.user.image_url = this.editProfileForm.imageUrl;
+          
+          // Update Vuex store
+          this.$store.dispatch('setUser', this.user);
           
           // Close the edit profile modal
           this.isEditProfileOpen = false;
@@ -589,6 +678,7 @@ export default {
           this.editProfileError = response.message || 'Failed to update profile';
         }
       } catch (error) {
+        console.error('Profile update error:', error);
         this.editProfileError = 'Failed to update profile. Please try again.';
       }
     }
@@ -1211,6 +1301,50 @@ export default {
   font-family: 'Samsung Sharp Sans';
 }
 
+.password-reset-section {
+  margin-top: 20px;
+}
+
+.password-reset-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.password-reset-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.toggle-password-btn {
+  background: none;
+  border: none;
+  color: #1428a0;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: 'Samsung Sharp Sans';
+  font-size: 14px;
+}
+
+.password-reset-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.password-reset-fields .form-group {
+  margin-bottom: 0;
+}
+
+.profile-button-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1428a0; /* Adding thin blue border */
+}
 </style>
 
 <style>
