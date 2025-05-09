@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Check login status
+
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Please log in']);
     exit;
@@ -25,25 +25,25 @@ $phone = $data['phone'] ?? '';
 $address = $data['address'] ?? '';
 $imageUrl = $data['imageUrl'] ?? '';
 
-// Validate required fields
+
 if (empty($fullName) || empty($email) || empty($phone) || empty($address)) {
     echo json_encode(['success' => false, 'message' => 'All fields are required']);
     exit;
 }
 
-// Update user profile
+
 $query = "UPDATE user SET full_name = ?, email = ?, phone = ?, address = ?";
 $params = [$fullName, $email, $phone, $address];
 $types = "ssss";
 
-// Include image URL if provided
+
 if (!empty($imageUrl)) {
     $query .= ", image_url = ?";
     $params[] = $imageUrl;
     $types .= "s";
 }
 
-// Add password update if provided
+
 if (isset($data['password']) && !empty($data['password'])) {
     $password = password_hash($data['password'], PASSWORD_DEFAULT);
     $query .= ", password = ?";
@@ -59,7 +59,7 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param($types, ...$params);
 
 if ($stmt->execute()) {
-    // Get updated user data
+    
     $getUserStmt = $conn->prepare("SELECT id, username, full_name, email, phone, address, image_url FROM user WHERE id = ?");
     $getUserStmt->bind_param("i", $user_id);
     $getUserStmt->execute();

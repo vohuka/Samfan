@@ -12,14 +12,14 @@ try {
     $data = json_decode(file_get_contents('php://input'), true);
     $action = $_GET['action'] ?? ($data['action'] ?? '');
 
-    // Get product specs categories (for dropdown options)
+    
     if ($method === 'GET' && $action === 'categories') {
         $categories = ['processor', 'display', 'camera', 'storage', 'connectivity', 'network', 'physical'];
         echo json_encode(['success' => true, 'categories' => $categories]);
         exit;
     }
 
-    // Add a new spec
+    
     if ($method === 'POST' && $action === 'add') {
         $product_id = $data['product_id'] ?? 0;
         $category = $data['category'] ?? '';
@@ -50,7 +50,7 @@ try {
         exit;
     }
 
-    // Edit an existing spec
+    
     if ($method === 'POST' && $action === 'edit') {
         $id = $data['id'] ?? 0;
         $product_id = $data['product_id'] ?? 0;
@@ -81,7 +81,7 @@ try {
         exit;
     }
 
-    // Delete a spec
+    
     if ($method === 'POST' && $action === 'delete') {
         $id = $data['id'] ?? 0;
         $product_id = $data['product_id'] ?? 0;

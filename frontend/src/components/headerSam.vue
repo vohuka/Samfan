@@ -1,4 +1,4 @@
-<!-- src/components/Header.vue -->
+
 
 <template>
   <header class="samfan-header">
@@ -48,7 +48,7 @@
         </div>
         <div class="login-container">
           <button class="icon-btn" @click="toggleLogin">
-            <!-- Show profile image if logged in, otherwise show default SVG icon -->
+            
             <img v-if="user && user.image_url" :src="user.image_url" alt="Profile" class="profile-button-img">
             <img v-else-if="user" src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" alt="Profile" class="profile-button-img">
             <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -212,7 +212,7 @@
               required
             >
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="signup-image">Profile Image URL</label>
             <input 
               type="text"
@@ -220,7 +220,7 @@
               v-model="signupForm.imageUrl"
               placeholder="Enter profile image URL (optional)"
             >
-          </div>
+          </div> -->
 
           <div class="form-group">
             <label for="signup-password">Password</label>
@@ -271,7 +271,7 @@
       </div>
     </div>
 
-    <!-- Add the Edit Profile Modal -->
+    
     <div v-if="isEditProfileOpen" class="login-overlay" :class="{ 'mobile-login': isMobile }">
       <div class="login-modal">
         <div class="login-header">
@@ -1045,8 +1045,8 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
-  max-height: 500px; /* Chiều cao tối đa của vùng lưới (có thể điều chỉnh) */
-  overflow-y: auto; /* Kích hoạt cuộn dọc khi vượt quá chiều cao */
+  max-height: 500px; 
+  overflow-y: auto; 
   padding: 10px;
   border: 1px solid #ddd;
   background-color: #f9f9f9;
@@ -1371,34 +1371,34 @@ export default {
   from { opacity: 0; transform: translateY(-10px);}
   to { opacity: 1; transform: translateY(0);}
 }
-/* Edit Profile button styling */
+
 .edit-profile-btn {
   margin-bottom: 0 !important;
 }
 
-/* Add this CSS rule specifically for the profile dropdown buttons */
+
 .profile-info .login-buttons {
   display: flex;
-  flex-direction: column;  /* Change to column layout */
-  gap: 10px;               /* Adjust spacing between buttons */
-  margin-top: 15px;        /* Adjust top margin as needed */
-  width: 100%;             /* Make buttons full width */
+  flex-direction: column;  
+  gap: 10px;               
+  margin-top: 15px;        
+  width: 100%;             
 }
 
-/* Make both buttons consistent width */
+
 .profile-info .login-buttons button {
-  width: 100%;             /* Full width buttons */
-  padding: 10px 0;         /* Consistent padding */
-  justify-content: center; /* Center button text */
-  border-radius: 5px;      /* Match the rounded corners in screenshot */
+  width: 100%;             
+  padding: 10px 0;         
+  justify-content: center; 
+  border-radius: 5px;      
 }
 
-/* Remove the bottom margin since we're using flex column with gap */
+
 .edit-profile-btn {
   margin-bottom: 0 !important;
 }
 
-/* Add these styles to your existing <style> section */
+
 
 .profile-header {
   display: flex;
@@ -1500,7 +1500,7 @@ export default {
   height: 24px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #1428a0; /* Adding thin blue border */
+  border: 2px solid #1428a0; 
 }
 .file-upload-btn {
   background-color: #a4b2ff;

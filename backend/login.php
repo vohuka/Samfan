@@ -22,7 +22,7 @@ if (!$username || !$password) {
     exit;
 }
 
-// Modified query to include status check
+// Status check
 $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();

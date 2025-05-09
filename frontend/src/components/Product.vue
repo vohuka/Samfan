@@ -490,7 +490,7 @@ export default {
   margin: 0 0;
   align-items: center;
   color: white;
-  overflow: hidden; /* Để đảm bảo video không tràn ra ngoài */
+  overflow: hidden; 
 }
 
 .video-background {
@@ -499,15 +499,15 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Giữ tỷ lệ video và cover toàn bộ container */
-  z-index: -1; /* Đảm bảo video nằm dưới nội dung */
+  object-fit: cover; 
+  z-index: -1; 
 }
 
 .banner-content {
   max-width: 600px;
   margin-top: 250px;
   margin-left: 100px;
-  position: relative; /* Để nằm trên video */
+  position: relative; 
   z-index: 1;
 }
 
@@ -522,56 +522,56 @@ export default {
   padding-left: 35px;
 }
 
-/* Primary Button (Learn More) */
+
 .primary-btn {
-  background-color: transparent; /* Không có màu nền */
-  border: none; /* Không có viền */
-  color: white; /* Chữ màu trắng */
+  background-color: transparent; 
+  border: none; 
+  color: white; 
   padding: 12px 20px;
   font-family: 'Samsung Sharp Sans';
   
   cursor: pointer;
-  position: relative; /* Để định vị đường gạch chân */
-  text-transform: uppercase; /* Chữ in hoa như trong hình */
+  position: relative; 
+  text-transform: uppercase; 
 }
 
 .primary-btn::after {
-  content: ''; /* Tạo đường gạch chân bằng pseudo-element */
+  content: ''; 
   position: absolute;
-  bottom: 8px; /* Đặt vị trí đường gạch chân */
-  left: 50%; /* Bắt đầu từ giữa */
-  width: 85px; /* Độ dài ban đầu của đường gạch chân */
-  height: 2px; /* Độ dày của đường gạch chân */
-  background-color: white; /* Màu trắng cho đường gạch chân */
-  transform: translateX(-50%); /* Căn giữa đường gạch chân */
-  transition: width 0.3s ease; /* Hiệu ứng mở rộng mượt mà */
+  bottom: 8px; 
+  left: 50%; 
+  width: 85px; 
+  height: 2px; 
+  background-color: white; 
+  transform: translateX(-50%); 
+  transition: width 0.3s ease; 
 }
 
 .primary-btn:hover::after {
-  width: 100%; /* Khi hover, đường gạch chân mở rộng toàn bộ chiều rộng */
+  width: 100%; 
 }
 
-/* Secondary Button (Shop Now) */
+
 .secondary-btn {
-  background-color: white; /* Nền trắng mặc định */
-  color: black; /* Chữ đen mặc định */
-  border: none; /* Không có viền mặc định */
+  background-color: white; 
+  color: black; 
+  border: none; 
   padding: 12px 20px;
   font-family: 'Samsung Sharp Sans';
  
   cursor: pointer;
-  border-radius: 50px; /* Bo tròn như trong hình */
-  text-transform: uppercase; /* Chữ in hoa như trong hình */
-  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease; /* Hiệu ứng mượt mà */
+  border-radius: 50px; 
+  text-transform: uppercase; 
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease; 
 }
 
 .secondary-btn:hover {
-  background-color: black; /* Nền chuyển sang đen khi hover */
-  color: white; /* Chữ chuyển sang trắng */
-  border: 2px solid white; /* Thêm viền trắng khi hover */
+  background-color: black; 
+  color: white; 
+  border: 2px solid white; 
 }
 
-/* Suggest Products Section with Carousel */
+
 .suggest-products {
   padding: 50px;
   text-align: center;
@@ -622,7 +622,7 @@ export default {
 .suggest-product-card img {
   max-width: 100%;
   height: 200px; 
-  /* fix */
+  
   object-fit: contain;
   margin-bottom: 15px;
 }
@@ -692,7 +692,7 @@ export default {
   margin-left: 10px;
 }
 
-/* Slide Animation */
+
 .slide-enter-active, .slide-leave-active {
   transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
@@ -708,7 +708,7 @@ export default {
 }
 
 
-/* Phần Trending Section */
+
 .trending {
   padding: 50px 20px;
   text-align: center;
@@ -808,22 +808,22 @@ export default {
 }
 
 .trending-product-card.large img {
-  height: auto; /* Chiều cao lớn hơn cho ảnh trong thẻ large */
+  height: auto; 
 }
 
 .trending-product-card img {
   width: 100%;
-  height: 180px; /* Slightly reduced to give more space for text */
+  height: 180px; 
   object-fit: contain;
-  margin-bottom: 15px; /* Increased spacing between image and text */
+  margin-bottom: 15px; 
 }
 
 .trending-product-card .product-info {
   display: flex;
   flex-direction: column;
-  /* This is key - make it take all remaining space */
+  
   flex: 1;
-  /* Set minimum height to ensure there's always space */
+  
   min-height: 100px;
   width: 100%;
   padding: 0;
@@ -855,12 +855,12 @@ export default {
 
 .product-info h3 {
   margin-top: 10px;
-  margin-bottom: 8px; /* Consistent spacing */
+  margin-bottom: 8px; 
   font-size: 16px;
   font-weight: 500;
   width: 100%;
-  height: auto; /* Change from fixed height to auto */
-  max-height: 40px; /* Maximum height */
+  height: auto; 
+  max-height: 40px; 
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -891,7 +891,7 @@ export default {
   background-color: #ff3333;
 }
 
-/* Fade transition for category change */
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
@@ -906,7 +906,7 @@ export default {
   transform: translateX(-50px);
 }
 
-/* Responsive styles */
+
 @media (max-width: 1024px) {
   .product-grid-trending {
     grid-template-columns: 1fr 1fr;
@@ -945,7 +945,7 @@ export default {
   
   .suggest-product-container {
     flex-direction: column;
-    /* align-content: space-between; */
+    
   }
   
   .carousel-arrow {

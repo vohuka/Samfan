@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2025 at 11:10 PM
+-- Generation Time: May 09, 2025 at 06:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,12 +39,12 @@ CREATE TABLE `about_content` (
 --
 
 INSERT INTO `about_content` (`id`, `section`, `content`, `last_updated`) VALUES
-(1, 'main_banner', '{\"section_title\":\"Company Information\",\"title\":\"Mission & Values\",\"text\":\"Our commitment is to operate responsibly as a leading global company.\"}', '2025-05-08 14:51:22'),
+(1, 'main_banner', '{\"id\":\"1\",\"section_title\":\"Company Information Test\",\"title\":\"Mission & Values\",\"text\":\"Our commitment is to operate responsibly as a leading global company.\"}', '2025-05-09 02:03:50'),
 (2, 'about_desc', '{\"text\":\"Samfan believes in creating innovative products that enhance people\'s lives. Our commitment to excellence drives everything we do.\"}', '2025-05-08 14:23:42'),
 (3, 'banner2', '{\"title\":\"Samfan\'s Vision\",\"text\":\"To inspire the world with innovative technologies, products and design that enrich people\'s lives and contribute to social prosperity.\"}', '2025-05-08 14:23:42'),
 (4, 'banner3', '{\"title\":\"Samfan\'s Core Values\",\"text\":\"Samfan believes that living by strong values is the key to good business. That\'s why these core values, together with a strict code of conduct, are at the heart of every decision the company makes.\"}', '2025-05-08 14:23:42'),
 (5, 'banner4', '{\"title\":\"Samfan Business Principles\",\"text\":\"Our business principles serve as the foundation for our actions and strategies. We are committed to ethical business practices, environmental sustainability, and making a positive impact on society.\"}', '2025-05-08 14:23:42'),
-(6, 'ceo_info', '{\"id\":\"6\",\"name\":\"John Smithe\",\"title\":\"Chief Executive Officer\",\"details\":\"Joined Samfan in 2010\\nPreviously CEO of Tech Innovations Inc\\nHolds an MBA from Harvard Business School\\nLed the company through digital transformation\",\"image\":\"\\/images\\/ceo\\/ceo_1746732876_profile.jpg\"}', '2025-05-08 19:34:43');
+(6, 'ceo_info', '{\"id\":\"6\",\"name\":\"John Smithe\",\"title\":\"Chief Executive Officer\",\"details\":\"Joined Samfan in 2010\\nPreviously CEO of Tech Innovations Inc\\nHolds an MBA from Harvard Business School\\nLed the company through digital transformation\",\"image\":\"\\/images\\/ceo\\/ceo_1746756245_profile.jpg\"}', '2025-05-09 02:04:07');
 
 -- --------------------------------------------------------
 
@@ -83,6 +83,17 @@ CREATE TABLE `comments` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `product_id`, `user_id`, `comment`, `created_at`) VALUES
+(1, 1, 2, 'This product works really well, exceeded my expectations!', '2025-05-09 03:15:00'),
+(2, 2, 3, 'Shipping was fast and the item was exactly as described.', '2025-05-09 03:30:00'),
+(3, 3, 1, 'Had some issues initially, but customer support helped a lot.', '2025-05-09 04:00:00'),
+(4, 4, 5, 'Good value for money. Would definitely recommend.', '2025-05-09 04:30:00'),
+(5, 5, 4, 'Battery life could be better, but overall it’s a solid choice.', '2025-05-09 05:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -100,15 +111,53 @@ CREATE TABLE `faq` (
 --
 
 INSERT INTO `faq` (`ID`, `question`, `answer`) VALUES
-(1, 'What is SamFan?', 'SamFan is a fictional community platform for fans of Samsung products, providing the latest news, tips, and discussions.'),
+(1, 'What is SamFan about?', 'SamFan is a fictional community platform for fans of Samsung products, providing the latest news, tips, and discussions.'),
 (2, 'How do I reset my password?', 'To reset your password, go to the login page and click on \"Forgot Password\". Follow the instructions sent to your email.'),
 (3, 'Where can I find firmware updates?', 'Firmware updates are usually available on the official Samsung support website or through the device\'s Settings > Software Update menu.'),
 (4, 'How do I contact support?', 'You can contact our support team via the Contact Us page, available at the bottom of the website, or email us at support@samfan.com.'),
 (5, 'Is SamFan affiliated with Samsung?', 'No, SamFan is an independent fan community and is not officially affiliated with Samsung Electronics.'),
 (6, 'Can I contribute to the FAQ section?', 'Yes, registered users can suggest edits or additions to the FAQ by using the feedback form located on the FAQ page.'),
 (7, 'What devices are supported?', 'We provide support and discussions for a wide range of Samsung devices, including smartphones, tablets, smartwatches, and smart TVs.'),
-(8, 'How often is the FAQ updated?', 'The FAQ is reviewed and updated monthly to ensure the information is accurate and relevant.'),
-(23, 'Help', 'Me');
+(9, 'What payment methods are accepted on SamFan?', 'SamFan accepts credit cards, PayPal, and direct bank transfers for all premium services.'),
+(10, 'Is my payment information secure?', 'Yes, all payment data is encrypted using industry-standard SSL technology.'),
+(11, 'How do I track my shipping order?', 'After your order is shipped, you will receive a tracking number via email.'),
+(12, 'Can I cancel my order after payment?', 'Orders can be canceled within 2 hours of payment confirmation by contacting support.'),
+(13, 'How does SamFan handle failed transactions?', 'If a transaction fails, the amount is not deducted. If deducted, it is automatically refunded within 5-7 business days.'),
+(14, 'Is warranty available for all products?', 'Yes, all products featured through SamFan partner stores come with a manufacturer\'s warranty.'),
+(15, 'How long does shipping usually take?', 'Shipping typically takes 3-5 business days, depending on your location.'),
+(16, 'Does SamFan ship internationally?', 'Currently, SamFan supports domestic shipping only. International options are coming soon.'),
+(17, 'Can I get an invoice for my transaction?', 'Yes, invoices are available in your account dashboard under the \"Transactions\" section.'),
+(18, 'How do I apply for product warranty service?', 'Contact support with your order ID and product details to initiate the warranty process.'),
+(19, 'Are there any shipping fees?', 'Shipping is free on all orders over $50. A standard shipping fee applies otherwise.'),
+(20, 'What should I do if I entered the wrong shipping address?', 'Please contact support immediately to update your shipping address.'),
+(21, 'Is SamFan responsible for product warranties?', 'SamFan helps facilitate warranty claims but the responsibility lies with the product manufacturer.'),
+(22, 'How can I check the status of my payment?', 'Log in to your account and visit the \"Payments\" section to see the latest status.'),
+(23, 'Can I use multiple payment methods for one order?', 'Currently, only one payment method can be used per transaction.'),
+(24, 'What happens if my shipment is delayed?', 'We’ll notify you via email with updated delivery estimates and options for cancellation or refund.'),
+(25, 'Do I need to register to make a payment?', 'Yes, a SamFan account is required to access and use payment features.'),
+(26, 'Are shipping updates sent via email?', 'Yes, you will receive email updates when your order is packed, shipped, and delivered.'),
+(27, 'What is the cancellation policy?', 'Orders can be canceled before shipping begins. Once shipped, cancellation is not possible.'),
+(28, 'Can I cancel my subscription to SamFan Premium?', 'Yes, you can cancel anytime from your account settings.'),
+(29, 'Are transactions processed immediately?', 'Most transactions are processed instantly, but some may take up to 24 hours.'),
+(30, 'How long is the warranty period?', 'Most products come with a 1-year manufacturer’s warranty.'),
+(31, 'How can I change my payment method?', 'Go to your account settings and update your payment preferences.'),
+(32, 'Is payment in installments available?', 'Installment options may be available depending on your region and payment provider.'),
+(33, 'What should I do if I receive a damaged product?', 'Report the issue within 48 hours to initiate a return or replacement.'),
+(34, 'Can I expedite my shipping?', 'Yes, expedited shipping is available at an additional cost.'),
+(35, 'Does SamFan store payment details?', 'No, SamFan does not store any sensitive payment information on its servers.'),
+(36, 'Will I be notified before my subscription renews?', 'Yes, email reminders are sent 7 days before your renewal date.'),
+(37, 'What carriers does SamFan use for shipping?', 'We use trusted carriers like FedEx, UPS, and USPS for all deliveries.'),
+(38, 'Can I view my past transactions?', 'Yes, all past transactions are available under the \"Transaction History\" tab in your account.'),
+(39, 'Is there a warranty on digital products?', 'Digital products typically do not come with a warranty, but exceptions may apply.'),
+(40, 'Can I return an item after cancellation?', 'If your item has already shipped, a return must be initiated instead of a cancellation.'),
+(41, 'Why was my transaction declined?', 'Your transaction may have been declined due to bank restrictions or incorrect payment details.'),
+(42, 'Is there a restocking fee for returns?', 'Some items may be subject to a restocking fee. Please check the return policy for details.'),
+(43, 'Can I use promo codes during payment?', 'Yes, enter valid promo codes at checkout to receive discounts.'),
+(44, 'Will I be charged tax on my purchase?', 'Yes, applicable taxes are calculated based on your shipping address.'),
+(45, 'Can I contact SamFan about a transaction issue?', 'Yes, reach out via our support page or email support@samfan.com.'),
+(46, 'Does SamFan offer payment receipts?', 'Yes, receipts are emailed immediately after successful payment.'),
+(47, 'What documents are needed for warranty claims?', 'A valid receipt and product serial number are usually required.'),
+(48, 'Can I schedule my delivery time?', 'Scheduling is available in select locations. Check during checkout for availability.');
 
 -- --------------------------------------------------------
 
@@ -131,7 +180,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `color`, `memory`, `ram`, `image`) VALUES
-(1, 'Galaxy S25 Ultra', 37490000.00, 'Black', '512GB', '12GB', 'galaxy_s25_ultra.avif'),
+(1, 'Galaxy S25 Ultra', 37490000.00, 'Blue', '512GB', '12GB', 'galaxy_s25_ultra.avif'),
 (2, 'Galaxy Z Fold5 (Special)', 86500000.00, 'Special', '512GB', '12GB', 'galaxy_zflop5.avif'),
 (3, 'Galaxy Z Fold6', 39900000.00, 'Gray', '256GB', '12GB', 'galaxy_z_fold6.avif'),
 (4, 'Galaxy Z Flip6', 22900000.00, 'Black', '512GB', '12GB', 'galaxy_z_flip6.avif'),
@@ -487,19 +536,23 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `full_name`, `email`, `phone`, `address`, `image_url`, `status`) VALUES
-(1, 'john_doe', '123456', 'John Doe', 'john@example.com', '0901234567', '123 Main St', NULL, 'active'),
-(2, 'jane_smith', 'password', 'Jane Smith', 'jane@example.com', '0902345678', '456 Oak St', NULL, 'active'),
-(3, 'bob_nguyen', 'abc123', 'Nguyen Van Bob', 'bob@example.com', '0903456789', '789 Pine St', NULL, 'active'),
-(4, 'alice_lee', 'alicelee', 'Alice Lee', 'alice@example.com', '0904567890', '321 Elm St', NULL, 'active'),
-(5, 'charlie_k', 'charlie1', 'Charlie Kim', 'charlie@example.com', '0905678901', '654 Maple St', NULL, 'active'),
-(6, 'david_tran', 'davidtran', 'Tran Minh David', 'david@example.com', '0906789012', '987 Cedar St', NULL, 'active'),
-(7, 'emma_wat', 'emma123', 'Emma Watson', 'emma@example.com', '0907890123', '159 Birch St', NULL, 'active'),
-(8, 'lucas_ho', 'lucasho', 'Ho Quang Lucas', 'lucas@example.com', '0908901234', '753 Spruce St', NULL, 'active'),
-(9, 'sophie_phan', 'sophiep', 'Phan Thi Sophie', 'sophie@example.com', '0909012345', '357 Ash St', NULL, 'active'),
-(10, 'michael_t', 'michael1', 'Michael Truong', 'michael@example.com', '0910123456', '951 Walnut St', NULL, 'active'),
+(1, 'john_doe', '$2y$10$kxXSSbSCzZDJzGZK9BbqpeRu09D/ulQOx6LgZNRg5TfqZcYbnPj6e', 'John Doe', 'john@example.com', '0901234567', '123 Main St', NULL, 'active'),
+(2, 'jane_smith', '$2y$10$RSPUHaAsmxew0HxJabT0Uu2ewXLp72Qe5.7eBGkOmVdCrV6SzQ6FO', 'Jane Smith', 'jane@example.com', '0902345678', '456 Oak St', NULL, 'active'),
+(3, 'bob_nguyen', '$2y$10$Ro9iKw.y7myVtNqIFAd9je.bWzR6sRXfhHy9TqlAnMu8qTGbvYZmS', 'Nguyen Van Bob', 'bob@example.com', '0903456789', '789 Pine St', NULL, 'active'),
+(4, 'alice_lee', '$2y$10$GHdJb5HtiybkBhEKAYCVj.mMmyc2yBpApTx4vDEI.X3ZOh/NVD0Hq', 'Alice Lee', 'alice@example.com', '0904567890', '321 Elm St', NULL, 'active'),
+(5, 'charlie_k', '$2y$10$Ex7xSlQeImuR2uM6i19wQOdyoxDRmKxpyzzrQIBWIZmUCUcI1nd6S', 'Charlie Kim', 'charlie@example.com', '0905678901', '654 Maple St', NULL, 'active'),
+(6, 'david_tran', '$2y$10$6Hi3fSw8myftbi6k9DwYvO.1smO3KYlHP2z9K8xCKbfKiVceD1TiK', 'Tran Minh David', 'david@example.com', '0906789012', '987 Cedar St', NULL, 'active'),
+(7, 'emma_wat', '$2y$10$uXsU6PIeXo.lCGCu6vXU4uJwEGHktdEqz7QIQ9jzOblBQz1hJ6y1y', 'Emma Watson', 'emma@example.com', '0907890123', '159 Birch St', NULL, 'active'),
+(8, 'lucas_ho', '$2y$10$HvSADfqSgQ7nDwERo4/dquL/oK2KTRpm96nygS0.LRnVZx0pI0CkC', 'Ho Quang Lucas', 'lucas@example.com', '0908901234', '753 Spruce St', NULL, 'active'),
+(9, 'sophie_phan', '$2y$10$kY8CFm3W44V/fKYUqj8DbOagKKpJecpD7EqcngcuLCIxeKJOsUMzu', 'Phan Thi Sophie', 'sophie@example.com', '0909012345', '357 Ash St', NULL, 'active'),
+(10, 'michael_t', '$2y$10$Ahm6OpkZz1KYOwUDo3vwROaVrWSWPEFFeP.SmUOpLEdTm2Yc1qzPi', 'Michael Truong', 'michael@example.com', '0910123456', '951 Walnut St', NULL, 'active'),
 (11, 'Hehe123', '$2y$10$QFpkR5kTX6V5UfogrGZovuBq.kZtgbl.By6sXtg5gXdLZgqhSeERC', 'Huynh Loc', 'debug@account.com', '0123456789', 'Debug debu', '/images/profiles/11_1746731789_pexels-mayday-1545743.jpg', 'active'),
 (12, 'debug', '$2y$10$3yd8cnrJnsRct23o0Zlnf.nU7E4/rVsnnZL.bC38aossGJ7yGPu0u', 'Nguyen Van A', 'debug@test.com', '0974752693', 'Debug St. Louis LA', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1dzAY9vxSYgd7Zz6Aji9j2-LaG3-BF5iw5w&s', 'active'),
-(13, 'demoaccount', '$2y$10$Z62NG2rjRA0X50XlmW5PeuN59DGrDRYCR8cgLZyEF/DJBzmZHhUUe', 'Demo ', 'debug@demo.com', '0111111111', 'Demo ', '', 'active');
+(13, 'demoaccount', '$2y$10$Z62NG2rjRA0X50XlmW5PeuN59DGrDRYCR8cgLZyEF/DJBzmZHhUUe', 'Demo ', 'debug@demo.com', '0111111111', 'Demo ', '/images/profiles/13_1746738841_vue-logo.png', 'active'),
+(14, 'TestAccount', '$2y$10$ZQIMvUjBVc1uhfyeBnn1Ceko2mmqcE1fbXdz5GT440E48wK9adoYu', 'Tester', 'lochehe@gmail.com', '0345627431', 'Bach Khoa', '/images/profiles/14_1746751076_woman_pfp.jpg', 'active'),
+(15, 'demo456', '$2y$10$x69YOb6d5I8F2FohKDPYYuVUsWPDIBWB4HFS1o0T9QmlC9L9NAIue', 'Demo 456', 'demo@bruh.com', '0123456789', 'dassssssssss222', '/images/profiles/15_1746755506_woman_pfp.jpg', 'active'),
+(16, 'demo123', '$2y$10$eVjm66c9C52Rp5prpd/8n.EdbplECRPAkbTNpL46PU8enEvolsMjW', 'Demo Account ', 'demodemo@gmail.com', '0123456789', 'Demo Demo', '', 'active'),
+(17, 'jonathan123', '$2y$10$KVtK06oQFTxW7FQae/jfneF.VouT3FMxLtNvoLoGzNl9Hd4LZXuHe', 'Joseph Joestar', 'jojo@gmail.com', '0765435643', 'Los Angeles', '/images/profiles/17_1746759727_woman_pfp.jpg', 'active');
 
 --
 -- Indexes for dumped tables
@@ -577,19 +630,19 @@ ALTER TABLE `about_content`
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `faq`
 --
 ALTER TABLE `faq`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -613,7 +666,7 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables

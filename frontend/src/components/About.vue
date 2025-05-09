@@ -145,7 +145,7 @@
 
 <script>
 import { fetchAboutContent } from '../api/api';
-import ceoPhoto from '../assets/ceo.jpg'; // Import the image
+import ceoPhoto from '../assets/ceo.jpg'; 
 
 export default {
   name: 'AboutPage',
@@ -156,7 +156,7 @@ export default {
       banner3Visible: false,
       banner4Visible: false,
       dropdownOpen: {},
-      ceoImageUrl: ceoPhoto, // Store the imported image URL
+      ceoImageUrl: ceoPhoto, 
       aboutContent: {
         main_banner: {},
         about_desc: {},
@@ -175,7 +175,7 @@ export default {
       };
     },
     handleClickOutside(event) {
-      // Kiểm tra nếu click ngoài dropdown thì đóng tất cả dropdown
+      
       if (!this.$el.contains(event.target)) {
         this.dropdownOpen = {};
       }
@@ -228,7 +228,7 @@ export default {
         if (response.success) {
           this.aboutContent = response.sections;
           
-          // If the API returns an invalid image path, use our local image
+          
           if (!this.aboutContent.ceo_info?.image || this.aboutContent.ceo_info.image.includes('../assets/')) {
             this.aboutContent.ceo_info.image = this.ceoImageUrl;
           }
@@ -239,10 +239,10 @@ export default {
     }
   },
   mounted() {
-    // Load content from API
+    
     this.loadAboutContent();
     
-    // Your existing code
+    
     document.addEventListener('click', this.handleClickOutside);
     this.observeBanner2();
     this.observeBanner3();
@@ -259,7 +259,7 @@ export default {
   width: 100%;
 }
 
-/* Navigation Styles */
+
 .top-nav {
   width: 100%;
   background: white;
@@ -320,7 +320,7 @@ export default {
   transform: rotate(180deg);
 }
 
-/* Banner Styles */
+
 .banner {
   position: relative;
   width: 100%;
@@ -338,10 +338,10 @@ export default {
   max-width: 600px;
 }
 
-/* Add these responsive styles for the main banner */
+
 @media screen and (max-width: 768px) {
   .banner {
-    height: 400px; /* Reduce height on smaller screens */
+    height: 400px; 
   }
   
   .banner-content {
@@ -365,7 +365,7 @@ export default {
   }
 }
 
-/* Further adjustments for very small screens */
+
 @media screen and (max-width: 480px) {
   .banner {
     height: 350px;
@@ -380,7 +380,7 @@ export default {
   }
 }
 
-/* Improve responsive styles for banner 2, 3, 4 */
+
 @media screen and (max-width: 768px) {
   .banner-2,
   .banner-3,
@@ -410,7 +410,7 @@ export default {
   }
 }
 
-/* Enhance CEO section responsiveness */
+
 @media screen and (max-width: 768px) {
   .ceo-info {
     margin: 40px auto;
@@ -443,7 +443,7 @@ export default {
   }
 }
 
-/* Improve about description responsiveness */
+
 @media screen and (max-width: 768px) {
   .about-desc {
     margin: 40px auto 0 auto;
@@ -457,7 +457,7 @@ export default {
   }
 }
 
-/* Banner 2, 3, 4 Styles chung */
+
 .banner-2,
 .banner-3,
 .banner-4 {
@@ -481,7 +481,7 @@ export default {
   transform: translateY(0);
 }
 
-/* Background images riêng */
+
 .banner-2 {
   background: url('../assets/about_banner2.jpg') center/cover no-repeat;
 }
@@ -492,7 +492,7 @@ export default {
   background: url('../assets/about_banner4.jpg') center/cover no-repeat;
 }
 
-/* Content chung cho 3 banner */
+
 .banner2-content,
 .banner3-content,
 .banner4-content {
@@ -530,7 +530,7 @@ export default {
   object-fit: cover;
 }
 
-/* Responsive chung */
+
 @media screen and (max-width: 900px) {
   .banner-2,
   .banner-3,
@@ -555,7 +555,7 @@ export default {
   }
 }
 
-/* Add responsive styles */
+
 @media screen and (max-width: 1200px) {
   .nav-container {
     padding: 0 20px;
@@ -566,14 +566,14 @@ export default {
   }
 }
 
-/* Dropdown Styles */
+
 .dropdown {
   position: relative;
   height: 100%;
 }
 
 .dropdown-content {
-  /* display: none; */
+  
   position: absolute;
   top: 100%;
   left: 0;
@@ -586,7 +586,7 @@ export default {
   border: 1px solid #000;
 }
 
-/* Add padding wrapper to keep dropdown visible when moving to content */
+
 .dropdown > a {
   padding: 0;
   height: 100%;
@@ -608,12 +608,10 @@ export default {
 .dropdown-content a:last-child {
   border-bottom: none;
 }
-/* Modify the show dropdown behavior */
-/* .dropdown:hover .dropdown-content {
-  display: block;
-} */
 
-/* Update arrow position */
+
+
+
 .dropdown::after {
   content: '';
   position: absolute;
@@ -630,7 +628,7 @@ export default {
   display: block;
 }
 
-/* Responsive adjustments */
+
 @media screen and (max-width: 768px) {
   .dropdown-content {
     width: 100%;
@@ -689,7 +687,7 @@ export default {
   }
 }
 
-/* Fade transition for dropdown */
+
 .fade-dropdown-enter-active, .fade-dropdown-leave-active {
   transition: opacity 0.25s;
 }
@@ -750,14 +748,14 @@ export default {
   font-family: 'Samsung Sharp Sans', Arial, sans-serif;
 }
 
-/* Hiệu ứng underline cho navbar và dropdown */
+
 .top-nav a,
 .dropdown-content a {
   position: relative;
   overflow: hidden;
 }
 
-/* Tạo underline động */
+
 .top-nav a::after,
 .dropdown-content a::after {
   content: '';
@@ -770,14 +768,14 @@ export default {
   transition: width 0.3s cubic-bezier(.4,0,.2,1), left 0.3s cubic-bezier(.4,0,.2,1);
 }
 
-/* Khi hover: underline từ giữa ra hai bên */
+
 .top-nav a:hover::after,
 .dropdown-content a:hover::after {
   width: 100%;
   left: 0;
 }
 
-/* Khi không hover: underline thu lại vào giữa */
+
 .top-nav a::after,
 .dropdown-content a::after {
   width: 0;

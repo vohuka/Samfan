@@ -29,7 +29,7 @@
         <button v-for="tag in tags" :key="tag" class="faq-banner-tag" @click="search = tag">{{ tag }}</button>
       </div>
     </div>
-    <!-- Decorative icons (optional, can add more for effect) -->
+    
     <div class="faq-banner-icons">
       <span class="icon chat"></span>
       <span class="icon truck"></span>
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+
 import { fetchFAQs } from '../api/api';
 
 export default {
@@ -118,7 +118,7 @@ export default {
     return {
       search: '',
       tags: ['payment', 'shipping', 'Samfan', 'cancellation', 'transaction', 'warranty'],
-      activeIndexes: [], // Change from activeIndex: null
+      activeIndexes: [], 
       faqs: [],
       currentPage: 1,
       pageSize: 10,
@@ -139,16 +139,16 @@ export default {
     },
     paginatedFaqs() {
       const start = (this.currentPage - 1) * this.pageSize;
-      // Change to use filteredFaqs instead of faqs
+      
       return this.filteredFaqs.slice(start, start + this.pageSize);
     },
     totalPages() {
-      // Change to use filteredFaqs instead of faqs
+      
       return Math.ceil(this.filteredFaqs.length / this.pageSize);
     }
   },
   async mounted() {
-    // Fetch FAQ từ backend bằng fetchFAQs
+    
     try {
       this.faqs = await fetchFAQs();
       this.triggerFade();
@@ -156,7 +156,7 @@ export default {
       console.error('Error fetching FAQ:', err);
     }
 
-    // ...existing IntersectionObserver code...
+    
     const bottomBanner = document.querySelector('.faq-bottom-banner');
     const helpBanner = document.querySelector('.help-banner');
     const observerOptions = { threshold: 0.2 };
@@ -193,7 +193,7 @@ export default {
     goToPage(page) {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;
-        this.activeIndexes = []; // Reset all expanded on page change
+        this.activeIndexes = []; 
         this.triggerFade();
       }
     },
@@ -207,7 +207,7 @@ export default {
     }
   },
   watch: {
-    // Reset to first page when search term changes
+    
     search() {
       this.currentPage = 1;
       this.activeIndexes = [];

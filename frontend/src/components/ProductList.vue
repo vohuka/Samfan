@@ -46,7 +46,7 @@ export default {
       } else if (this.sortOption === 'price-desc') {
         sorted.sort((a, b) => b.price - a.price);
       } else if (this.sortOption === 'rating-desc') {
-        // Chuyển đổi rating sang số để đảm bảo sắp xếp chính xác
+        
         sorted.sort((a, b) => {
           const ratingA = parseFloat(a.rating) || 0;
           const ratingB = parseFloat(b.rating) || 0;

@@ -34,18 +34,16 @@ if ($product_id <= 0 || $rating < 1 || $rating > 5) {
 
 $user_id = $_SESSION['user_id'];
 
-// Kiểm tra xem người dùng đã đánh giá chưa
+
 $stmt = $conn->prepare("SELECT id FROM ratings WHERE product_id = ? AND user_id = ?");
 $stmt->bind_param("ii", $product_id, $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Cập nhật đánh giá
     $stmt = $conn->prepare("UPDATE ratings SET rating = ? WHERE product_id = ? AND user_id = ?");
     $stmt->bind_param("iii", $rating, $product_id, $user_id);
 } else {
-    // Thêm đánh giá mới
     $stmt = $conn->prepare("INSERT INTO ratings (product_id, user_id, rating) VALUES (?, ?, ?)");
     $stmt->bind_param("iii", $product_id, $user_id, $rating);
 }

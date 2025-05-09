@@ -1,6 +1,6 @@
 <template>
   <div class="business-areas-container">
-    <!-- Top Navigation Bar (Same as About.vue) -->
+    
     <nav class="top-nav">
       <div class="nav-container">
         <div class="brand-text">Business Areas</div>
@@ -72,7 +72,7 @@
       </div>
     </nav>
 
-    <!-- Main Banner using the specified image -->
+    
     <section class="banner business-banner">
       <div class="banner-content">
         <h2 class="section-title">Business Areas</h2>
@@ -84,14 +84,14 @@
       <div class="banner-image"></div>
     </section>
 
-    <!-- Additional content for the Business Areas page can go here -->
+    
     <section class="business-desc">
       <p>
         Samfan Electronics continuously reinvents the future. We explore the unknown to bring technology that helps people all over the world live happier, healthier lives.
       </p>
     </section>
 
-    <!-- Business Areas Highlights Banner -->
+    
     <section class="business-highlight-banner">
       <div class="highlight-content">
         <h2 class="highlight-title">Creating What's Next</h2>
@@ -148,12 +148,12 @@ export default {
 </script>
 
 <style scoped>
-/* Reuse styles from About.vue */
+
 .business-areas-container {
   width: 100%;
 }
 
-/* Navigation Styles */
+
 .top-nav {
   width: 100%;
   background: white;
@@ -214,44 +214,44 @@ export default {
   transform: rotate(180deg);
 }
 
-/* Banner Styles */
+
 .banner {
   position: relative;
   width: 100%;
-  height: 500px; /* Reduced from 600px to 500px */
+  height: 500px; 
   color: white;
   font-family: 'Samsung Sharp Sans';
 }
 
-/* Set the specific background for the Business Areas banner */
+
 .business-banner {
   background-image: url('../assets/AS.2_BusinessArea_img01.jpg');
-  background-position: center top; /* Changed to top alignment */
+  background-position: center top; 
   background-size: cover;
   background-repeat: no-repeat;
-  overflow: hidden; /* Prevent any content from overflowing */
+  overflow: hidden; 
 }
 
-/* Adjust banner content position */
+
 .banner-content {
   position: absolute;
   left: 10%;
-  top: 50%; /* Changed from 50% to 40% to move content up slightly */
+  top: 50%; 
   transform: translateY(-50%);
   max-width: 600px;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.059); /* Add semi-transparent background */
-  border-radius: 8px; /* Optional: rounded corners */
-  backdrop-filter: blur(3px); /* Optional: slight blur effect for modern browsers */
+  background-color: rgba(0, 0, 0, 0.059); 
+  border-radius: 8px; 
+  backdrop-filter: blur(3px); 
 }
 
-/* You may want to adjust text spacing inside the container */
+
 .section-title,
 .banner-title,
 .banner-text {
   margin-left: 0;
   margin-right: 0;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Optional: add text shadow for better readability */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); 
 }
 
 .section-title {
@@ -262,9 +262,9 @@ export default {
   margin-bottom: 10px;
 }
 
-/* Adjust title size slightly */
+
 .banner-title {
-  font-size: 54px; /* Reduced from 60px to 54px */
+  font-size: 54px; 
   font-weight: bold;
   margin: 20px 0;
   line-height: 1.2;
@@ -275,7 +275,7 @@ export default {
   line-height: 1.6;
 }
 
-/* Responsive styles for the banner */
+
 @media screen and (max-width: 768px) {
   .banner {
     height: 400px;
@@ -285,7 +285,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 15px;
-    width: calc(100% - 40px); /* Full width minus padding */
+    width: calc(100% - 40px); 
     max-width: 500px;
   }
   
@@ -317,7 +317,7 @@ export default {
   }
 }
 
-/* Dropdown Styles */
+
 .dropdown {
   position: relative;
   height: 100%;
@@ -374,7 +374,7 @@ export default {
   display: block;
 }
 
-/* Description section */
+
 .business-desc {
   max-width: 1200px;
   margin: 60px auto 0 auto;
@@ -383,13 +383,13 @@ export default {
 }
 
 .business-desc p {
-  font-size: 48px; /* Increased from 20px */
-  font-weight: bold; /* Added to make text bold */
+  font-size: 48px; 
+  font-weight: bold; 
   line-height: 1.3;
   font-family: 'Samsung Sharp Sans', Arial, sans-serif;
 }
 
-/* Business Highlight Banner */
+
 .business-highlight-banner {
   width: 100%;
   height: 600px;
@@ -409,7 +409,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  /* background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%); */
+  
 }
 
 .highlight-content {
@@ -461,7 +461,7 @@ export default {
   transform: translateY(-3px);
 }
 
-/* Responsive styles for the highlight banner */
+
 @media screen and (max-width: 768px) {
   .business-highlight-banner {
     height: 500px;
@@ -495,7 +495,7 @@ export default {
   }
 }
 
-/* Fade transition for dropdown */
+
 .fade-dropdown-enter-active, .fade-dropdown-leave-active {
   transition: opacity 0.25s;
 }
@@ -506,7 +506,7 @@ export default {
   opacity: 1;
 }
 
-/* Responsive adjustments for navigation */
+
 @media screen and (max-width: 768px) {
   .nav-container {
     flex-direction: column;
@@ -556,35 +556,35 @@ export default {
   }
 }
 
-/* Keep your existing styles and add/modify these responsive sections */
 
-/* Business Highlight Banner - adjust padding based on screen width */
+
+
 .highlight-content {
   position: relative;
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 40px;
-  padding-left: 120px; /* Left padding to push content right */
+  padding-left: 120px; 
   width: 100%;
   color: white;
 }
 
-/* Large Desktop (1200px+) - Current styles are good */
 
-/* Desktop (992px-1199px) */
+
+
 @media screen and (max-width: 1199px) {
   .highlight-content {
-    padding-left: 80px; /* Reduce left padding */
+    padding-left: 80px; 
   }
   
   .business-desc p {
-    font-size: 40px; /* Reduce font size for business description */
+    font-size: 40px; 
     padding: 0 20px;
   }
 }
 
-/* Tablet (768px-991px) */
+
 @media screen and (max-width: 991px) {
   .highlight-content {
     padding-left: 60px;
@@ -604,11 +604,11 @@ export default {
   }
 }
 
-/* Mobile Landscape (576px-767px) */
+
 @media screen and (max-width: 767px) {
   .highlight-content {
     padding: 0 30px;
-    padding-left: 40px; /* Further reduce left padding */
+    padding-left: 40px; 
   }
   
   .business-desc {
@@ -645,24 +645,24 @@ export default {
   }
 }
 
-/* Mobile Portrait (<=575px) */
+
 @media screen and (max-width: 575px) {
   .highlight-content {
-    padding: 0 20px; /* Even spacing on both sides */
-    text-align: center; /* Center align content on smallest screens */
+    padding: 0 20px; 
+    text-align: center; 
   }
   
   .highlight-title {
     font-size: 28px;
-    max-width: 100%; /* Full width */
+    max-width: 100%; 
   }
   
   .highlight-text {
-    max-width: 100%; /* Full width */
+    max-width: 100%; 
   }
   
   .business-desc p {
-    font-size: 20px; /* Significantly reduce font size */
+    font-size: 20px; 
   }
   
   .business-highlight-banner {
@@ -692,13 +692,13 @@ export default {
     font-size: 12px;
   }
   
-  /* Navigation adjustments */
+  
   .nav-container {
     padding: 0 15px;
   }
 }
 
-/* Very small screens */
+
 @media screen and (max-width: 375px) {
   .highlight-content {
     padding: 0 15px;

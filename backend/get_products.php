@@ -6,7 +6,7 @@ if ($conn->connect_error) {
     die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
 }
 
-// Sửa SQL query để tính toán giá trị rating giống như trong search_products.php
+
 $sql = "SELECT 
     p.id, 
     p.name, 

@@ -830,7 +830,7 @@ export default {
   }
 }
 
-/* Laptop và màn hình lớn (mặc định) */
+
 @media screen and (min-width: 1201px) {
   .cart-item {
     padding: 20px;
@@ -847,7 +847,7 @@ export default {
   }
 }
 
-/* Máy tính bảng (landscape) */
+
 @media screen and (max-width: 1200px) {
   .cart-page {
     padding: 20px;
@@ -862,7 +862,7 @@ export default {
   }
 }
 
-/* Máy tính bảng (portrait) */
+
 @media screen and (max-width: 992px) {
   .cart-item {
     padding: 15px;
@@ -896,7 +896,7 @@ export default {
   }
 }
 
-/* Tablet nhỏ */
+
 @media screen and (max-width: 768px) {
   .cart-page {
     padding: 15px;
@@ -945,7 +945,7 @@ export default {
   }
 }
 
-/* Điện thoại */
+
 @media screen and (max-width: 576px) {
   .cart-page {
     padding: 10px;
@@ -1028,7 +1028,7 @@ export default {
     margin: 10px 0;
   }
   
-  /* Cải thiện form đăng nhập/đăng ký trên mobile */
+  
   .login-form {
     max-height: 60vh;
   }
@@ -1051,7 +1051,7 @@ export default {
   }
 }
 
-/* Điện thoại nhỏ */
+
 @media screen and (max-width: 375px) {
   .cart-item-info h3 {
     font-size: 14px;
