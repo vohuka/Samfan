@@ -1,21 +1,19 @@
 <template>
   <div class="product-container">
-    <div class="relative w-11/12 h-full mb-10 text-white mx-auto">
+    <div class="hero-section">
       <!-- Background Image -->
-      <div class="relative w-full h-full">
+      <div class="hero-image-container">
         <img
           src="@/assets/pictures/Home/03_Product_00_PC.jpg"
           alt="Business Image"
-          class="object-cover w-full h-full"
+          class="hero-image"
         />
         <!-- Overlay Text -->
-        <div
-          class="absolute top-1/2 left-10 transform -translate-y-1/2 text-left w-2/3"
-        >
-          <h1 class="text-4xl font-bold mb-4">
+        <div class="hero-text">
+          <h1 class="hero-title">
             Màn Hình Chuyên Dụng Cho Doanh Nghiệp
           </h1>
-          <p class="text-xs">
+          <p class="hero-subtitle">
             Nâng tầm doanh nghiệp với công nghệ hiển thị hàng đầu
           </p>
         </div>
@@ -25,53 +23,50 @@
 
     <!-- Call to Action Button -->
 
-    <div class="max-w-4xl mx-auto text-center mb-20">
-      <div class="text-4xl font-bold mb-12">Tailored for your industry</div>
-      <div
-        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 justify-center"
-      >
-        <div
-          class="group flex flex-col items-center cursor-pointer col-start-1 p-2"
-        >
-          <font-awesome-icon :icon="['fas', 'school']" class="text-3xl" />
-          <div class="mt-2 group-hover:text-blue-600 transition-colors">
+    <div class="industry-section">
+      <div class="section-title">Tailored for your industry</div>
+      <div class="industry-grid">
+        <div class="industry-item col-start-1">
+          <font-awesome-icon :icon="['fas', 'school']" class="industry-icon" />
+          <div class="industry-name">
             Giáo dục
           </div>
         </div>
-        <div class="group flex flex-col items-center cursor-pointer p-2">
-          <font-awesome-icon :icon="['fas', 'store']" class="text-3xl" />
-          <div class="mt-2 group-hover:text-blue-600 transition-colors">
+        <div class="industry-item">
+          <font-awesome-icon :icon="['fas', 'store']" class="industry-icon" />
+          <div class="industry-name">
             Bán lẻ
           </div>
         </div>
-        <div class="group flex flex-col items-center cursor-pointer p-2">
-          <font-awesome-icon :icon="['fas', 'chart-simple']" class="text-3xl" />
-          <div class="mt-2 group-hover:text-blue-600 transition-colors">
+        <div class="industry-item">
+          <font-awesome-icon :icon="['fas', 'chart-simple']" class="industry-icon" />
+          <div class="industry-name">
             Tài chính
           </div>
         </div>
-        <div class="group flex flex-col items-center cursor-pointer p-2">
-          <font-awesome-icon :icon="['fas', 'landmark']" class="text-3xl" />
-          <div class="mt-2 group-hover:text-blue-600 transition-colors">
+        <div class="industry-item">
+          <font-awesome-icon :icon="['fas', 'landmark']" class="industry-icon" />
+          <div class="industry-name">
             Chính phủ
           </div>
         </div>
-        <div class="group flex flex-col items-center cursor-pointer p-2">
-          <font-awesome-icon :icon="['fas', 'building']" class="text-3xl" />
-          <div class="mt-2 group-hover:text-blue-600 transition-colors">
+        <div class="industry-item">
+          <font-awesome-icon :icon="['fas', 'building']" class="industry-icon" />
+          <div class="industry-name">
             Doanh nghiệp
           </div>
         </div>
       </div>
     </div>
-    <div class="max-w-4xl mx-auto text-center mb-3">
-      <div class="text-4xl font-bold mb-12">Di động</div>
-      <div class="grid md:grid-cols-6 place-items-center item-center">
+
+    <div class="tab-section">
+      <div class="section-title">Di động</div>
+      <div class="tab-navigation">
         <div
-          class="col-start-3 font-semibold cursor-pointer w-max border-b-2 transition-opacity duration-200"
+          class="tab-item"
           :class="[
-            selected === 'feature' ? 'border-black' : 'border-transparent',
-            selected !== 'feature' && hovered === 'feature' ? 'opacity-50' : '',
+            selected === 'feature' ? 'active' : '',
+            selected !== 'feature' && hovered === 'feature' ? 'hovered' : '',
           ]"
           @click="selected = 'feature'"
           @mouseenter="hovered = 'feature'"
@@ -80,10 +75,10 @@
           Tính năng
         </div>
         <div
-          class="font-semibold cursor-pointer w-max border-b-2 transition-opacity duration-200"
+          class="tab-item"
           :class="[
-            selected === 'product' ? 'border-black' : 'border-transparent',
-            selected !== 'product' && hovered === 'product' ? 'opacity-50' : '',
+            selected === 'product' ? 'active' : '',
+            selected !== 'product' && hovered === 'product' ? 'hovered' : '',
           ]"
           @click="selected = 'product'"
           @mouseenter="hovered = 'product'"
@@ -94,109 +89,89 @@
       </div>
     </div>
 
-    <div class="relative min-h-[700px] mb-20">
+    <div class="content-section">
       <transition :name="transitionName" mode="in-out">
         <div
           v-show="selected === 'feature'"
-          class="grid grid-cols-1 md:grid-cols-12 gap-4 w-full p-2"
+          class="feature-grid"
           key="feature"
         >
           <!-- Cột 1 -->
-          <div
-            class="relative rounded-2xl overflow-hidden h-full col-span-6 cursor-pointer group"
-          >
+          <div class="feature-col-main">
             <img
               src="@/assets/pictures/Home/684x684_PC.webp"
               alt="Ưu đãi"
-              class="w-full h-full object-cover group-hover:scale-105 group-hover:translate-y-2 transition-transform"
+              class="feature-image"
             />
-            <div
-              class="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white text-center"
-            >
-              <div class="text-2xl font-bold whitespace-nowrap mb-4">
+            <div class="feature-text">
+              <div class="feature-title">
                 Ưu Đãi độc quyền cho doanh nghiệp
               </div>
-              <div class="text-sm whitespace-nowrap">
+              <div class="feature-subtitle">
                 Đăng kí nhận ngay ưu đãi độc quyền
               </div>
             </div>
           </div>
 
           <!-- Cột 2 -->
-          <div class="flex flex-col gap-4 col-span-3">
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer"
-            >
+          <div class="feature-col">
+            <div class="feature-item">
               <img
                 src="@/assets/pictures/Home/2D_UK_pc.avif"
                 alt="Lựa chọn tốt nhất"
-                class="w-full h-full object-cover"
+                class="feature-image"
               />
-              <div
-                class="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white text-center px-4"
-              >
-                <div class="font-bold text-base whitespace-nowrap mb-5">
+              <div class="feature-text">
+                <div class="feature-item-title">
                   Samsung - Lựa chọn di động tốt nhất
                 </div>
-                <div class="text-xs whitespace-nowrap">
+                <div class="feature-item-subtitle">
                   Thiết kế để đồng hành cùng doanh nghiệp
                 </div>
               </div>
             </div>
 
-            <div
-              class="relative rounded-2xl overflow-hidden h-full bg-gray-200 cursor-pointer shadow-md border border-gray-200 flex items-center justify-center"
-            >
+            <div class="feature-item feature-light">
               <img
                 src="@/assets/pictures/Home/HOME_Galaxy_S25_Ultra_KV_Merchandising_160x160.webp"
                 alt="Galaxy S25 Ultra"
-                class="w-1/2 h-1/2 object-contain -mt-12"
+                class="feature-item-image"
               />
-              <div
-                class="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-black font-semibold text-base bg-opacity-80 px-2 py-1 rounded"
-              >
+              <div class="feature-badge">
                 Galaxy S25 Ultra
               </div>
             </div>
           </div>
 
           <!-- Cột 3 -->
-          <div class="flex flex-col gap-4 col-span-3">
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer"
-            >
+          <div class="feature-col">
+            <div class="feature-item">
               <img
                 src="@/assets/pictures/Home/Knox-Suite_pc.avif"
                 alt="Samsung Knox"
-                class="w-full h-full object-cover"
+                class="feature-image"
               />
-              <div
-                class="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white text-center px-4"
-              >
-                <div class="font-bold text-base whitespace-nowrap mb-5">
+              <div class="feature-text">
+                <div class="feature-item-title">
                   Samsung Knox
                 </div>
-                <div class="text-xs whitespace-nowrap">
+                <div class="feature-item-subtitle">
                   Giải pháp di động dành cho doang nghiệp
                 </div>
               </div>
             </div>
 
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer"
-            >
+            <div class="feature-item">
               <img
                 src="@/assets/pictures/Home/pc.jpeg"
                 alt="Samsung SMB"
-                class="w-full h-full object-cover"
+                class="feature-image"
               />
-              <div
-                class="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white text-center px-4"
-              >
-                <div class="font-bold text-base whitespace-nowrap mb-5">
+              <div class="feature-text">
+                <div class="feature-item-title">
                   Samsung SMB
                 </div>
-                <div class="text-xs whitespace-nowrap">
+                <div class="feature-item-subtitle">
                   Giải pháp dành cho doanh nghiệp vừa và nhỏ
                 </div>
               </div>
@@ -207,47 +182,41 @@
 
       <!-- Product Section -->
       <transition name="transitionName" mode="in-out">
-        <div v-show="selected === 'product'" key="product" class="p-2 bg-white">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div v-show="selected === 'product'" key="product" class="product-grid">
+          <div class="product-row">
             <!-- Enterprise Edition -->
-            <div
-              class="bg-gray-100 p-6 rounded-xl flex flex-col items-center text-center"
-            >
+            <div class="product-card">
               <img
                 src="@/assets/pictures/Home/IM_Home_Showcase_Card_02_Products_1_Enterprise_Edition_PC_376X376.avif"
                 alt="Enterprise Edition"
-                class="h-full object-contain mb-4"
+                class="product-image"
               />
-              <h2 class="text-lg font-semibold">Enterprise Edition</h2>
-              <p class="text-sm text-gray-600">
+              <h2 class="product-title">Enterprise Edition</h2>
+              <p class="product-description">
                 Tất cả những gì bạn cần cho doanh nghiệp
               </p>
             </div>
 
             <!-- Chuyên biệt -->
-            <div
-              class="bg-gray-100 p-6 rounded-xl flex flex-col items-center text-center"
-            >
+            <div class="product-card">
               <img
                 src="@/assets/pictures/Home/IM_Home_Showcase_Card_02_Products_2_Rugged_PC_376X376.webp"
                 alt="Chuyên biệt"
-                class="h-full object-contain mb-4"
+                class="product-image"
               />
-              <h2 class="text-lg font-semibold">Chuyên biệt</h2>
-              <p class="text-sm text-gray-600">Dễ dùng, khó hỏng</p>
+              <h2 class="product-title">Chuyên biệt</h2>
+              <p class="product-description">Dễ dùng, khó hỏng</p>
             </div>
 
             <!-- Máy tính bảng -->
-            <div
-              class="bg-gray-100 p-6 rounded-xl flex flex-col items-center text-center"
-            >
+            <div class="product-card">
               <img
                 src="@/assets/pictures/Home/IM_Home_Showcase_Card_02_Products_3_Tablets_PC_376X376.avif"
                 alt="Máy tính bảng"
-                class="h-full object-contain mb-4"
+                class="product-image"
               />
-              <h2 class="text-lg font-semibold">Máy tính bảng</h2>
-              <p class="text-sm text-gray-600">
+              <h2 class="product-title">Máy tính bảng</h2>
+              <p class="product-description">
                 Màn hình lớn cùng hiệu năng vượt trội
               </p>
             </div>
@@ -256,19 +225,15 @@
       </transition>
     </div>
 
-    <div class="max-w-4xl mx-auto text-center mb-3">
-      <div class="text-4xl font-bold mb-12">Displays</div>
-      <div class="grid md:grid-cols-6 place-items-center item-center">
+    <div class="tab-section">
+      <div class="section-title">Displays</div>
+      <div class="tab-navigation">
         <!-- Tab: Sản phẩm -->
         <div
-          class="col-start-3 font-semibold cursor-pointer w-max border-b-2 transition-opacity duration-200"
+          class="tab-item"
           :class="[
-            selectedDisplay === 'product'
-              ? 'border-black'
-              : 'border-transparent',
-            selectedDisplay !== 'product' && hoveredDisplay === 'product'
-              ? 'opacity-50'
-              : '',
+            selectedDisplay === 'product' ? 'active' : '',
+            selectedDisplay !== 'product' && hoveredDisplay === 'product' ? 'hovered' : '',
           ]"
           @click="selectedDisplay = 'product'"
           @mouseenter="hoveredDisplay = 'product'"
@@ -279,14 +244,10 @@
 
         <!-- Tab: Giải pháp -->
         <div
-          class="font-semibold cursor-pointer w-max border-b-2 transition-opacity duration-200"
+          class="tab-item"
           :class="[
-            selectedDisplay === 'solution'
-              ? 'border-black'
-              : 'border-transparent',
-            selectedDisplay !== 'solution' && hoveredDisplay === 'solution'
-              ? 'opacity-50'
-              : '',
+            selectedDisplay === 'solution' ? 'active' : '',
+            selectedDisplay !== 'solution' && hoveredDisplay === 'solution' ? 'hovered' : '',
           ]"
           @click="selectedDisplay = 'solution'"
           @mouseenter="hoveredDisplay = 'solution'"
@@ -297,109 +258,89 @@
       </div>
     </div>
 
-    <div class="relative min-h-[600px] mb-20">
+    <div class="content-section">
       <transition :name="transitionDisplayName" mode="out-in">
         <div
           v-if="selectedDisplay === 'product'"
           :key="'display-product'"
-          class="grid grid-cols-1 md:grid-cols-12 gap-4 w-full p-2"
+          class="display-grid"
         >
           <!-- Nội dung "Sản phẩm" phần Displays -->
-          <div
-            class="relative rounded-2xl overflow-hidden h-full col-span-6 cursor-pointer"
-          >
+          <div class="display-col-main">
             <img
               src="@/assets/pictures/Home/Display_PC_684x684.webp"
               alt="Ưu đãi"
-              class="w-full h-full object-cover"
+              class="display-image"
             />
-            <div
-              class="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-black text-center px-4"
-            >
-              <div class="font-bold text-2xl whitespace-nowrap mb-5">
+            <div class="display-text dark">
+              <div class="display-title">
                 Màn hình cho doanh nghiệp
               </div>
-              <div class="text-xs whitespace-nowrap">
+              <div class="display-subtitle">
                 Đẳng cấp hiển thị thu hút mọi sự chú ý
               </div>
             </div>
           </div>
-          <div class="flex flex-col gap-4 col-span-3">
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer bg-gray-200 flex justify-center items-center"
-            >
+          <div class="display-col">
+            <div class="display-item light">
               <img
                 src="@/assets/pictures/Home/display-products_PC_Smart-Signage_2.avif"
                 alt="Lựa chọn tốt nhất"
-                class="w-2/3 h-2/3 object-contain p-4 -mt-20"
+                class="display-item-image"
               />
-              <div
-                class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-blackblack text-center px-4"
-              >
-                <div class="font-bold text-base whitespace-nowrap mb-5">
+              <div class="display-item-text dark">
+                <div class="display-item-title">
                   Màn hình chuyên dụng
                 </div>
-                <div class="text-xs whitespace-nowrap">
+                <div class="display-item-subtitle">
                   Hiển thị hình ảnh sống động chuyên nghiệp
                 </div>
               </div>
             </div>
-            <div
-              class="relative rounded-2xl overflow-hidden h-full bg-gray-200 cursor-pointer shadow-md border border-gray-200 flex justify-center items-center"
-            >
+            <div class="display-item light">
               <img
                 src="@/assets/pictures/Home/display-products_PC_LED-Signage_2.webp"
                 alt="Galaxy S25 Ultra"
-                class="w-2/3 h-2/3 object-contain p-4 -mt-20"
+                class="display-item-image"
               />
-              <div
-                class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-black text-center px-4"
-              >
-                <div class="font-bold text-base whitespace-nowrap mb-5">
+              <div class="display-item-text dark">
+                <div class="display-item-title">
                   Màn hình LED Signage
                 </div>
-                <div class="text-xs whitespace-nowrap">
+                <div class="display-item-subtitle">
                   Giải pháp dành cho doanh nghiệp vừa và nhỏ
                 </div>
               </div>
             </div>
           </div>
-          <div class="flex flex-col gap-4 col-span-3">
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer bg-gray-200 shadow-md border border-gray-200 flex justify-center items-center"
-            >
+          <div class="display-col">
+            <div class="display-item light">
               <img
                 src="@/assets/pictures/Home/display-products_PC_Commercial-TVs_2.avif"
                 alt="Samsung Knox"
-                class="w-2/3 h-2/3 object-contain p-4 -mt-20"
+                class="display-item-image"
               />
-              <div
-                class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-black text-center px-4"
-              >
-                <div class="font-bold text-base whitespace-nowrap mb-5">
+              <div class="display-item-text dark">
+                <div class="display-item-title">
                   Màn hình khách sạn thông minh
                 </div>
-                <div class="text-xs whitespace-nowrap">
+                <div class="display-item-subtitle">
                   Nâng cấp với TV dành cho doang nghiệp
                 </div>
               </div>
             </div>
 
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer bg-gray-200 shadow-md border border-gray-200 flex justify-center items-center"
-            >
+            <div class="display-item light">
               <img
                 src="@/assets/pictures/Home/display-products_PC_Monitors_2.avif"
                 alt="Samsung SMB"
-                class="w-2/3 h-2/3 object-contain p-4 -mt-20"
+                class="display-item-image"
               />
-              <div
-                class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-black text-center px-4"
-              >
-                <div class="font-bold text-base whitespace-nowrap mb-5">
+              <div class="display-item-text dark">
+                <div class="display-item-title">
                   Màn hình
                 </div>
-                <div class="text-xs whitespace-nowrap">
+                <div class="display-item-subtitle">
                   Nâng cao hiệu quả và hiệu suất tối đa
                 </div>
               </div>
@@ -411,68 +352,56 @@
         <div
           v-if="selectedDisplay === 'solution'"
           :key="'display-solution'"
-          class="p-2 bg-white"
+          class="solution-grid"
         >
           <!-- Nội dung "Giải pháp" phần Displays -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="solution-row">
             <!-- Enterprise Edition -->
-            <div
-              class="relative bg-gray-100 rounded-xl flex flex-col items-center text-center h-full"
-            >
+            <div class="solution-card">
               <img
                 src="@/assets/pictures/Home/Display-Solutions_PC_448x684_3-Card_MagicINFO.webp"
                 alt="Enterprise Edition"
-                class="h-full w-full object-cover rounded-xl"
+                class="solution-image"
               />
-              <div
-                class="absolute bottom-5 text-white left-1/2 transform -translate-x-1/2 text-center"
-              >
-                <h2 class="text-lg font-semibold mb-5 whitespace-nowrap">
+              <div class="solution-text">
+                <h2 class="solution-title">
                   Giải pháp MagicINFO™
                 </h2>
-                <p class="text-xs whitespace-nowrap">
+                <p class="solution-description">
                   Giải pháp quản lý màn thông minh
                 </p>
               </div>
             </div>
 
             <!-- Chuyên biệt -->
-            <div
-              class="relative bg-gray-100 rounded-xl flex flex-col items-center text-center h-full"
-            >
+            <div class="solution-card">
               <img
                 src="@/assets/pictures/Home/Display-Solutions_PC_448x684_3-Card_Color-Expert-LED.avif"
                 alt="Chuyên biệt"
-                class="h-full w-full object-cover rounded-xl"
+                class="solution-image"
               />
-              <div
-                class="absolute bottom-5 text-black left-1/2 transform -translate-x-1/2 text-center"
-              >
-                <h2 class="text-lg font-semibold mb-5 whitespace-nowrap">
+              <div class="solution-text dark">
+                <h2 class="solution-title">
                   Giải pháp Color Expert LED
                 </h2>
-                <p class="text-xs whitespace-nowrap">
+                <p class="solution-description">
                   Giải pháp hiệu chuẩn màn hình LED
                 </p>
               </div>
             </div>
 
             <!-- Máy tính bảng -->
-            <div
-              class="relative bg-gray-100 rounded-xl flex flex-col items-center text-center h-full"
-            >
+            <div class="solution-card">
               <img
                 src="@/assets/pictures/Home/Display-Solutions_PC_448x684_3-Card_LYNK-HMS.avif"
                 alt="Máy tính bảng"
-                class="h-full w-full object-cover rounded-xl"
+                class="solution-image"
               />
-              <div
-                class="absolute bottom-5 text-black left-1/2 transform -translate-x-1/2 text-center"
-              >
-                <h2 class="text-lg font-semibold mb-5 whitespace-nowrap">
+              <div class="solution-text dark">
+                <h2 class="solution-title">
                   Giải pháp LYNK REACH
                 </h2>
-                <p class="text-xs whitespace-nowrap">
+                <p class="solution-description">
                   Giải pháp quản lý TV khách sạn
                 </p>
               </div>
@@ -481,67 +410,55 @@
         </div>
       </transition>
     </div>
-    <div class="max-w-4xl mx-auto text-center mb-3">
-      <div class="text-4xl font-bold mb-12">Điều hòa nhiệt độ</div>
+    <div class="tab-section">
+      <div class="section-title">Điều hòa nhiệt độ</div>
     </div>
-    <div class="relative min-h-[700px] mb-20">
+    <div class="content-section">
       <transition :name="transitionName" mode="in-out">
         <div
           v-show="selected === 'feature'"
-          class="grid grid-cols-1 md:grid-cols-12 gap-4 w-full p-2"
+          class="ac-grid"
           key="feature"
         >
           <!-- Cột 1 -->
-          <div
-            class="relative rounded-2xl overflow-hidden h-full col-span-6 cursor-pointer"
-          >
+          <div class="ac-col-main">
             <img
               src="@/assets/pictures/Home/da_showcase_card_01.avif"
               alt="Ưu đãi"
-              class="w-full h-full object-cover"
+              class="ac-image"
             />
-            <div
-              class="absolute bottom-5 text-white left-1/2 transform -translate-x-1/2 text-center"
-            >
-              <h2 class="text-2xl font-semibold mb-5 whitespace-nowrap">
+            <div class="ac-text">
+              <h2 class="ac-title">
                 Giải pháp điều hòa tối tân
               </h2>
-              <p class="text-xs whitespace-nowrap">
+              <p class="ac-subtitle">
                 Đột phá công nghệ diều hòa sáng tạo
               </p>
             </div>
           </div>
 
           <!-- Cột 2 -->
-          <div class="flex flex-col gap-4 col-span-3">
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer bg-gray-200 flex justify-center items-center"
-            >
+          <div class="ac-col">
+            <div class="ac-item">
               <img
                 src="@/assets/pictures/Home/AM015TNVDCH-AA_001_Front_White_thumb_PC_160x160.webp"
                 alt="Lựa chọn tốt nhất"
-                class="w-1/2 h-1/2 object-contain p-4 -mt-10"
+                class="ac-item-image"
               />
-              <div
-                class="absolute bottom-20 text-black left-1/2 transform -translate-x-1/2 text-center"
-              >
-                <h2 class="text-md font-semibold whitespace-nowrap">
+              <div class="ac-item-text">
+                <h2 class="ac-item-title">
                   WindFree™ Treo tường
                 </h2>
               </div>
             </div>
-            <div
-              class="relative rounded-2xl overflow-hidden h-full bg-gray-200 cursor-pointer shadow-md border border-gray-200 flex justify-center items-center"
-            >
+            <div class="ac-item">
               <img
                 src="@/assets/pictures/Home/250_AM007NN1DCH-AA_001_Front_White_thumb_PC_160x160.webp"
                 alt="Galaxy S25 Ultra"
-                class="w-1/2 h-1/2 object-contain p-4 -mt-10"
+                class="ac-item-image"
               />
-              <div
-                class="absolute bottom-20 text-black left-1/2 transform -translate-x-1/2 text-center"
-              >
-                <h2 class="text-md font-semibold whitespace-nowrap">
+              <div class="ac-item-text">
+                <h2 class="ac-item-title">
                   Điều hòa WindFree™ 1 chiều
                 </h2>
               </div>
@@ -549,36 +466,28 @@
           </div>
 
           <!-- Cột 3 -->
-          <div class="flex flex-col gap-4 col-span-3">
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer bg-gray-200 shadow-md border border-gray-200 flex justify-center items-center"
-            >
+          <div class="ac-col">
+            <div class="ac-item">
               <img
                 src="@/assets/pictures/Home/250_AM045NN4DEH-EU_001_Front-Sensor-on_White_thumb_PC_160x160.avif"
                 alt="Samsung Knox"
-                class="w-1/2 h-1/2 object-contain p-4 -mt-10"
+                class="ac-item-image"
               />
-              <div
-                class="absolute bottom-20 text-black left-1/2 transform -translate-x-1/2 text-center"
-              >
-                <h2 class="text-md font-semibold whitespace-nowrap">
+              <div class="ac-item-text">
+                <h2 class="ac-item-title">
                   Điều hòa WindFree™ 4 chiều
                 </h2>
               </div>
             </div>
 
-            <div
-              class="relative rounded-2xl overflow-hidden h-full cursor-pointer bg-gray-200 shadow-md border border-gray-200 flex justify-center items-center"
-            >
+            <div class="ac-item">
               <img
                 src="@/assets/pictures/Home/180_4.AC071KN4DKH-EU_002_Front_White_thumb_PC_160x160.webp"
                 alt="Samsung SMB"
-                class="w-1/2 h-1/2 object-contain p-4 -mt-10"
+                class="ac-item-image"
               />
-              <div
-                class="absolute bottom-20 text-black left-1/2 transform -translate-x-1/2 text-center"
-              >
-                <h2 class="text-md font-semibold whitespace-nowrap">
+              <div class="ac-item-text">
+                <h2 class="ac-item-title">
                   360 Cassette
                 </h2>
               </div>
@@ -595,7 +504,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faSchool,
-  faStore,
+  faStore, 
   faChartSimple,
   faLandmark,
   faBuilding,
@@ -655,29 +564,583 @@ export default {
 </script>
 
 <style scoped>
-/* Slide từ phải sang trái */
-.slide-left-enter-active,
-.slide-left-leave-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: all 0.3s ease;
+/* General Styles */
+.product-container {
+  width: 100%;
+  }
+
+/* Hero Section */
+.hero-section {
+  width: 91.666667%;
+  height: 100%;
+  margin-bottom: 2.5rem;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.slide-left-enter-from {
-  transform: translateX(100%);
-  opacity: 0;
-}
-.slide-left-leave-to {
-  transform: translateX(-100%);
-  opacity: 0;
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.slide-right-enter-from {
-  transform: translateX(-100%);
-  opacity: 0;
+.hero-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
-.slide-right-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 2.5rem;
+  transform: translateY(-50%);
+  text-align: left;
+  width: 66.666667%;
 }
+
+.hero-title {
+  font-size: 3.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+}
+
+/* Industry Section */
+.industry-section {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .industry-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .industry-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.industry-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.industry-item.col-start-1 {
+  grid-column-start: 1;
+}
+
+.industry-icon {
+  font-size: 1.875rem;
+}
+
+.industry-name {
+  margin-top: 0.5rem;
+  transition: color 0.3s;
+}
+
+.industry-item:hover .industry-name {
+  color: #2563eb;
+}
+
+/* Tab Navigation */
+.tab-section {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+
+.tab-navigation {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+}
+
+@media (max-width: 767px) {
+  .tab-navigation {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tab-item {
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  border-bottom: 2px solid transparent;
+  transition: opacity 0.2s;
+  text-align: center;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+}
+
+.tab-item.active {
+  border-bottom-color: black;
+}
+
+.tab-item.hovered {
+  opacity: 0.5;
+}
+
+/* Content Section */
+.content-section {
+  position: relative;
+  min-height: 700px;
+  margin-bottom: 5rem;
+}
+
+/* Feature Grid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .feature-grid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+.feature-col-main {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .feature-col-main {
+    grid-column: span 6;
+  }
+}
+
+.feature-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .feature-col {
+    grid-column: span 3;
+  }
+}
+
+.feature-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feature-col-main:hover .feature-image {
+  transform: scale(1.05) translateY(0.5rem);
+  transition: transform 0.3s;
+}
+
+.feature-text {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+}
+
+.feature-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-bottom: 1rem;
+}
+
+.feature-subtitle {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.feature-item {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+  cursor: pointer;
+}
+
+.feature-light {
+  background-color: #e5e7eb;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-item-image {
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  margin-top: -3rem;
+}
+
+.feature-item-title {
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  margin-bottom: 1.25rem;
+}
+
+.feature-item-subtitle {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.feature-badge {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: black;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Product Section */
+.product-grid {
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.product-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .product-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.product-card {
+  background-color: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.product-image {
+  height: 80%;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.product-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.product-description {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+/* Display Grid */
+.display-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .display-grid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+.display-col-main {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .display-col-main {
+    grid-column: span 6;
+  }
+}
+
+.display-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .display-col {
+    grid-column: span 3;
+  }
+}
+
+.display-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.display-text {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  padding: 0 1rem;
+}
+
+.display-text.dark {
+  color: black;
+}
+
+.display-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-bottom: 1.25rem;
+}
+
+.display-subtitle {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.display-item {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+  cursor: pointer;
+}
+
+  .display-item.light {
+    background-color: #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .display-item-image {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    margin-top: -3rem;
+  }
+
+  .display-item-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    white-space: nowrap;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .display-item-subtitle {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* Solution Grid */
+  .solution-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .solution-grid {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
+
+  .solution-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .solution-row {
+      grid-template-columns: repeat(3, 1fr);
+      
+    }
+  }
+
+  .solution-card {
+    background-color: #f3f4f6;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .solution-image {
+    height: 80%;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+
+  .solution-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .solution-description {
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
+
+  /* AC Grid */
+  .ac-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .ac-grid {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
+
+  .ac-col-main {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  @media (min-width: 768px) {
+    .ac-col-main {
+      grid-column: span 6;
+    }
+  }
+
+  .ac-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .ac-col {
+      grid-column: span 3;
+    }
+  }
+
+  .ac-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ac-text {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+  }
+
+  .ac-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    white-space: nowrap;
+    margin-bottom: 1rem;
+  }
+
+  .ac-subtitle {
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .ac-item {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    height: 100%;
+    cursor: pointer;
+    background-color: #f3f4f6;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ac-item-image {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    margin-top: -3rem;
+    
+  }
+
+  .ac-item-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    white-space: nowrap;
+    margin-bottom: 1.25rem;
+  }
 </style>

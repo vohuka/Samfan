@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `samfan_final`
 --
+DROP DATABASE IF EXISTS samfan_final;
+CREATE DATABASE samfan_final;
+USE samfan_final;
 
 -- --------------------------------------------------------
 
