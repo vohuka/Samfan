@@ -214,3 +214,27 @@ Dir exists: Yes
 Dir writable: Yes
 File uploaded successfully to: ../frontend/public/images/profiles/11_1746731789_pexels-mayday-1545743.jpg
 Relative path for DB: /images/profiles/11_1746731789_pexels-mayday-1545743.jpg
+Upload attempt by user: 14
+POST: Array
+(
+)
+
+FILES: Array
+(
+    [profile_image] => Array
+        (
+            [name] => woman_pfp.jpg
+            [full_path] => woman_pfp.jpg
+            [type] => image/jpeg
+            [tmp_name] => D:\xampp\tmp\php22F9.tmp
+            [error] => 0
+            [size] => 193386
+        )
+
+)
+
+Upload dir: D:\LTW_PROJECTS\Samfan\frontend\public\images\profiles
+Dir exists: Yes
+Dir writable: Yes
+File uploaded successfully to: ../frontend/public/images/profiles/14_1746751076_woman_pfp.jpg
+Relative path for DB: /images/profiles/14_1746751076_woman_pfp.jpg
