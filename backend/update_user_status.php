@@ -9,11 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Check if admin is logged in (you may want to add admin check here)
-// if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-//     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
-//     exit;
-// }
 
 $data = json_decode(file_get_contents('php://input'), true);
 $userId = isset($data['userId']) ? intval($data['userId']) : 0;

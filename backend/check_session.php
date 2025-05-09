@@ -5,7 +5,7 @@ require_once __DIR__ . '/database.php';
 
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    // Include status in the query
+    
     $stmt = $conn->prepare("SELECT id, username, full_name, email, phone, address, image_url, status FROM user WHERE id = ?");
     $stmt->bind_param("i", $user_id);
     $stmt->execute();

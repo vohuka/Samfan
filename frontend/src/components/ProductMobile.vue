@@ -10,7 +10,7 @@
 import ProductMobileHeader from './ProductMobileHeader.vue';
 import ProductFilterPanel from './ProductFilterPanel.vue';
 import ProductList from './ProductList.vue';
-import { fetchProducts } from '../api/api'; // Import the API function
+import { fetchProducts } from '../api/api'; 
 
 export default {
   name: 'ProductMobile',
@@ -72,7 +72,7 @@ export default {
     }
   },
   watch: {
-    // Watch for screen size changes to update layout
+    
     screenWidth(newWidth) {
       if (newWidth > 768 && this.isMobileFilterOpen) {
         this.isMobileFilterOpen = false;
@@ -81,11 +81,11 @@ export default {
   },
   mounted() {
     this.fetchProducts();
-    // Add event listener for screen resize
+    
     window.addEventListener('resize', this.handleResize);
   },
   beforeUnmount() {
-    // Remove event listener when component is destroyed
+    
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
@@ -130,7 +130,7 @@ export default {
   padding-left: 15px;
 }
 
-/* Tablet Styles */
+
 @media screen and (max-width: 992px) {
   .filter-panel {
     width: 30%;
@@ -141,7 +141,7 @@ export default {
   }
 }
 
-/* Mobile Styles */
+
 @media screen and (max-width: 768px) {
   .product-container {
     flex-direction: column;
@@ -163,7 +163,7 @@ export default {
   }
 }
 
-/* Extra small devices */
+
 @media screen and (max-width: 576px) {
   .product-container {
     padding: 0 10px;

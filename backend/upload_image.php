@@ -12,9 +12,9 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Debug logs
-file_put_contents(__DIR__ . '/upload_debug.log', "Upload attempt by user: $user_id\n", FILE_APPEND);
-file_put_contents(__DIR__ . '/upload_debug.log', "POST: " . print_r($_POST, true) . "\n", FILE_APPEND);
-file_put_contents(__DIR__ . '/upload_debug.log', "FILES: " . print_r($_FILES, true) . "\n", FILE_APPEND);
+// file_put_contents(__DIR__ . '/upload_debug.log', "Upload attempt by user: $user_id\n", FILE_APPEND);
+// file_put_contents(__DIR__ . '/upload_debug.log', "POST: " . print_r($_POST, true) . "\n", FILE_APPEND);
+// file_put_contents(__DIR__ . '/upload_debug.log', "FILES: " . print_r($_FILES, true) . "\n", FILE_APPEND);
 
 // Check file upload
 if (!isset($_FILES['profile_image']) || $_FILES['profile_image']['error'] !== UPLOAD_ERR_OK) {
@@ -42,13 +42,13 @@ if ($_FILES['profile_image']['size'] > $max_size) {
 $upload_dir = "../frontend/public/images/profiles/";
 if (!file_exists($upload_dir)) {
     mkdir($upload_dir, 0777, true);
-    file_put_contents(__DIR__ . '/upload_debug.log', "Created directory: $upload_dir\n", FILE_APPEND);
+    // file_put_contents(__DIR__ . '/upload_debug.log', "Created directory: $upload_dir\n", FILE_APPEND);
 }
 
 // Log path information for debugging
-file_put_contents(__DIR__ . '/upload_debug.log', "Upload dir: " . realpath($upload_dir) . "\n", FILE_APPEND);
-file_put_contents(__DIR__ . '/upload_debug.log', "Dir exists: " . (file_exists($upload_dir) ? "Yes" : "No") . "\n", FILE_APPEND);
-file_put_contents(__DIR__ . '/upload_debug.log', "Dir writable: " . (is_writable($upload_dir) ? "Yes" : "No") . "\n", FILE_APPEND);
+// file_put_contents(__DIR__ . '/upload_debug.log', "Upload dir: " . realpath($upload_dir) . "\n", FILE_APPEND);
+// file_put_contents(__DIR__ . '/upload_debug.log', "Dir exists: " . (file_exists($upload_dir) ? "Yes" : "No") . "\n", FILE_APPEND);
+// file_put_contents(__DIR__ . '/upload_debug.log', "Dir writable: " . (is_writable($upload_dir) ? "Yes" : "No") . "\n", FILE_APPEND);
 
 // Generate unique filename
 $file_name = $user_id . '_' . time() . '_' . basename($_FILES['profile_image']['name']);
@@ -60,8 +60,8 @@ if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_path)) {
     // Create relative path for database storage
     $relative_path = "/images/profiles/" . $file_name;
     
-    file_put_contents(__DIR__ . '/upload_debug.log', "File uploaded successfully to: $upload_path\n", FILE_APPEND);
-    file_put_contents(__DIR__ . '/upload_debug.log', "Relative path for DB: $relative_path\n", FILE_APPEND);
+    // file_put_contents(__DIR__ . '/upload_debug.log', "File uploaded successfully to: $upload_path\n", FILE_APPEND);
+    // file_put_contents(__DIR__ . '/upload_debug.log', "Relative path for DB: $relative_path\n", FILE_APPEND);
     
     echo json_encode([
         'success' => true, 
@@ -69,7 +69,7 @@ if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $upload_path)) {
         'image_url' => $relative_path
     ]);
 } else {
-    file_put_contents(__DIR__ . '/upload_debug.log', "Failed to move file. Error: " . error_get_last()['message'] . "\n", FILE_APPEND);
+    // file_put_contents(__DIR__ . '/upload_debug.log', "Failed to move file. Error: " . error_get_last()['message'] . "\n", FILE_APPEND);
     echo json_encode(['success' => false, 'message' => 'Failed to upload file']);
 }
 ?>

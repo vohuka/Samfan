@@ -15,7 +15,7 @@ if ($method === 'POST' && $action === 'updateStatus') {
         exit;
     }
     
-    // Validate status
+    
     $validStatuses = ['pending', 'processing', 'completed', 'canceled'];
     if (!in_array($status, $validStatuses)) {
         echo json_encode(['success' => false, 'message' => 'Invalid status']);

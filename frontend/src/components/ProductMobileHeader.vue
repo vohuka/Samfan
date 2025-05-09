@@ -240,7 +240,7 @@ export default {
   transition: all 0.3s ease;
 }
 
-/* Hiệu ứng fade in/out */
+
 .fade-out {
   opacity: 0;
 }
@@ -278,7 +278,7 @@ export default {
   transform: translateY(-2px);
 }
 
-/* Nút outline cho chữ trắng (mặc định) */
+
 .btn-outline {
   border: 1px solid white;
   background-color: transparent;
@@ -289,7 +289,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Nút outline cho chữ đen */
+
 .btn-outline-dark {
   border: 1px solid black;
   background-color: transparent;
@@ -300,7 +300,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Nút filled cho chữ trắng (mặc định) */
+
 .btn-filled {
   background-color: white;
   color: black;
@@ -311,7 +311,7 @@ export default {
   background-color: #f0f0f0;
 }
 
-/* Nút filled cho chữ đen */  
+
 .btn-filled-dark {
   background-color: black;
   color: white;
@@ -322,7 +322,7 @@ export default {
   background-color: #333333;
 }
 
-/* Responsive scaling for different screen sizes */
+
 @media screen and (max-width: 1200px) {
   .mobile-header {
     font-size: calc(0.85 * var(--base-font-size));
@@ -405,7 +405,7 @@ export default {
 
 @media screen and (max-width: 400px) {
   .mobile-header {
-    height: 400px; /* Giảm chiều cao hơn nữa */
+    height: 400px; 
     padding: 0.75rem 0.25rem;
   }
   

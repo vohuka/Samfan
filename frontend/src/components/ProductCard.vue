@@ -31,7 +31,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+
 
 export default {
   props: {
@@ -46,25 +46,25 @@ export default {
     },
     async buyNow() {
       try {
-        // Check if user is logged in
+        
         const user = this.$store.state.user;
         if (!user) {
           alert('Please login to add items to your cart.');
-          // Kiểm tra xem action showLoginOverlay có tồn tại không
+          
           return;
         }
 
-        // Import the addToCart function from api.js
+        
         const { addToCart } = await import('../api/api');
         
-        // Call the addToCart API function
+        
         const response = await addToCart({
           product_id: this.product.id,
           quantity: 1
         });
 
         if (response.success) {
-          // Update the Vuex store with the new cart item
+          
           const cartItem = {
             id: response.cartItemId, 
             product_id: this.product.id,
@@ -193,10 +193,10 @@ export default {
   color: white;
 }
 
-/* Responsive styles for different screen sizes */
-/* Desktop (default styles above) */
 
-/* Tablet Styles */
+
+
+
 @media screen and (max-width: 992px) {
   .product-name {
     font-size: 16px;
@@ -221,7 +221,7 @@ export default {
   }
 }
 
-/* Mobile Styles */
+
 @media screen and (max-width: 576px) {
   .product-card {
     padding: 12px;

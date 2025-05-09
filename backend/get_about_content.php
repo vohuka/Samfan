@@ -22,14 +22,14 @@ if ($result && $result->num_rows > 0) {
     
     echo json_encode(['success' => true, 'sections' => $sections]);
 } else {
-    // Initialize with default content if the table is empty
+    // Default content if the table is empty
     $defaultContent = initializeDefaultContent();
     echo json_encode(['success' => true, 'sections' => $defaultContent]);
 }
 
 $conn->close();
 
-// Helper function to initialize default content
+
 function initializeDefaultContent() {
     return [
         'main_banner' => [

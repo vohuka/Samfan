@@ -1,14 +1,13 @@
-// src/router.js
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './components/Home.vue'
 import ProductMobile from './components/ProductMobile.vue'
 import ProductTVAV from './components/ProductTVAV.vue'
 import ProductApplication from './components/ProductApplication.vue'
-import ProductDetail from './components/ProductDetail.vue' // Thêm import cho ProductDetail
+import ProductDetail from './components/ProductDetail.vue' 
 import CartPage from './components/CartPage.vue' 
 
-// Giả sử bạn có các component này 
-// (nếu chưa có, hãy tạo chúng)
+
+
 const About = () => import('./components/About.vue')
 const Product = () => import('./components/Product.vue')
 const Contact = () => import('./components/Contact.vue')
@@ -57,7 +56,7 @@ const routes = [
     component: ProductApplication
   },
   {
-    path: '/product/:id', // Thêm route mới cho trang chi tiết sản phẩm
+    path: '/product/:id', 
     name: 'ProductDetail',
     component: ProductDetail
   },

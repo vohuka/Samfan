@@ -219,7 +219,7 @@
                                             <textarea class="form-control" id="ceoDetails" name="details" rows="3"></textarea>
                                             <small class="text-muted">Enter each detail on a new line</small>
                                         </div>
-                                        <!-- Replace the existing CEO image field with this -->
+                                        
                                         <div class="mb-3">
                                             <label for="ceoImage" class="form-label">CEO Image</label>
                                             <div class="input-group mb-2">
@@ -256,17 +256,17 @@
 <script src="assets/static/js/components/dark.js"></script>
 <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="assets/compiled/js/app.js"></script>
-<!-- Add JavaScript for handling the forms -->
+
 <script>
 // API URL for managing about page content
 const apiUrl = 'http://localhost/manage_about.php';
 
-// Load the content for all sections when the page loads
+
 document.addEventListener('DOMContentLoaded', function() {
     fetchAllSections();
 });
 
-// Function to fetch all sections from the backend
+
 function fetchAllSections() {
     fetch('http://localhost/get_about_content.php', { credentials: 'include' })
         .then(res => res.json())
@@ -280,7 +280,7 @@ function fetchAllSections() {
         });
 }
 
-// Function to populate the forms with the fetched data
+
 function populateFormsWithData(sections) {
     // Main Banner
     if (sections.main_banner) {
@@ -325,11 +325,11 @@ function populateFormsWithData(sections) {
         document.getElementById('ceoDetails').value = sections.ceo_info.details || '';
         document.getElementById('ceoImage').value = sections.ceo_info.image || '';
         
-        // Display the existing CEO image
+        
         const imageUrl = sections.ceo_info.image || '';
         const preview = document.getElementById('ceoImagePreview');
         if (imageUrl && !imageUrl.includes('../assets/')) {
-            // Display the image if it's a valid URL (not a relative asset path)
+            
             preview.src = imageUrl;
             preview.style.display = 'block';
         } else {
@@ -395,7 +395,7 @@ document.getElementById('ceoInfoForm').addEventListener('submit', function(e) {
     });
 });
 
-// Function to save a section to the backend
+
 function saveSection(section, data) {
     fetch(apiUrl, {
         method: 'POST',
@@ -411,7 +411,7 @@ function saveSection(section, data) {
     .then(response => {
         if (response.success) {
             alert('Section updated successfully!');
-            // Refresh data after successful update
+            
             fetchAllSections();
         } else {
             alert('Error: ' + (response.message || 'Unknown error'));
@@ -423,7 +423,7 @@ function saveSection(section, data) {
     });
 }
 
-// Add to the existing script in about.html
+
 function resetSection(section) {
     if (confirm(`Are you sure you want to reset the ${section.replace('_', ' ')} section to default values?`)) {
         fetch(apiUrl, {
@@ -439,7 +439,7 @@ function resetSection(section) {
         .then(response => {
             if (response.success) {
                 alert('Section reset to default values successfully!');
-                // Refresh data after successful reset
+                
                 fetchAllSections();
             } else {
                 alert('Error: ' + (response.message || 'Unknown error'));
@@ -452,9 +452,9 @@ function resetSection(section) {
     }
 }
 
-// Add these JavaScript functions
 
-// Image preview and upload handling
+
+
 document.getElementById('ceoImageUpload').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {
@@ -494,11 +494,11 @@ document.getElementById('uploadCeoImage').addEventListener('click', async functi
             credentials: 'include'
         });
         
-        // Log raw response for debugging
+        
         const responseText = await response.text();
         console.log('Raw server response:', responseText);
         
-        // Try to parse JSON
+        
         let result;
         try {
             result = JSON.parse(responseText);

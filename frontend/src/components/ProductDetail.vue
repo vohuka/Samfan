@@ -1,13 +1,13 @@
 <template>
   <div class="product-detail">
-    <!-- Thông tin sản phẩm -->
+    
     <h1>{{ product?.name }}</h1>
     <img :src="'/images/' + product?.image" :alt="product?.name" class="product-image" />
     <div class="button-group">
       <button class="buy-button">Buy now</button>
     </div>
 
-    <!-- Tabs for Specifications and Reviews -->
+    
     <!-- <div class="tabs">
       <button @click="activeTab = 'specs'" :class="{ active: activeTab === 'specs' }">
         Specifications
@@ -59,7 +59,7 @@
         <p><strong>Average Rating:</strong> {{ rating.average_rating }} / 5 ({{ rating.total_ratings }} ratings)</p>
       </div>
 
-      <!-- Form gửi đánh giá và bình luận -->
+      
       <div v-if="isLoggedIn" class="comment-form">
         <h3>Write a Comment and Rating</h3>
         <div class="rating-input">
@@ -88,7 +88,7 @@
         <p>You must log in to use this feature</p>
       </div>
 
-      <!-- Danh sách bình luận -->
+      
       <div class="comments">
         <h3>Comments</h3>
         <div v-if="comments.length === 0" class="no-comments">
@@ -117,13 +117,13 @@ export default {
       newRating: 0,
       hoverRating: 0,
       isLoggedIn: false,
-      activeTab: 'specs', // Default tab
+      activeTab: 'specs', 
     };
   },
   async mounted() {
     const productId = this.$route.params.id;
 
-    // Kiểm tra trạng thái đăng nhập
+    
     try {
       const session = await checkSession();
       this.isLoggedIn = session.loggedIn;
@@ -131,7 +131,7 @@ export default {
       console.error('Error checking session:', error);
     }
 
-    // Lấy thông tin sản phẩm
+    
     try {
       const response = await fetchProductDetails(productId);
       if (response.success) {
@@ -143,7 +143,7 @@ export default {
       console.error('Error loading product details:', error);
     }
 
-    // Lấy bình luận
+    
     try {
       const response = await fetchComments(productId);
       if (response.success) {
@@ -153,7 +153,7 @@ export default {
       console.error('Error loading comments:', error);
     }
 
-    // Lấy đánh giá trung bình
+    
     try {
       const response = await fetchRating(productId);
       if (response.success) {
@@ -212,7 +212,7 @@ export default {
 </script>
 
 <style scoped>
-/* Include Font Awesome for star icons */
+
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
 .product-detail {

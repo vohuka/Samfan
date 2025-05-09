@@ -1,4 +1,4 @@
-<!-- src/components/Footer.vue -->
+
 
 <template>
   <footer class="samfan-footer">
@@ -96,7 +96,7 @@ export default {
 
 .footer-column {
   margin-bottom: 20px;
-  width: 100%; /* 1 cột/hàng trên màn hình nhỏ (1/4 màn hình) */
+  width: 100%; 
   
 }
 
@@ -145,10 +145,10 @@ export default {
   font-size: 18px;
 }
 
-/* Màn hình trung bình (1/2 màn hình): 2 cột/hàng */
+
 @media screen and (min-width: 768px) {
   .footer-column {
-    width: 45%; /* 2 cột/hàng */
+    width: 45%; 
   }
   
   .copyright {
@@ -156,14 +156,14 @@ export default {
   }
 }
 
-/* Màn hình lớn: 4 cột/hàng */
+
 @media screen and (min-width: 992px) {
   .footer-sections {
     justify-content: space-between;
   }
   
   .footer-column {
-    width: 22%; /* 4 cột/hàng */
+    width: 22%; 
     text-align: left;
   }
   

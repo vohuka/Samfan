@@ -1,24 +1,5 @@
 <?php
-$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
-$allowed_origins = [
-    'http://localhost:8081', // Thêm các origin được phép nếu cần
-];
-
-if (in_array($origin, $allowed_origins)) {
-    header("Access-Control-Allow-Origin: $origin");
-    header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Allow-Headers: Content-Type');
-    header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-}
-
-header('Content-Type: application/json');
-
-// Đáp ứng preflight request
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
+require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/database.php';
 
 $data = json_decode(file_get_contents('php://input'), true);

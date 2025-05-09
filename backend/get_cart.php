@@ -3,8 +3,6 @@ session_start();
 require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/database.php';
 
-// Không cần đọc dữ liệu JSON vì đây là GET request
-// nhưng cần giữ lại để nhất quán với các file khác và hỗ trợ nếu chuyển thành POST
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Please log in']);

@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/cors.php';
 require_once __DIR__ . '/database.php';
 
-// Đọc dữ liệu JSON từ request
+
 $json_data = file_get_contents('php://input');
 $data = json_decode($json_data, true);
 

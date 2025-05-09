@@ -5,7 +5,7 @@ require_once __DIR__ . '/database.php';
 
 header('Content-Type: application/json');
 
-// Get the search keyword
+
 $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
 
 if (empty($keyword)) {
@@ -13,7 +13,7 @@ if (empty($keyword)) {
     exit;
 }
 
-// Prepare and execute the query
+
 $keyword = "%$keyword%";
 $stmt = $conn->prepare("
     SELECT 
@@ -35,7 +35,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $products = $result->fetch_all(MYSQLI_ASSOC);
 
-// Format the response
+
 if ($products) {
     echo json_encode([
         'success' => true,
